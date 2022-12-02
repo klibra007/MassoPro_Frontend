@@ -85,7 +85,7 @@ export default function PageConnexion() {
 
                         <div className="mt-4">
                             <p>Nouveau? <a href='#' className="mleft-6">Créer un compte</a></p>
-                            <a href='#' className="mtop-10">Mot de passe oublié?</a>
+                            <a href='#'>Mot de passe oublié?</a>
                         </div>
                     </Form>
                 </Col>
