@@ -4,6 +4,7 @@ import Header from './composants/Header';
 import Main from './composants/Main';
 import Footer from './composants/Footer';
 import { AuthProvider } from './composants/Context';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

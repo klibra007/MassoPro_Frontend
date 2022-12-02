@@ -1,9 +1,9 @@
 import React, { useState, createContext } from "react";
 const AuthContext = createContext();
 const AuthProvider = (props) => {
-    const [tabRechercheChaussures, setTabRechercheChaussures] = useState([]);
+    const [idConnexion, setIdConnexion] = useState({});
     return (    
-        <AuthContext.Provider value={[tabRechercheChaussures, setTabRechercheChaussures]}>      
+        <AuthContext.Provider value={[idConnexion, setIdConnexion]}>      
             {props.children}
         </AuthContext.Provider>
     );

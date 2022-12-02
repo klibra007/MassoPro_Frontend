@@ -1,8 +1,11 @@
 import React from 'react'
+import PageConnexion from './PageConnexion'
 
 export default function Main() {
   
   return (
-    <div>Main</div>
+    <div id='idMain'>
+      <PageConnexion/>
+    </div>
   )
 }
