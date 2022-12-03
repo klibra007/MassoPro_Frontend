@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {Container, Button, Card, CardGroup, Row, Col} from 'react-bootstrap';
-import {CCard} from 'react-bootstrap';
 
 export default function PageChoisirService() {
     return (
