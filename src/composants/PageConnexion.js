@@ -25,7 +25,7 @@ export default function PageConnexion() {
         alert(courriel);
         alert(motDePasse);
         let strDossierServeur = "https://dev.pascalrocher.com";
-        let strNomApplication = strDossierServeur + "/api/services";
+        let strNomApplication = strDossierServeur + "/api/auth/login";
 
         alert(strNomApplication);
         let data = {
@@ -33,7 +33,11 @@ export default function PageConnexion() {
             "motDePasse": motDePasse
         }
 
-        axios.get(strNomApplication)
+        axios.post(strNomApplication, JSON.stringify(data), {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        })
             .then((response) => {alert("La réponse: " + response); setResultat(response.data)})
             .catch((error) => console.log(error));
     }
