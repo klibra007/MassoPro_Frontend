@@ -17,7 +17,9 @@ export default function ReservationCard(props) {
                                             Prix total: ${props.prix}<br/>
                                             Numéro de réservation: {props.reservation}
                                         </Card.Text>
-                                        <Button className="mright-16"variant="primary">Modifier</Button>
+                                        {/* <Button className="mright-16"variant="primary">Annuler</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button className="mright-16"variant="primary">Modifier</Button>  */}
+                                        
                                     </Card.Body>
                                     {/* <Button className="align-items-end" variant="primary">MODIFIER</Button> */}
                                 </Card>
