@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './composants/Header';
 import Main from './composants/Main';
 import Footer from './composants/Footer';
+import PageRegister from './composants/PageRegister';
 import { AuthProvider } from './composants/Context';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PageAccueil from './composants/PageAccueil';
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
         <Header />
         <AuthProvider>
           <Routes>
-            <Route path='/' element={<Main />}></Route>
+            <Route path='*' element={<Main />}></Route>
+            <Route path='/register' element={<PageRegister />}></Route>
           </Routes>
         </AuthProvider>
         <Footer />
