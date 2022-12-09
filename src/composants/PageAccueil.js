@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function PageAccueil() {
+export default function PageAccueil({setResultat}) {
     const resultat = useSelector(selectConnexionData);
 
     const affichageConnexion = useSelector(selectAffichageChoixDureeEtMasso);

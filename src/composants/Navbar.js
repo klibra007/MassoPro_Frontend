@@ -10,7 +10,7 @@ function NavBar() {
           <Navbar.Brand href="#home">MassoPro</Navbar.Brand>
           <Nav className="ms-auto">
             <Nav.Link href="/accueil">Massage</Nav.Link>
-            <Nav.Link href="#features">Reservation</Nav.Link>
+            <Nav.Link href="/vosreservations">Vos Reservations</Nav.Link>
             <Nav.Link href="#pricing">Mon compte</Nav.Link>
           </Nav>
         </Container>

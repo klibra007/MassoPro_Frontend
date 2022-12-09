@@ -4,6 +4,8 @@ const initialState = {
     affichageChoixServices : true,
     affichageChoixDureeEtMasso: false,
     affichageReservation: false,
+    affichageConfirmation: false,
+    affichageAvantConfirmation: true,
     objReservation : {
         date: null,
         idService: null,
@@ -13,6 +15,10 @@ const initialState = {
     nomServiceChoisi: "",
     nomMassoChoisi: "",
     dureeChoisie: "",
+    prix: "",
+    dateChoisie: "",
+    heureChoisie: {},
+    tabReservation: [],
 }
 
 export const reservationSlice = createSlice({
@@ -34,6 +40,16 @@ export const reservationSlice = createSlice({
             console.log('in reducer setAffichageReservation');
             state.affichageReservation === false ? state.affichageReservation = true : state.affichageReservation = false;
         }, 
+
+        setAffichageConfirmation : (state, action) => {
+            console.log('in reducer setAffichageReservation');
+            state.affichageConfirmation === false ? state.affichageConfirmation = true : state.affichageConfirmation = false;
+        },
+
+        setAffichageAvantConfirmation : (state, action) => {
+            console.log('in reducer setAffichageReservation');
+            state.affichageAvantConfirmation === true ? state.affichageAvantConfirmation = false : state.affichageAvantConfirmation = true;
+        },
 
         setObjetReservationDate : (state, action) => {
             state.objReservation.date = action.payload;
@@ -61,17 +77,37 @@ export const reservationSlice = createSlice({
 
         setDureeChoisie : (state, action) => {
             state.dureeChoisie = action.payload;
-        }
+        },
+
+        setDateChoisie : (state, action) => {
+            state.dateChoisie = action.payload;
+        },
+
+        setHeureChoisie : (state, action) => {
+            state.heureChoisie = action.payload;
+        },
+
+        setPrix : (state, action) => {
+            state.prix = action.payload;
+        },
+
+        setTabReservation : (state, action) => {
+            state.tabReservation = action.payload;
+        },
     }
 })
 
-export const { setAffichageChoixServices, setAffichageChoixDureeEtMasso, setObjetReservationDate, setObjetReservationIdService, setObjetReservationIdPersonnel, setObjetReservationIdDuree, setNomServiceChoisi, setNomMassoChoisi, setDureeChoisie, setAffichageReservation } = reservationSlice.actions;
+export const { setAffichageChoixServices, setAffichageChoixDureeEtMasso, setObjetReservationDate, setObjetReservationIdService, setObjetReservationIdPersonnel, setObjetReservationIdDuree, setNomServiceChoisi, setNomMassoChoisi, setDureeChoisie, setAffichageReservation, setAffichageConfirmation, setDateChoisie, setHeureChoisie, setPrix, setAffichageAvantConfirmation, setTabReservation } = reservationSlice.actions;
 
 export const selectAffichageChoixServices = (state) => state.reservation.affichageChoixServices;
 
 export const selectAffichageChoixDureeEtMasso = (state) => state.reservation.affichageChoixDureeEtMasso;
 
 export const selectAffichageReservation = (state) => state.reservation.affichageReservation;
+
+export const selectAffichageConfirmation = (state) => state.reservation.affichageConfirmation;
+
+export const selectAffichageAvantConfirmation = (state) => state.reservation.affichageAvantConfirmation;
 
 export const selectObjReservation = (state) => state.reservation.objReservation;
 
@@ -80,5 +116,13 @@ export const selectNomServiceChoisi = (state) => state.reservation.nomServiceCho
 export const selectNomMassoChoisi = (state) => state.reservation.nomMassoChoisi;
 
 export const selectDureeChoisie = (state) => state.reservation.dureeChoisie;
+
+export const selectPrix = (state) => state.reservation.prix;
+
+export const selectDateChoisie = (state) => state.reservation.dateChoisie;
+
+export const selectHeureChoisie = (state) => state.reservation.heureChoisie;
+
+export const selectTabReservation = (state) => state.reservation.tabReservation;
 
 export default reservationSlice.reducer;

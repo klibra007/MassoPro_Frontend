@@ -7,8 +7,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import bgLocale from 'date-fns/locale/bg';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation, setObjetReservationDate } from '../app/features/reservationSlice';
+import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation, setObjetReservationDate, setDateChoisie, selectDateChoisie } from '../app/features/reservationSlice';
 import axios from 'axios';
+import { set } from 'date-fns';
 
 
 
@@ -28,7 +29,7 @@ export default function StaticDatePickerDemo({setDisponibiliteTab}) {
     return day === 0 || day === 6;
   };
 
-  dispatch(setObjetReservationDate(value.format('DD/MM/YYYY')));
+  dispatch(setObjetReservationDate(value.format('YYYY-MM-DD')));
 
   const handleAccept = () => {
 
@@ -39,12 +40,19 @@ export default function StaticDatePickerDemo({setDisponibiliteTab}) {
 
     alert(JSON.stringify(objReservation));
 
-    axios.get(strNomApplication, JSON.stringify(objReservation))
+
+    axios.post(strNomApplication, JSON.stringify(objReservation), {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
       .then((response) => {
         alert("La réponse: " + JSON.stringify(response));
         //setResultat(response.data);
         if (response.data.length !== 0) {
           setDisponibiliteTab(response.data);
+          dispatch(setDateChoisie(value.format("dddd, DD MMM YYYY")));
+          console.log("setDateChoisie: " + value.format());
           
           //dispatch(setAffichageAccueil(true));
           //dispatch(setAffichageConnexion(false));

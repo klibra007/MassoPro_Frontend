@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Form, Dropdown } from 'react-bootstrap';
-import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation } from '../app/features/reservationSlice';
+import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation, setPrix, selectPrix } from '../app/features/reservationSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -8,13 +8,15 @@ import axios from 'axios';
 export default function PageChoixDureeMasso() {
     const [dureeTab, setDureeTab] = useState([]);
     const [massoTab, setMassoTab] = useState([]);
-   
+
 
     const nomServiceChoisi = useSelector(selectNomServiceChoisi);
 
     const dureeChoisie = useSelector(selectDureeChoisie);
 
     const massoChoisi = useSelector(selectNomMassoChoisi);
+
+    const prix = useSelector(selectPrix);
 
     const objReservation = useSelector(selectObjReservation);
 
@@ -27,8 +29,9 @@ export default function PageChoixDureeMasso() {
     let strNomApplication2 = strDossierServeur + "/api/servicespersonnels";
 
     useEffect(() => {
+        console.log("AU MONTAGE DU CHOIXMASSO");
         //recup des durées
-        axios.get(strNomApplication + `/${objReservation.idService}`)
+        axios.get(strNomApplication)
             .then((response) => {
                 alert("La réponse durée : " + JSON.stringify(response.data));
                 setDureeTab(response.data);
@@ -41,20 +44,25 @@ export default function PageChoixDureeMasso() {
                 alert("La réponse masso : " + JSON.stringify(response.data));
                 setMassoTab(response.data);
             })
-            .catch(error => alert(error))
+            .catch(error => alert(error));
+            
+            return ()=>{
+                console.log("AU DEMONTAGE DU CHOIXMASSO")
+              }
     }, [])
 
     const handleChangeDuree = (event) => {
         const tab = event.target.value.split("-");
         dispatch(setObjetReservationIdDuree(tab[0]));
         dispatch(setDureeChoisie(tab[1]));
+        dispatch(setPrix(tab[2]));
         console.log("la duree choisie est : " + tab[1])
     }
 
     const handleChangeMasso = (event) => {
         const tab = event.target.value.split("-");
         dispatch(setObjetReservationIdPersonnel(tab[0]));
-        dispatch(setNomMassoChoisi(`${tab[1]} ${tab[2]}}`))
+        dispatch(setNomMassoChoisi(`${tab[1]} ${tab[2]}`))
         console.log("le masso choisi est : " + tab[1] + " " + tab[2])
     }
 
@@ -77,7 +85,7 @@ export default function PageChoixDureeMasso() {
                             <option value={0}>Veuillez choisir une durée svp</option>
                             {dureeTab.map((data) => {
                                 const { id, duree, prix, idService } = data;
-                                return <option value={`${id}-${duree}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
                             })}
                         </Form.Select>
 

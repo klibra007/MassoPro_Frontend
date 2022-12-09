@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Box, height, margin } from '@mui/system';
 import { Grid } from '@mui/material';
 import { selectConnexionData, setConnexionData } from '../app/features/connexionSlice';
-import { selectAffichageChoixServices,  setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation } from '../app/features/reservationSlice';
+import { selectAffichageChoixServices,  setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation, selectPrix, prix } from '../app/features/reservationSlice';
 import { useDispatch } from 'react-redux';
 import PageChoixDureeMasso from './PageChoixDureeMasso';
 import PageReservation from './PageReservation';
