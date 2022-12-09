@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {Container, Button, Row, Col, Form} from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
-import axios from 'axios';
 
 export default function PageRegister() {
     const [prenom, setPrenom] = useState("");
@@ -99,5 +98,5 @@ export default function PageRegister() {
               </Col>
             </Row>
         </Container>
-    )  // end return
-}  // end export
+    ) 
+}  

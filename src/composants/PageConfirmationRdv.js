@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Card, Button } from 'react-bootstrap';
-import Moment from 'moment';
-import 'moment/min/locales';
 import axios from 'axios';
-import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation, setObjetReservationDate, setHeureChoisie, selectHeureChoisie, selectDateChoisie, selectPrix, setPrix, selectAffichageConfirmation, setAffichageConfirmation, setAffichageAvantConfirmation, selectAffichageAvantConfirmation } from '../app/features/reservationSlice';
+import {   selectObjReservation, selectNomServiceChoisi, selectDureeChoisie, selectNomMassoChoisi, selectHeureChoisie, selectDateChoisie, selectPrix, selectAffichageConfirmation, setAffichageConfirmation, setAffichageAvantConfirmation, selectAffichageAvantConfirmation } from '../app/features/reservationSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectConnexionData } from '../app/features/connexionSlice';
 import PageRdvConfirme from './PageRdvConfirme';
 
 export default function PageConfirmationRdv() {
+
+  const TPS = 0.05;
+
+  const TVQ = 0.09975;
 
   const [numeroReservation, setNumeroReservation] = useState("");
 
@@ -46,18 +48,12 @@ export default function PageConfirmationRdv() {
     }
   })
 
-  //alert('connexion ' + JSON.stringify(connexionData))
-
   const onClickConfirmer = () => {
     let strDossierServeur = "https://dev.pascalrocher.com";
     let strNomApplication = strDossierServeur + "/api/rendezvous";
-
-
-    //let objValidation = {date,"heureDebut":`${dispo.heureDebut}`, "heureFin" :`${dispo.heureFin}`,idService,idDuree,idPersonnel};
-
     let objValidation = { ...objReservation, "idClient": `${connexionData.idClient}`, "heureDebut": `${disponibilite.heureDebut}`, "heureFin": `${disponibilite.heureFin}` }
 
-    alert(JSON.stringify(objValidation));
+    console.log(JSON.stringify(objValidation));
 
 
     axios.post(strNomApplication, JSON.stringify(objValidation), {
@@ -66,67 +62,17 @@ export default function PageConfirmationRdv() {
       }
     })
       .then((response) => {
-        alert("La réponse: " + JSON.stringify(response));
-        //setResultat(response.data);
+        console.log("La réponse: " + JSON.stringify(response));
         if (response.data.status === true) {
           setNumeroReservation(response.data.reservation);
           dispatch(setAffichageConfirmation());
           dispatch(setAffichageAvantConfirmation());
-          //navigate('/reservation/confirmation#2');
-
-          //dispatch(setAffichageAccueil(true));
-          //dispatch(setAffichageConnexion(false));
-
-
         }
       })
       .catch((error) => {
         alert("erreur:" + error.response);
       });
   }
-
-  let strDossierServeur = "https://dev.pascalrocher.com";
-
-  // Test data
-  const client_id = 1;
-  const TPS = 0.05;
-  const TVQ = 0.09975;
-
-
-
-
-  const [client, setClient] = useState([]);
-
-  /*const GetClient = (id) => {
-    let strNomApplication = strDossierServeur + `/api/client/${id}`;
-
-    axios.get(strNomApplication, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => {
-        // Convert JSON into array object
-        var arr = [];
-        arr.push(response.data[0]);
-        setClient(arr)
-      })
-      .catch((error) => console.log(error));
-  }*/
-
-  let getTotal = (recObj) => {
-    let sum = recObj.reduce(function (prev, current) {
-      return prev + +current.prix
-    }, 0);
-    return sum;
-  }
-
-  const handleClickRdv = () => {
-
-  }
-
-  //Moment.locale('fr');
-  //GetClient(client_id);
 
   return (
     <>
@@ -211,9 +157,6 @@ export default function PageConfirmationRdv() {
                   <Col>Méthode de paiement: <i>Payer plus tard</i></Col>
                 </Row>
               </>
-
-
-
               <Form.Group className="mt-4">
                 <Button variant='primary' onClick={onClickConfirmer}>Confirmer la réservation</Button>
               </Form.Group>
@@ -221,9 +164,8 @@ export default function PageConfirmationRdv() {
           </Col>
         </Row>
       </Container>}
-
       {affichageConfirmation && <PageRdvConfirme numeroReservation={numeroReservation}/>}
     </>
 
-  )  // end return
-}  // end export
+  )
+}

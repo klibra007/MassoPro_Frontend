@@ -7,7 +7,6 @@ import Footer from './composants/Footer';
 import PageRegister from './composants/PageRegister';
 import { AuthProvider } from './composants/Context';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PageAccueil from './composants/PageAccueil';
 
 function App() {
   return (

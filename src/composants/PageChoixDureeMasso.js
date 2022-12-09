@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Row, Col, Form, Dropdown } from 'react-bootstrap';
-import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, selectNomServiceChoisi, selectDureeChoisie, setDureeChoisie, selectNomMassoChoisi, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, selectAffichageReservation, setPrix, selectPrix } from '../app/features/reservationSlice';
+import { Container, Button, Row, Col, Form } from 'react-bootstrap';
+import {  setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -8,18 +8,8 @@ import axios from 'axios';
 export default function PageChoixDureeMasso() {
     const [dureeTab, setDureeTab] = useState([]);
     const [massoTab, setMassoTab] = useState([]);
-
-
     const nomServiceChoisi = useSelector(selectNomServiceChoisi);
-
-    const dureeChoisie = useSelector(selectDureeChoisie);
-
-    const massoChoisi = useSelector(selectNomMassoChoisi);
-
-    const prix = useSelector(selectPrix);
-
     const objReservation = useSelector(selectObjReservation);
-
     const dispatch = useDispatch();
 
     console.log("dans choixMasso : " + JSON.stringify(objReservation))
@@ -29,11 +19,10 @@ export default function PageChoixDureeMasso() {
     let strNomApplication2 = strDossierServeur + "/api/servicespersonnels";
 
     useEffect(() => {
-        console.log("AU MONTAGE DU CHOIXMASSO");
         //recup des durées
         axios.get(strNomApplication)
             .then((response) => {
-                alert("La réponse durée : " + JSON.stringify(response.data));
+                console.log("La réponse durée : " + JSON.stringify(response.data));
                 setDureeTab(response.data);
             })
             .catch(error => alert(error));
@@ -41,14 +30,10 @@ export default function PageChoixDureeMasso() {
         //recup des masso
         axios.get(strNomApplication2 + `/${objReservation.idService}`)
             .then((response) => {
-                alert("La réponse masso : " + JSON.stringify(response.data));
+                console.log("La réponse masso : " + JSON.stringify(response.data));
                 setMassoTab(response.data);
             })
             .catch(error => alert(error));
-            
-            return ()=>{
-                console.log("AU DEMONTAGE DU CHOIXMASSO")
-              }
     }, [])
 
     const handleChangeDuree = (event) => {
@@ -104,5 +89,5 @@ export default function PageChoixDureeMasso() {
                 </Col>
             </Row>
         </Container>
-    )  // end return
-}  // end export
+    ) 
+}  

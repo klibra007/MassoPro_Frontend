@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Button, Card, CardGroup, Row, Col } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Box, height, margin } from '@mui/system';
+import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
-import { selectConnexionData, setConnexionData } from '../app/features/connexionSlice';
-import { selectAffichageChoixServices,  setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation, selectPrix, prix } from '../app/features/reservationSlice';
+import { selectConnexionData } from '../app/features/connexionSlice';
+import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation } from '../app/features/reservationSlice';
 import { useDispatch } from 'react-redux';
 import PageChoixDureeMasso from './PageChoixDureeMasso';
 import PageReservation from './PageReservation';
-
-
-
-
 
 export default function PageChoixService() {
   const [servicesTab, setServicesTab] = useState([]);
@@ -31,7 +27,7 @@ export default function PageChoixService() {
   const affichageChoixServices = useSelector(selectAffichageChoixServices);
 
   const affichageChoixDureeEtMasso = useSelector(selectAffichageChoixDureeEtMasso);
-  
+
   const affichageReservation = useSelector(selectAffichageReservation);
 
   console.log(resultat);
@@ -42,7 +38,7 @@ export default function PageChoixService() {
   useEffect(() => {
     axios.get(strNomApplication)
       .then((response) => {
-        alert("La réponse : " + JSON.stringify(response.data));
+        console.log("La réponse : " + JSON.stringify(response.data));
         setServicesTab(response.data);
       })
       .catch(error => alert(error))
@@ -52,7 +48,7 @@ export default function PageChoixService() {
 
   useEffect(() => {
     if (JSON.stringify(resultat) === "{}") {
-      navigate('/');
+      navigate('/connexion');
     }
   })
 
@@ -74,7 +70,7 @@ export default function PageChoixService() {
               <Card.Text className='text-aleft'>
                 {service.description}
               </Card.Text>
-              <Button variant="primary" onClick={()=>{handleClickReserver(service)}}>RÉSERVER</Button>
+              <Button variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
             </Card.Body>
           </Card>
         </Grid>
@@ -98,19 +94,12 @@ export default function PageChoixService() {
             gap: 2,
           }}>
             <Services />
-
-
           </Box>
         </Grid>
       </div>
-
       }
-      {affichageChoixDureeEtMasso && <PageChoixDureeMasso/>}
-      {affichageReservation && <PageReservation/>}
-
+      {affichageChoixDureeEtMasso && <PageChoixDureeMasso />}
+      {affichageReservation && <PageReservation />}
     </>
-
-
-
-  )  // end return
-}  // end export
+  )
+}
