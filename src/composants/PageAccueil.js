@@ -14,6 +14,7 @@ export default function PageAccueil() {
     const handleClickReserver = () => {
         if(resultat !== null){
             navigate('/reservation');
+            
         }
     }
 
@@ -24,7 +25,6 @@ export default function PageAccueil() {
     }
 
     const AccueilProfil = () => {
-        
         if (resultat.idClient !== null && resultat.idClient !== undefined) {
             return <div>
                 <b>PageAccueil Client</b>
@@ -38,7 +38,7 @@ export default function PageAccueil() {
                 <p>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</p>
                 <p>Token : {resultat.token.substr(3)}</p>
             </div>
-        } else if (resultat.idAministrateur !== null && resultat.idAministrateur !== undefined) {
+        } else if (resultat.idAdministrateur !== null && resultat.idAdministrateur !== undefined) {
             return <div>
                 <b>PageAccueil Admin</b> 
                 <p>Bonjour {resultat.prenom}, vous êtes connecté!</p>

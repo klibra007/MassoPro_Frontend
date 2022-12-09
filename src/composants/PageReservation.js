@@ -48,6 +48,7 @@ export default function PageReservation() {
       <div style={{ width: "50%", margin: "2ch auto " }}>
         <h5 style={{ textAlign: "left" }}>Sélectionnez l'heure</h5>
         <Disponibilites />
+        <Button variant='contained' href='/reservation' sx={{margin: 5}}>Retour sélection massages</Button>
       </div>
     </div>
   )

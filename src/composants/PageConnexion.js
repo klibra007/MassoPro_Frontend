@@ -59,7 +59,7 @@ export default function PageConnexion() {
                 }
             })
             .catch((error) => {
-                alert(error.response.data.status);
+                console.log(error.response.data.status);
                 document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
             });
     }

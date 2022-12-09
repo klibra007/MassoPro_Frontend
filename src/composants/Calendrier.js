@@ -8,6 +8,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectObjReservation, setObjetReservationDate, setDateChoisie } from '../app/features/reservationSlice';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
 
 export default function StaticDatePickerDemo({setDisponibiliteTab}) {
@@ -75,5 +76,7 @@ export default function StaticDatePickerDemo({setDisponibiliteTab}) {
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>
+
+    
   );
 }
