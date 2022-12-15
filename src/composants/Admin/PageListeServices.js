@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import { Grid } from '@mui/material';
-import { Paper } from '@mui/material';
 import Link from '@mui/material/Link';
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from '@mui/material/InputAdornment';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
@@ -14,15 +17,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import { 
+import {
     Button,
     Dialog,
     DialogActions,
     DialogTitle,
     DialogContent,
-    DialogContentText } from '@mui/material'
-    
-  
+    DialogContentText
+} from '@mui/material'
+
+
 import '../../styles.css';
 
 
@@ -45,6 +49,14 @@ export default function PageListeServices() {
             })
             .catch(error => alert(error))
     }, [])
+
+    const handleSearch = () => {
+        console.log("Add service")
+    }
+
+    const handleAddService = () => {
+        console.log("Add service")
+    }
 
     const handleDisableService = () => {
         console.log("Disable service")
@@ -71,33 +83,33 @@ export default function PageListeServices() {
 
     const handleClose = () => {
         setOpen(false);
-      }; 
+    };
 
-    const ConfirmDialog = () => {  
+    const ConfirmDialog = () => {
         return (
             <>
-         
-             <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby='alert-dialog-title'
-                aria-describedby='alert-dialog-description'
-             >
-               <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
-               <DialogContent>
-                  <DialogContentText id='alert-dialog-description'>
-                  &Ecirc;tes-vous certain de vouloir supprimer?
-                  </DialogContentText>
-               </DialogContent>
-               <DialogActions>
-                  <Button onClick={handleClose}>Non</Button>
-                  <Button autoFocus onClick={handleDeleteService}>Oui</Button>
-               </DialogActions>
-             </Dialog>
+
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='alert-dialog-title'
+                    aria-describedby='alert-dialog-description'
+                >
+                    <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id='alert-dialog-description'>
+                            &Ecirc;tes-vous certain de vouloir supprimer?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Non</Button>
+                        <Button autoFocus onClick={handleDeleteService}>Oui</Button>
+                    </DialogActions>
+                </Dialog>
             </>
         )  // end return    
-      }  // end ConfirmDialog
-      
+    }  // end ConfirmDialog
+
 
     const ListeServices = () => {
         return (
@@ -111,22 +123,22 @@ export default function PageListeServices() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {servicesTab.map(srv => {
-                    return (
-                        <TableRow className="text-start" key={srv.id}>
-                            <TableCell className="test-top">{srv.id}</TableCell>
-                            <TableCell >{srv.nomService}</TableCell>
-                            <TableCell>{srv.description}</TableCell>
-                            <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                                {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
-                                }
-                                <Link onClick={() => handleModifyService()}><EditIcon /></Link>
-                                <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon /></Link>
-                            </TableCell>
-                        </TableRow>
-                    )
-                })}
+                    {servicesTab.map(srv => {
+                        return (
+                            <TableRow className="text-start" key={srv.id}>
+                                <TableCell className="test-top">{srv.id}</TableCell>
+                                <TableCell >{srv.nomService}</TableCell>
+                                <TableCell>{srv.description}</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                                    {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
+                                    ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
+                                    }
+                                    <Link onClick={() => handleModifyService()}><EditIcon /></Link>
+                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon /></Link>
+                                </TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
             </Table>
         )
@@ -134,21 +146,29 @@ export default function PageListeServices() {
 
     return (
         <Container>
-            <Grid container className='justify-content-center'>
+            <Grid container className='justify-content-center mtop-20'>
                 <Grid item xs={8}>
-                    <div className="text-start mb-3">
-                        <h4>Service</h4>
-                    </div>
                     <div className="search">
-                        <TextField className="searchBox" size="small">
-
-                        </TextField>
+                        <TextField className="searchBox" size="small"
+                        InputProps={{
+                        type: 'search',
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton type="submit" aria-label="search" onClick={handleSearch}>
+                                    <SearchIcon style={{ fill: "blue" }} />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                        }}
+                        />
+                    </div>
+                    <div className="text-start mtop-20 mb-3">
+                        <h4>Service &nbsp;&nbsp;&nbsp; <Link onClick={() => handleAddService()}><AddCircleOutlineIcon /></Link></h4>
                     </div>
                     <ListeServices />
                 </Grid>
             </Grid>
             <ConfirmDialog />
-        </Container>
-
+        </Container >     
     )  // end return
 }  // end PageListeService    
