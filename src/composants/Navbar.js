@@ -9,7 +9,8 @@ import { useSelector } from 'react-redux';
 function NavBar() {
 
   const connexionData = useSelector(selectConnexionData);
-
+  console.log(connexionData);
+  // if (resultat.idAdministrateur !== null && resultat.idAdministrateur !== undefined)
   const seDeconnecter = () => {
     localStorage.removeItem('connexionData');
   }
@@ -35,6 +36,17 @@ function NavBar() {
                 Se déconnecter
               </NavDropdown.Item>
             </NavDropdown>
+            {(connexionData.idAdministrateur) ?
+              <NavDropdown title="Admin" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="/admin/clients">Clients</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/admin/calendriers">Calendriers</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/admin/disponibilites">Disponibilités</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/admin/services">Services</NavDropdown.Item>                            
+              </NavDropdown>
+            : '' }
           </Nav>
         </Container>
       </Navbar>

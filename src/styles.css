@@ -5,3 +5,5 @@
 
 .text-aleft { text-align: left; }
 .text-aright { text-align: right; }
+
+.MuiTableCell-head { font-weight: bold !important;}

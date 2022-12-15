@@ -7,7 +7,7 @@ import PageChoisirService from './PageChoixService';
 import PageConfirmationRdv from './PageConfirmationRdv';
 import PageRdvConfirme from './PageRdvConfirme';
 import PageVosReservations from './PageVosReservations';
-
+import PageListeServices from './Admin/PageListeServices';
 
 export default function Main() {
   return (
@@ -19,7 +19,10 @@ export default function Main() {
         <Route path='/reservation/confirmation' element={<PageConfirmationRdv />}></Route>
         <Route path='/reservation/confirmation#2' element={<PageRdvConfirme />}></Route>
         <Route path='/vosreservations' element={<PageVosReservations />}></Route>
+        <Route path='/admin/services' element={<PageListeServices />}></Route>
       </Routes>
+      {/* <PageListeServices/> */}
     </div>
+   
   )
 }
