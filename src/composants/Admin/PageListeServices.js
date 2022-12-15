@@ -86,7 +86,7 @@ export default function PageListeServices() {
                <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
                <DialogContent>
                   <DialogContentText id='alert-dialog-description'>
-                    Etes-vous certain de vouloir supprimer?
+                  &Ecirc;tes-vous certain de vouloir supprimer?
                   </DialogContentText>
                </DialogContent>
                <DialogActions>
