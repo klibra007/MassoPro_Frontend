@@ -83,15 +83,15 @@ export default function PageListeServices() {
                 aria-labelledby='alert-dialog-title'
                 aria-describedby='alert-dialog-description'
              >
-               <DialogTitle id='alert-dialog-title'>Deletion</DialogTitle>
+               <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
                <DialogContent>
                   <DialogContentText id='alert-dialog-description'>
-                    Are you sure you want to delete?
+                    Etes-vous certain de vouloir supprimer?
                   </DialogContentText>
                </DialogContent>
                <DialogActions>
-                  <Button onClick={handleClose}>No</Button>
-                  <Button autoFocus onClick={handleDeleteService}>Yes</Button>
+                  <Button onClick={handleClose}>Non</Button>
+                  <Button autoFocus onClick={handleDeleteService}>Oui</Button>
                </DialogActions>
              </Dialog>
             </>
