@@ -14,12 +14,25 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
+import { 
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    DialogContent,
+    DialogContentText } from '@mui/material'
+    import MuiConfirmDel2 from '../MuiConfirmDel2';
+  
 import '../../styles.css';
+
+
 
 import axios from 'axios';
 
 export default function PageListeServices() {
     const [servicesTab, setServicesTab] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [currentService, setCurrentService] = useState({});
 
     let strDossierServeur = "https://dev.pascalrocher.com";
     let strNomApplication = strDossierServeur + "/api/services";
@@ -46,9 +59,45 @@ export default function PageListeServices() {
         console.log("Modify service")
     }
 
-    const handleDeleteService = () => {
-        console.log("Delete service")
+    const handleConfirmDeleteService = (srv) => {
+        setOpen(true);
+        setCurrentService(srv);
     }
+
+    const handleDeleteService = () => {
+        console.log("Current Service: ", currentService);
+        setOpen(false);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+      }; 
+
+    const ConfirmDialog = () => {  
+        return (
+            <>
+         
+             <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='alert-dialog-title'
+                aria-describedby='alert-dialog-description'
+             >
+               <DialogTitle id='alert-dialog-title'>Deletion</DialogTitle>
+               <DialogContent>
+                  <DialogContentText id='alert-dialog-description'>
+                    Are you sure you want to delete?
+                  </DialogContentText>
+               </DialogContent>
+               <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button autoFocus onClick={handleDeleteService}>Yes</Button>
+               </DialogActions>
+             </Dialog>
+            </>
+        )  // end return    
+      }  // end ConfirmDialog
+      
 
     const ListeServices = () => {
         return (
@@ -73,7 +122,7 @@ export default function PageListeServices() {
                                 ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
                                 }
                                 <Link onClick={() => handleModifyService()}><EditIcon /></Link>
-                                <Link onClick={() => handleDeleteService()}><DeleteForeverOutlinedIcon /></Link>
+                                <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon /></Link>
                             </TableCell>
                         </TableRow>
                     )
@@ -98,6 +147,8 @@ export default function PageListeServices() {
                     <ListeServices />
                 </Grid>
             </Grid>
+            <ConfirmDialog />
         </Container>
+
     )  // end return
 }  // end PageListeService    
