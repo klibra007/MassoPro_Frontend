@@ -9,8 +9,6 @@ import { useSelector } from 'react-redux';
 function NavBar() {
 
   const connexionData = useSelector(selectConnexionData);
-  console.log(connexionData);
-  // if (resultat.idAdministrateur !== null && resultat.idAdministrateur !== undefined)
   const seDeconnecter = () => {
     localStorage.removeItem('connexionData');
   }
