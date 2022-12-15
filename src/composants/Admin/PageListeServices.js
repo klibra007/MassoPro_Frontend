@@ -21,7 +21,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText } from '@mui/material'
-    import MuiConfirmDel2 from '../MuiConfirmDel2';
+    
   
 import '../../styles.css';
 
