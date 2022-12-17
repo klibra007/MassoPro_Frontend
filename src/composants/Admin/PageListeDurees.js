@@ -33,52 +33,52 @@ import '../../styles.css';
 
 import axios from 'axios';
 
-export default function PageListeServices() {
-    const [servicesTab, setServicesTab] = useState([]);
+export default function PageListeDurees() {
+    const [dureesTab, setDureesTab] = useState([]);
     const [open, setOpen] = useState(false);
-    const [currentService, setCurrentService] = useState({});
+    const [currentDuree, setCurrentDuree] = useState({});
 
     let strDossierServeur = "https://dev.pascalrocher.com";
-    let strNomApplication = strDossierServeur + "/api/services";
+    let strNomApplication = strDossierServeur + "/api/durees";
 
     useEffect(() => {
         axios.get(strNomApplication)
             .then((response) => {
                 console.log("La réponse : " + JSON.stringify(response.data));
-                setServicesTab(response.data);
+                setDureesTab(response.data);
             })
             .catch(error => alert(error))
     }, [])
 
     const handleSearch = () => {
-        console.log("Add service")
+        console.log("Add Duree")
     }
 
-    const handleAddService = () => {
-        console.log("Add service")
+    const handleAddDuree = () => {
+        console.log("Add Duree")
     }
 
-    const handleDisableService = () => {
-        console.log("Disable service")
-
-    }
-
-    const handleEnableService = () => {
-        console.log("Enable service")
-    }
-
-    const handleModifyService = () => {
-        console.log("Modify service")
+    const handleDisableDuree = () => {
+        console.log("Disable duree")
 
     }
 
-    const handleConfirmDeleteService = (srv) => {
+    const handleEnableDuree = () => {
+        console.log("Enable duree")
+    }
+
+    const handleModifyDuree = () => {
+        console.log("Modify duree")
+
+    }
+
+    const handleConfirmDeleteDuree = (duree) => {
         setOpen(true);
-        setCurrentService(srv);
+        setCurrentDuree(duree);
     }
 
-    const handleDeleteService = () => {
-        console.log("Current Service: ", currentService);
+    const handleDeleteDuree = () => {
+        console.log("Current Duree: ", currentDuree);
         setOpen(false);
     }
 
@@ -96,7 +96,7 @@ export default function PageListeServices() {
                     aria-labelledby='alert-dialog-title'
                     aria-describedby='alert-dialog-description'
                 >
-                    <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
+                    <DialogTitle id='alert-dialog-title'>Suppression d'une durée</DialogTitle>
                     <DialogContent>
                         <DialogContentText id='alert-dialog-description'>
                             &Ecirc;tes-vous certain de vouloir supprimer?
@@ -104,7 +104,7 @@ export default function PageListeServices() {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Non</Button>
-                        <Button autoFocus onClick={handleDeleteService}>Oui</Button>
+                        <Button autoFocus onClick={handleDeleteDuree}>Oui</Button>
                     </DialogActions>
                 </Dialog>
             </>
@@ -112,31 +112,31 @@ export default function PageListeServices() {
     }  // end ConfirmDialog
 
 
-    const ListeServices = () => {
+    const ListeDurees = () => {
         return (
             <Table className="Table">
                 <TableHead >
                     <TableRow className="text-start" >
-                        <TableCell className="text-center">ID</TableCell>
-                        <TableCell className="text-center">Nom service</TableCell>
-                        <TableCell className="text-center">Description</TableCell>
+                        <TableCell className="text-start">ID</TableCell>
+                        <TableCell className="text-center">Durée</TableCell>
+                        <TableCell className="text-center">Prix</TableCell>
                         <TableCell className="text-center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {servicesTab.map(srv => {
+                    {dureesTab.map(duree => {
                         return (
-                            <TableRow className="text-start" key={srv.id}>
-                                <TableCell className="test-top">{srv.id}</TableCell>
-                                <TableCell >{srv.nomService}</TableCell>
-                                <TableCell>{srv.description}</TableCell>
-                                <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                                    {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                    ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
-                                    }
-                                    <Link onClick={() => handleModifyService()}><EditIcon /></Link>
-                                    {/* <Link href='/admin/services/form'><EditIcon /></Link> */}
-                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon /></Link>
+                            <TableRow className="text-center" key={duree.id}>
+                                <TableCell className="text-start test-top">{duree.id}</TableCell>
+                                <TableCell className="text-center">{duree.duree}</TableCell>
+                                <TableCell className="text-center">{duree.prix}</TableCell>
+                                <TableCell className="text-center" sx={{ whiteSpace: 'nowrap' }}>
+                                    {/* {duree.estActif === 1 ? (<Link onClick={() => handleDisableDuree()}><CheckCircleOutlineOutlinedIcon /></Link>
+                                    ) : (<Link onClick={() => handleEnableDuree()}><HighlightOffIcon /></Link>)
+                                    } */}
+                                    {/* <Link onClick={() => handleModifyDuree()}><EditIcon /></Link> */}
+                                    <Link href='/admin/durees/form'><EditIcon /></Link>
+                                    <Link onClick={() => handleConfirmDeleteDuree(duree)}><DeleteForeverOutlinedIcon /></Link>
                                 </TableCell>
                             </TableRow>
                         )
@@ -144,14 +144,14 @@ export default function PageListeServices() {
                 </TableBody>
             </Table>
         )
-    }   // end listeServices
+    }   // end listeDurees
 
     return (
         <Container>
             <Grid container className='justify-content-center mtop-20'>
                 <Grid item xs={8}>
                     <div className="text-start mtop-40 mb-3">
-                        <h2>Services</h2>
+                        <h2>Durée</h2>
                     </div>
                     {/* <div className="search">
                         <TextField className="searchBox" size="small"
@@ -168,12 +168,12 @@ export default function PageListeServices() {
                         />
                     </div> */}
                     <div className="text-start mleft-16 mtop-40 mb-3">
-                        <h5>Créer un nouveau service  &nbsp;&nbsp;&nbsp; <Link href='/admin/services/form'><AddCircleOutlineIcon /></Link></h5>
+                        <h5>Créer une nouvelle durée  &nbsp;&nbsp;&nbsp; <Link href='/admin/durees/form'><AddCircleOutlineIcon /></Link></h5>
                     </div>
-                    <ListeServices />
+                    <ListeDurees />
                 </Grid>
             </Grid>
             <ConfirmDialog />
         </Container >
     )  // end return
-}  // end PageListeService    
+}  // end PageListeDuree    
