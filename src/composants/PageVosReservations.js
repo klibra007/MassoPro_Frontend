@@ -40,9 +40,11 @@ export default function PageVosReservations() {
       return tabReservations.map(rdv => {
         return (
           <div key={rdv.reservation}>
+            <br/>
             <ReservationCard  date={rdv.date} idPersonnel={`${rdv.prenom} ${rdv.nom}`} idService={rdv.nomService} duree={`${rdv.duree} mn`} prix={`${rdv.prix}`} reservation={rdv.reservation} heure={rdv.heureDebut} />
             {/*<Button className="mright-16" variant="primary">Annuler</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Button className="mright-16" variant="primary">Modifier</Button> <br /><br /><br />*/}
+            <br />
           </div>
         )
       }
@@ -68,7 +70,7 @@ export default function PageVosReservations() {
   return (
     <Container className={"m-5 mx-auto"}>
       <Row className='justify-content-center'>
-        <Col xs={3}>
+        <Col xs={6}>
           <h4 className="mb-3 justify-content-center" id="titleMsg">Vos réservations</h4>
           <Reservation />
         </Col>

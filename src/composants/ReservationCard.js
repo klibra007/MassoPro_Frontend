@@ -4,9 +4,9 @@ import { Card, CardGroup, Row, Col } from 'react-bootstrap';
 
 export default function ReservationCard(props) {
     return (
-        <CardGroup>
-            <Row className='justify-content-center'>
-                <Col>
+        // <CardGroup>
+        //     <Row className='justify-content-center'>
+        //         <Col>
                     <Card>
                         <Card.Header className='text-aleft'>{`${props.date} à ${props.heure}`}</Card.Header>
                         <Card.Body>
@@ -16,12 +16,13 @@ export default function ReservationCard(props) {
                                 Durée: {props.duree}<br />
                                 Prix total: ${props.prix}<br />
                                 Numéro de réservation: {props.reservation}
+                                <br />
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <br />
-                </Col>
-            </Row>
-        </CardGroup>
+                    
+        //         </Col>
+        //     </Row>
+        // </CardGroup>
     ) 
 } 
