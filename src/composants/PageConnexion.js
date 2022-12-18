@@ -10,6 +10,7 @@ import axios from 'axios';
 import { setConnexionData } from '../app/features/connexionSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { responsiveFontSizes } from '@mui/material';
 
 
 
@@ -52,10 +53,13 @@ export default function PageConnexion() {
         })
             .then((response) => {
                 console.log("La réponse: " + JSON.stringify(response));
-                if (response.data.status === true) {
+                if (response.data.status === true && response.data.clientEstActif === 1) {
                     localStorage.setItem('connexionData', JSON.stringify(response.data));
                     dispatch(setConnexionData(response.data));
                     navigate('/');
+                }
+                else if (response.data.clientEstActif === 0 || response.data.personnelEstActif === 0 ){
+                    document.getElementById('idErreur').innerHTML = "Votre compte n'existe plus. Contactez l'administrateur svp!"
                 }
             })
             .catch((error) => {
@@ -70,7 +74,7 @@ export default function PageConnexion() {
     
     return (
         <Container>
-            <Row className='justify-content-md-center mt-5'>
+            <Row className='justify-content-md-center justify-content-sm-center mt-5'>
                 <Col xs={4}>
                     <Form>
                         <div className="mb-5">
@@ -89,7 +93,7 @@ export default function PageConnexion() {
                         </Stack>
 
                         <div className="mt-4">
-                            <p>Nouveau? <a href='/register' className="mleft-6">Créer un compte</a></p>
+                            <p>Nouveau? <a href='/inscription' className="mleft-6">Créer un compte</a></p>
                             <a href='#'>Mot de passe oublié?</a>
                         </div>
                     </Form>

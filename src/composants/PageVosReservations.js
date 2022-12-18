@@ -26,6 +26,7 @@ export default function PageVosReservations() {
   useEffect(()=>{
       axios.post(strNomApplication, { "idClient": connexionData.idClient })
         .then((response) => {
+          if(response.data.status === true)
           dispatch(setTabReservation(response.data.reservations));
         })
         .catch(error => alert(error))
@@ -34,7 +35,6 @@ export default function PageVosReservations() {
 
   const Reservation = () => {
     console.log("DANS LE FRAGMENT REACT RESERVATION " + tabReservations.length);
-    
     if (tabReservations.length > 0) {
       console.log("length" + tabReservations.length)
       return tabReservations.map(rdv => {
@@ -66,7 +66,7 @@ export default function PageVosReservations() {
   }
 
   return (
-    <Container>
+    <Container className={"m-5 mx-auto"}>
       <Row className='justify-content-center'>
         <Col xs={3}>
           <h4 className="mb-3 justify-content-center" id="titleMsg">Vos réservations</h4>

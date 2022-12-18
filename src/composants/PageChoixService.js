@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { selectConnexionData } from '../app/features/connexionSlice';
-import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation } from '../app/features/reservationSlice';
+import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageChoixDureeEtMasso, selectAffichageChoixDureeEtMasso, selectObjReservation, setObjetReservationIdService, setNomServiceChoisi, selectAffichageReservation, selectRefresh } from '../app/features/reservationSlice';
 import { useDispatch } from 'react-redux';
 import PageChoixDureeMasso from './PageChoixDureeMasso';
 import PageReservation from './PageReservation';
@@ -29,6 +29,8 @@ export default function PageChoixService() {
   const affichageChoixDureeEtMasso = useSelector(selectAffichageChoixDureeEtMasso);
 
   const affichageReservation = useSelector(selectAffichageReservation);
+
+  const refresh = useSelector(selectRefresh);
 
   console.log(resultat);
 
@@ -55,8 +57,8 @@ export default function PageChoixService() {
   const handleClickReserver = (service) => {
     dispatch(setObjetReservationIdService(service.id));
     console.log("dans handleClickReserver : " + JSON.stringify(objReservation));
-    dispatch(setAffichageChoixServices());
-    dispatch(setAffichageChoixDureeEtMasso());
+    dispatch(setAffichageChoixServices(false));
+    dispatch(setAffichageChoixDureeEtMasso(true));
     dispatch(setNomServiceChoisi(service.nomService))
   }
 

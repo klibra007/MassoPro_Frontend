@@ -1,18 +1,28 @@
 import React from 'react';
 import { selectConnexionData } from '../app/features/connexionSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { selectAffichageReservation, selectRefresh, setAffichageChoixDureeEtMasso, setAffichageReservation, setRefresh, selectAffichageChoixServices, setAffichageChoixServices } from '../app/features/reservationSlice';
+import { set } from 'date-fns';
 
 export default function PageAccueil() {
     const resultat = useSelector(selectConnexionData);
+    const affichageReservation = useSelector(selectAffichageReservation);
+    const affichageChoixServices = useSelector(selectAffichageChoixServices)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    ;
 
     console.log(localStorage.getItem('connexionData'));
     console.log("resultat dans accueil : "+ resultat.idClient)
 
     const handleClickReserver = () => {
         if(resultat !== null){
+            alert(affichageChoixServices)
+            dispatch(setAffichageChoixServices(true));
+            //dispatch(setAffichageChoixDureeEtMasso(true));
+            dispatch(setAffichageReservation(false));
             navigate('/reservation');
             
         }

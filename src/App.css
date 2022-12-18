@@ -52,7 +52,7 @@
   height: 10vh;
 }
 
-#idMain {
+#idMain, #idContainerInscription {
   min-height: 80vh;
 }
 
