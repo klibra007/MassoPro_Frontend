@@ -5,6 +5,7 @@
 .mtop-10 { margin-top: 10px; }
 .mtop-20 { margin-top: 20px; }
 .mtop-40 { margin-top: 40px; }
+.mtop-100 { margin-top: 200px; }
 
 .text-aleft { text-align: left; }
 .text-aright { text-align: right; }
@@ -12,3 +13,11 @@
 .MuiTableCell-head { font-weight: bold !important;}
 
 .searchBox {width: 60%;}
+
+.idPointerMouse{
+    cursor: pointer;
+}
+
+.cardReservation{
+    height: "150px";
+  }

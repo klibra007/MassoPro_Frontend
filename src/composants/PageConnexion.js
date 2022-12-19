@@ -53,7 +53,7 @@ export default function PageConnexion() {
         })
             .then((response) => {
                 console.log("La réponse: " + JSON.stringify(response));
-                if (response.data.status === true && response.data.clientEstActif === 1) {
+                if ((response.data.status === true && response.data.clientEstActif === 1) || (response.data.status === true && response.data.personnelEstActif === 1) || (response.data.status === true && response.data.idAdministrateur === 1) ) {
                     localStorage.setItem('connexionData', JSON.stringify(response.data));
                     dispatch(setConnexionData(response.data));
                     navigate('/');

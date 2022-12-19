@@ -10,6 +10,7 @@ import { selectAffichageChoixServices, setAffichageChoixServices, setAffichageCh
 import { useDispatch } from 'react-redux';
 import PageChoixDureeMasso from './PageChoixDureeMasso';
 import PageReservation from './PageReservation';
+import '../styles.css';
 
 export default function PageChoixService() {
   const [servicesTab, setServicesTab] = useState([]);
@@ -64,18 +65,21 @@ export default function PageChoixService() {
 
   const Services = () => {
     if (JSON.stringify(resultat) !== "{}") {
-      return servicesTab.map((service) =>
-        <Grid item xs={12} m={0} bgcolor={"yellow"} key={service.id}>
-          <Card>
-            <Card.Header className='text-aleft'>{service.nomService}</Card.Header>
-            <Card.Body>
-              <Card.Text className='text-aleft'>
-                {service.description}
-              </Card.Text>
-              <Button variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
-            </Card.Body>
-          </Card>
-        </Grid>
+      return servicesTab.map((service) => {
+        if (service.estActif === 1) {
+          return <Grid item xs={12} m={0} bgcolor={"yellow"} key={service.id} style={{ height: "250px" }} >
+            <Card className='h-100' >
+              <Card.Header className='text-aleft'>{service.nomService}</Card.Header>
+              <Card.Body>
+                <Card.Text className='text-aleft'>
+                  {service.description}
+                </Card.Text>
+                <Button variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
+              </Card.Body>
+            </Card>
+          </Grid>
+        }
+      }
       )
 
     }
@@ -85,10 +89,11 @@ export default function PageChoixService() {
     <>
       {affichageChoixServices && <div>
         <h1>Choisissez votre massage</h1>
-        <Grid container spacing={0} height={"80vh"} justifyContent={"center"} style={{ backgroundColor: "pink" }}>
+        <Grid container spacing={0} minHeight={"80vh"} justifyContent={"center"} style={{ backgroundColor: "pink" }}>
           <Box sx={{
             pt: 2,
             mt: 5,
+            mb: 5,
             bgcolor: 'green',
             display: 'grid',
             gridTemplateColumns: { md: '1fr 1fr' },

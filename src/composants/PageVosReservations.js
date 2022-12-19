@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTabReservation, selectTabReservation } from '../app/features/reservationSlice';
 import { selectConnexionData } from '../app/features/connexionSlice';
 import { useNavigate } from 'react-router-dom';
+import { getYear } from 'date-fns';
 
 export default function PageVosReservations() {
   const tabReservations = useSelector(selectTabReservation);
@@ -23,13 +24,17 @@ export default function PageVosReservations() {
   let strDossierServeur = "https://dev.pascalrocher.com";
   let strNomApplication = strDossierServeur + "/api/rendezvous";
 
-  useEffect(()=>{
-      axios.post(strNomApplication, { "idClient": connexionData.idClient })
+  const getReservations = () => {
+    axios.post(strNomApplication, { "idClient": connexionData.idClient })
         .then((response) => {
           if(response.data.status === true)
           dispatch(setTabReservation(response.data.reservations));
         })
         .catch(error => alert(error))
+  }
+
+  useEffect(()=>{
+    getReservations();
   },[]);
 
 

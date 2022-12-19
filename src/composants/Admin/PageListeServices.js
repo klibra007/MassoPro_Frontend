@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { Grid } from '@mui/material';
+import { Alert, Grid, Snackbar } from '@mui/material';
 import Link from '@mui/material/Link';
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -32,22 +32,50 @@ import '../../styles.css';
 
 
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectConnexionData } from '../../app/features/connexionSlice';
+import FullScreenDialog from './FullScreenDialog';
+import PageServiceForm from './PageServiceForm';
+import { useNavigate } from 'react-router-dom';
+import { set } from 'date-fns';
 
 export default function PageListeServices() {
     const [servicesTab, setServicesTab] = useState([]);
     const [open, setOpen] = useState(false);
-    const [currentService, setCurrentService] = useState({});
-
+    const [open2, setOpen2] = useState(false);
+    const [serviceSelectionne, setServiceSelectionne] = useState("");
+    const [service, setService] = useState("");
+    const [description, setDescription] = useState("");
     let strDossierServeur = "https://dev.pascalrocher.com";
+    const [modificationService, setModificationService] = useState(false);
+    const [open3, setOpen3] = useState(false);
+
+    const connexionData = useSelector(selectConnexionData);
+
+    const [alignment, setAlignment] = useState("");
+
+    //const navigate = useNavigate();
+
+    const handleClickOpen = () => {
+        setOpen2(true);
+        setModificationService(false);
+    };
+
+    //alert(JSON.stringify(connexionData));
+
     let strNomApplication = strDossierServeur + "/api/services";
 
-    useEffect(() => {
+    const getServices = () => {
         axios.get(strNomApplication)
             .then((response) => {
                 console.log("La réponse : " + JSON.stringify(response.data));
                 setServicesTab(response.data);
             })
             .catch(error => alert(error))
+    }
+
+    useEffect(() => {
+        getServices();
     }, [])
 
     const handleSearch = () => {
@@ -55,7 +83,37 @@ export default function PageListeServices() {
     }
 
     const handleAddService = () => {
-        console.log("Add service")
+        console.log("Add service");
+
+        let strNomApplication = strDossierServeur + "/api/services";
+
+        //alert("dans ajout Service " + strNomApplication);
+
+        let data = {
+            "nomService": service,
+            "description": description,
+            "idAdministrateur": connexionData.idAdministrateur,
+        }
+
+        //alert(JSON.stringify(data))
+
+        axios.post(strNomApplication, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                alert("La réponse: " + JSON.stringify(response));
+                if (response.data.status === true) {
+                    getServices();
+                    //window.location.reload(false);
+                    setOpen2(false);
+                }
+            })
+            .catch((error) => {
+                console.log(error.response.data.status);
+                //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
+            });
     }
 
     const handleDisableService = () => {
@@ -67,23 +125,77 @@ export default function PageListeServices() {
         console.log("Enable service")
     }
 
-    const handleModifyService = () => {
-        console.log("Modify service")
-
+    const handleModifyService = (service) => {
+        setAlignment(service.estActif);
+        setServiceSelectionne(service);
+        //console.log("Modify service");
+        setModificationService(true);
+        setOpen2(true);
     }
 
-    const handleConfirmDeleteService = (srv) => {
+    const handleValidateModification = () => {
+        let strNomApplication = strDossierServeur + `/api/services/${serviceSelectionne.id}`;
+
+        //alert("dans modification Service " + strNomApplication);
+
+        let data = {
+            "nomService": service === "" ? serviceSelectionne.nomService : service,
+            "description": description === "" ? serviceSelectionne.description : description,
+            "estActif": alignment,
+        }
+
+        //alert(JSON.stringify(data))
+
+        axios.put(strNomApplication, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                //alert("La réponse: " + JSON.stringify(response));
+                if (response.data.status === true) {
+                    getServices();
+                    //window.location.reload(false);
+                    setOpen2(false);
+                    setOpen3(true);
+                }
+            })
+            .catch((error) => {
+                console.log(error.response.data.status);
+                //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
+            });
+    }
+
+    const handleConfirmDeleteService = (service) => {
         setOpen(true);
-        setCurrentService(srv);
+        setServiceSelectionne(service);
     }
 
     const handleDeleteService = () => {
-        console.log("Current Service: ", currentService);
+        //alert("Current Service: " + service.id);
+
+        let strNomApplication = strDossierServeur + `/api/services/${serviceSelectionne.id}`;
+        axios.delete(strNomApplication)
+            .then((response) => {
+                //alert("La réponse supression service : " + JSON.stringify(response.data));
+                if (response.data.status === true) {
+                    console.log("La réponse supression service : " + JSON.stringify(response.data));
+                    getServices();
+                    //window.location.reload(false);
+                }
+
+            })
+            .catch(error => alert(error));
+
         setOpen(false);
     }
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleClose2 = () => {
+        setOpen3(false);
     };
 
     const ConfirmDialog = () => {
@@ -96,10 +208,10 @@ export default function PageListeServices() {
                     aria-labelledby='alert-dialog-title'
                     aria-describedby='alert-dialog-description'
                 >
-                    <DialogTitle id='alert-dialog-title'>Suppression de service</DialogTitle>
+                    <DialogTitle id='alert-dialog-title'>{`Supprimer le service "${service.nomService}"`}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id='alert-dialog-description'>
-                            &Ecirc;tes-vous certain de vouloir supprimer?
+                            &Ecirc;tes-vous sûr de vouloir supprimer ce service?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -120,7 +232,7 @@ export default function PageListeServices() {
                         <TableCell className="text-center">ID</TableCell>
                         <TableCell className="text-center">Nom service</TableCell>
                         <TableCell className="text-center">Description</TableCell>
-                        <TableCell className="text-center">Action</TableCell>
+                        <TableCell className="text-center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -134,9 +246,9 @@ export default function PageListeServices() {
                                     {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
                                     ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
                                     }
-                                    <Link onClick={() => handleModifyService()}><EditIcon /></Link>
+                                    <Link onClick={() => handleModifyService(srv)}><EditIcon className='idPointerMouse' /></Link>
                                     {/* <Link href='/admin/services/form'><EditIcon /></Link> */}
-                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon /></Link>
+                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon className='idPointerMouse' /></Link>
                                 </TableCell>
                             </TableRow>
                         )
@@ -168,12 +280,22 @@ export default function PageListeServices() {
                         />
                     </div> */}
                     <div className="text-start mleft-16 mtop-40 mb-3">
-                        <h5>Créer un nouveau service  &nbsp;&nbsp;&nbsp; <Link href='/admin/services/form'><AddCircleOutlineIcon /></Link></h5>
+                        <h5>Créer un nouveau service  &nbsp;&nbsp;&nbsp; <Link ><AddCircleOutlineIcon className='idPointerMouse' onClick={handleClickOpen} /></Link></h5>
                     </div>
                     <ListeServices />
                 </Grid>
             </Grid>
             <ConfirmDialog />
+            
+            <FullScreenDialog setOpen={setOpen2} open={open2} setService={setService} setDescription={setDescription} handleAddService={handleAddService} service={service} description={description} modificationService={modificationService} handleModifyService={handleModifyService} alignment={alignment} setAlignment={setAlignment} handleValidateModification={handleValidateModification} serviceSelectionne={serviceSelectionne}/>
+
+            <Snackbar sx={{marginTop: 14, marginLeft: 19}} open={open3} autoHideDuration={1000} onClose={handleClose2} anchorOrigin={{vertical: 'top', horizontal: 'center'}} >
+                <Alert  severity="success" sx={{ width: '100%' }}>
+                    Le service a bien été modifié!
+                </Alert>
+            </Snackbar>
         </Container >
+
+
     )  // end return
 }  // end PageListeService    
