@@ -4,7 +4,7 @@ import NavBar from './Navbar'
 
 export default function Header() {
   return (
-    <div id='idHeader' style={{ backgroundColor: "yellow" }}>
+    <div id='idHeader'>
       <Typography>MassoPro</Typography>
       <NavBar/>
     </div>

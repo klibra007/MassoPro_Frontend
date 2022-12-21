@@ -89,12 +89,11 @@ export default function PageListClients() {
                         <TableCell>{item.nom}</TableCell>      
                         <TableCell>{item.courriel}</TableCell> 
                         <TableCell className="text-center">
-                          {item.estActif === 1 ? (<Link onClick={() => disableClient()}><CheckCircleOutlineOutlinedIcon /></Link>
-                           ) : (<Link onClick={() => enableClient()}><HighlightOffIcon /></Link>)
+                          {item.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className="app-icon app-icon-active" onClick={() => disableClient()}/>
+                            : <HighlightOffIcon className="app-icon app-icon-inactive"  onClick={() => enableClient()}/>
                           } 
-                          <Link onClick={() => modifyClient()}><EditIcon /></Link>
-                          <Link onClick={() => openInPopup(item.id)}><DeleteForeverOutlinedIcon />
-                          </Link>                                                   
+                          <EditIcon className="app-icon" onClick={() => modifyClient()}/>
+                          <DeleteForeverOutlinedIcon className="app-icon" onClick={() => openInPopup(item.id)}/>                                                 
                         </TableCell>                                      
                     </TableRow>                    
                   )                    
@@ -127,7 +126,7 @@ export default function PageListClients() {
                     />
                 </div> */}
                 <div className="text-start mtop-40 mb-3">
-                    <h5>Ajouter un nouveau client &nbsp;&nbsp;&nbsp; <Link href='/admin/clients/form'><AddCircleOutlineIcon /></Link></h5>
+                    <h5>Ajouter un nouveau client &nbsp;&nbsp;&nbsp; <Link href='/admin/clients/form'><AddCircleOutlineIcon className="app-icon"/></Link></h5>
                 </div>
                 <ListeClients />
             </Grid>            

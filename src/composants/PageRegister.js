@@ -72,7 +72,7 @@ export default function PageRegister() {
                   <Form.Group className="mb-3">
                       <Form.Control type='text' id="formCodePostal" placeholder='Code postal' onChange={handleChangeCodePostal} />
                   </Form.Group>  
-                  <div className="mt-3 text-start">Comment devons-nous nous contacter le subjet de votre rendez-vous?
+                  <div className="mt-3 text-start">Comment devons-nous vous contacter au subjet de votre rendez-vous?
                   </div>                    
                   <Form.Group className="text-start">
                      <Form.Check

@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 
-export default function AjouterClientForm() {
+export default function PageClientForm() {
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");  
   const [courriel, setCourriel] = useState("");

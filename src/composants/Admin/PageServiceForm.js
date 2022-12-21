@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import { Container} from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
+import PageListeServices from './PageListeServices';
 
 export default function PageServiceForm() {
   let strDossierServeur = "https://dev.pascalrocher.com";
   let strApiDurees = strDossierServeur + "/api/durees";
+
+  const navigate = useNavigate();
 
   const [dureesTab, setDureesTab] = useState([]);
   const [nomService, setNomService] = useState("");
@@ -60,7 +64,7 @@ export default function PageServiceForm() {
 
             <Form.Group className="col-md-3 mx-auto mt-4">
               <Stack direction="horizontal" gap={3}>
-                <Button type="reset" variant='outline-secondary' onClick={handleClickAnnuler}>Annuler</Button>
+                <Button type="reset" variant='outline-secondary' href='/Admin/Services'>Annuler</Button>
                 <Button onClick={handleClickSauvegarder}>Sauvegarder</Button>
               </Stack>     
             </Form.Group>             

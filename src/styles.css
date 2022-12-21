@@ -1,3 +1,51 @@
+body{
+    background-color: #faf8ed !important;
+}
+
+#idFooter{
+    background-color: #CB997E;
+    color: burlywood;
+}
+
+#idHeader{
+    /* background-color: #6B705C; */
+    /* background-color: #CB997E; */
+    background-color: #DDBEA9;
+}
+
+#idHeader p{
+   color: aqua;
+}
+
+.navbar{
+    /* background-color: #CB997E !important; */
+    /* background-color: #6B705C !important; */
+    background-color: rgb(253, 237, 237);
+    
+ 
+}
+
+.navbar .navbar-brand{
+    color: violet;
+}
+
+.navbar .navbar-brand:hover{
+    color: rgb(164, 130, 238);
+}
+
+.navbar .nav-link{
+    color: #f918cc;
+}
+
+.navbar .nav-link:hover{
+    color: #18f945;
+}
+
+.admin-menu li {
+    list-style-type: none;
+    text-align: left;
+
+}
 .mleft-6 { margin-left: 6px; }
 .mleft-16 { margin-left: 16px; }
 .mleft-40 { margin-left: 40px; }
@@ -9,6 +57,45 @@
 .text-aleft { text-align: left; }
 .text-aright { text-align: right; }
 
+
+.app-icon{
+    cursor: pointer;
+    color: brown;
+    margin: 0px 10px;
+}
+
+
+.app-icon.app-icon-active{
+    color: green;
+
+}
+
+.app-icon.app-icon-inactive{
+    color: orangered;
+}
+
+.idPointerMouse{
+    cursor: pointer;
+}
+
 .MuiTableCell-head { font-weight: bold !important;}
 
 .searchBox {width: 60%;}
+.dureeTextField {text-align: center;}
+
+.MuiButton-root {border: 1px solid #666 !important; }
+.primary-button {    
+    background-color: brown !important;
+    color: white !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-input{
+    border-color:  brown;
+    border-style: solid;
+    border-width: 3px;    
+}
+
+.MuiTextField-root label{
+    padding: 7px;
+    background-color: white;
+}
