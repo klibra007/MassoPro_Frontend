@@ -36,30 +36,167 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
+/*************************************************************************/
 #idHeader {
   height: 10vh;
 }
 
 #idFooter {
+  background-color: #463f3a;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 10vh;
+  min-height: 10vh;
+  padding-top: 20px;
+  margin-top: 0px;
+  font-weight: bold;
+  color: white;
 }
 
 #idMain, #idContainerInscription {
   min-height: 80vh;
+  
+  background: linear-gradient(whitesmoke, #ccd5ae);
+  padding-top: 20px;
 }
 
-#formCourriel:focus, #formPassword:focus {
+.headColor {
+  background-color: red;
+}
+
+#formCourriel:focus,
+#formPassword:focus {
   border-color: yellow;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(242, 255, 0, 0.6);
 }
 
+#idImageAccueilNonConnecte {
+  min-height: 1000px;
+  background-image: url('../images/headH.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -20px;
 
+}
 
+#idUserHead {
+  height: 1000px;
+  background-image: url("../images/head1.jpg");
+}
+
+#idAccueilNonConnecte {
+  /* height: 222vh; */
+  background-color: whitesmoke;
+  /* background-image: url(C:\Users\stephanie\Masso\MassoPro_Frontend\images\head.jpg); */
+}
+
+#services {
+  min-height: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* margin-left: 100px; */
+}
+
+#therap1 {
+  height: 400px;
+  background-image: url('../images/therapi.jpg');
+  width: 700px;
+  margin: 20px;
+}
+
+#therap2 {
+  height: 400px;
+  background-image: url('../images/therap3.jpg');
+  width: 700px;
+  margin: 20px;
+}
+
+#therap3 {
+ 
+  height: 400px;
+  background-image: url('../images/therap4.jpg');
+  width: 700px;
+  margin: 20px;
+
+}
+
+#therap4 {
+ 
+  height: 400px;
+  background-image: url('../images/therap5.jpg');
+  width: 700px;
+  margin: 20px;
+
+}
+
+#therapText1 {
+  
+  height: 400px;
+  width: 900px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #ccd5ae;
+  padding-top: 10px;
+}
+#therapText2 {
+ 
+  height: 400px;
+  width: 900px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #ccd5ae;
+  padding-top: 10px;
+}
+#therapText3 {
+
+  height: 400px;
+  width: 900px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #ccd5ae;
+  padding-top: 10px;
+}
+
+#therapText4 {
+
+  height: 400px;
+  width: 900px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #ccd5ae;
+  padding-top: 10px;
+}
+
+#idBloc1 {
+  display: flex;
+  flex-wrap: wrap;
+}
+#idBloc2 {
+  display: flex;
+  flex-wrap: wrap;
+}
+#idBloc3 {
+  display: flex;
+  flex-wrap: wrap;
+}
+#idBloc4 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#contactFooter {
+  flex-basis: 25%;
+}
+ #horaireFooter {
+  flex-basis: 25%;
+} 
