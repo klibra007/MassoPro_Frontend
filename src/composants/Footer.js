@@ -2,6 +2,23 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div id='idFooter' style={{backgroundColor: "orange"}}>Footer</div>
+    <div id='idFooter' style={{ }}>
+      <div id='contactFooter'>
+        <h4> Contactez-nous </h4>
+        <p> MassoPro </p>
+        <p>   234, boulevard René longlois </p>
+        <p>   Gatineau, Québec, J9J 1V2 </p>
+        <p>    Téléphone : 819-363-1486  </p>
+      
+      </div>
+      
+      <div id='horaireFooter'>
+        <h4> Horaires d'ouverture </h4>
+        <p>   Lundi au Vendredi : 9 h 00 à 20 h 00 </p>
+        <p>   Samedi : 9 h 00 à  17 h 00  </p>
+        <p>   Dimanche : Fermé </p>
+      </div>
+                    
+      </div>
   )
 }
