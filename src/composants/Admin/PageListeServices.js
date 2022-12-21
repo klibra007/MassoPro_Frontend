@@ -49,7 +49,8 @@ export default function PageListeServices() {
     let strDossierServeur = "https://dev.pascalrocher.com";
     const [modificationService, setModificationService] = useState(false);
     const [open3, setOpen3] = useState(false);
-
+    const [boolService, setBoolService] = useState(true);
+    
     const connexionData = useSelector(selectConnexionData);
 
     const [alignment, setAlignment] = useState("");
@@ -208,7 +209,7 @@ export default function PageListeServices() {
                     aria-labelledby='alert-dialog-title'
                     aria-describedby='alert-dialog-description'
                 >
-                    <DialogTitle id='alert-dialog-title'>{`Supprimer le service "${service.nomService}"`}</DialogTitle>
+                    <DialogTitle id='alert-dialog-title'>{`Supprimer le service "${serviceSelectionne.nomService}"`}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id='alert-dialog-description'>
                             &Ecirc;tes-vous sûr de vouloir supprimer ce service?
@@ -259,7 +260,7 @@ export default function PageListeServices() {
     }   // end listeServices
 
     return (
-        <Container>
+        <Container className='mb-5'>
             <Grid container className='justify-content-center mtop-20'>
                 <Grid item xs={8}>
                     <div className="text-start mtop-40 mb-3">
@@ -287,7 +288,7 @@ export default function PageListeServices() {
             </Grid>
             <ConfirmDialog />
             
-            <FullScreenDialog setOpen={setOpen2} open={open2} setService={setService} setDescription={setDescription} handleAddService={handleAddService} service={service} description={description} modificationService={modificationService} handleModifyService={handleModifyService} alignment={alignment} setAlignment={setAlignment} handleValidateModification={handleValidateModification} serviceSelectionne={serviceSelectionne}/>
+            <FullScreenDialog setOpen={setOpen2} open={open2} setService={setService} setDescription={setDescription} handleAddService={handleAddService} service={service} description={description} modificationService={modificationService} handleModifyService={handleModifyService} alignment={alignment} setAlignment={setAlignment} handleValidateModification={handleValidateModification} serviceSelectionne={serviceSelectionne} boolService={boolService}/>
 
             <Snackbar sx={{marginTop: 14, marginLeft: 19}} open={open3} autoHideDuration={1000} onClose={handleClose2} anchorOrigin={{vertical: 'top', horizontal: 'center'}} >
                 <Alert  severity="success" sx={{ width: '100%' }}>
