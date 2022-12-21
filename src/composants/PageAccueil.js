@@ -3,6 +3,7 @@ import { selectConnexionData } from '../app/features/connexionSlice';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Paper } from '@mui/material';
 
 export default function PageAccueil() {
     const resultat = useSelector(selectConnexionData);
@@ -34,44 +35,40 @@ export default function PageAccueil() {
 
                 <h1> Nos massages coup de coeur </h1>
                 <div id='services'>
-                <div id='idBloc1'>
-                    <div id='therap1'>
+                    <div id='idBloc1'>
+                        <Paper id='therap1' elevation={2}></Paper>
+                        <Paper id='therapText1' elevation={2}>
+                            <h1> Massage thérapeutique </h1>
+                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                        </Paper>
+                    </div>
+                    <div id='idBloc2'>
+                        <Paper id='therapText2' elevation={2}>
+                            <h1> Massage Suédois </h1>
+                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                        </Paper>
+                        <Paper id='therap2' elevation={2}></Paper>
+                    </div>
+                    <div id='idBloc3'>
+                        <Paper id='therap3' elevation={2}></Paper>
+                        <Paper id='therapText3' elevation={2}>
+                            <h1> Massage pierres chauffantes </h1>
+                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                        </Paper>
+                    </div>
 
-                    </div>
-                    <div id='therapText1'>
-                        <h1> Massage thérapeutique </h1>
-                        <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                    </div>
-                </div>
-                <div id='idBloc2'>
-                <div id='therapText2'>
-                        <h1> Massage Suédois </h1>
-                        <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                    </div>
-                    <div id='therap2'>
-
-                    </div>
-                </div>
-                <div id='idBloc3'>   
-
-                    <div id='therap3'>
-
-                    </div>
-                    <div id='therapText3'>
-                        <h1> Massage pierres chauffantes </h1>
-                        <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                    </div>
-                </div>
-                <div id='idBloc4'>
-                <div id='therapText4'>
-                        <h1> Massage Suédois </h1>
-                        <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                    </div>
-                    <div id='therap4'>
-
-                    </div>
-                </div>
+                    <div id='idBloc4'>
+                        <Paper id='therapText4' elevation={2}>
+                            <h1> Massage Suédois </h1>
+                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                        </Paper>
                     
+                        <Paper id='therap4' elevation={2}></Paper>
+                        <div >
+
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -89,7 +86,7 @@ export default function PageAccueil() {
             </div>
         } else {
             return <div>
-                
+
                 <div id='idImageAccueilNonConnecte'></div>
                 <div id='idAccueilNonConnecte'>
                     <p style={{ fontWeight: "bold", fontSize: "20px" }}> La massothérapie est l’une des plus anciennes thérapies existantes pour traiter ou soulager les douleurs physiques. Elle réunit différentes techniques manuelles pour relaxer les groupes musculaires.</p>
@@ -99,43 +96,43 @@ export default function PageAccueil() {
                     </Button><br /><br />
                     <h1> Nos massages coup de coeur </h1>
                     <div id='services'>
-                    <div id='idBloc1'>
-                       <div id='therap1'>
+                        <div id='idBloc1'>
+                            <div id='therap1'>
 
-                       </div>
-                       <div id='therapText1'>
-                        <h1> Massage thérapeutique </h1>
-                        <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                       </div>
-
-                    </div>
-                    <div id='idBloc2'>
-                        <div id='therapText2'>
-                            <h1> Massage Suédois </h1>
-                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-                        </div>
-                        <div id='therap2'>
+                            </div>
+                            <div id='therapText1'>
+                                <h1> Massage thérapeutique </h1>
+                                <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                            </div>
 
                         </div>
-                    </div>
-                    <div id='idBloc3'>
-                    <div id='therap3'>
+                        <div id='idBloc2'>
+                            <div id='therapText2'>
+                                <h1> Massage Suédois </h1>
+                                <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                            </div>
+                            <div id='therap2'>
 
-</div>
-<div id='therapText3'>
-    <h1> Massage pierres chauffantes </h1>
-    <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
-</div>
-                    </div>
-                    <div id='idBloc4'>
-                    <div id='therapText4'>
-                            <h1> Massage Suédois </h1>
-                            <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                            </div>
                         </div>
-                        <div id='therap4'>
+                        <div id='idBloc3'>
+                            <div id='therap3'>
 
+                            </div>
+                            <div id='therapText3'>
+                                <h1> Massage pierres chauffantes </h1>
+                                <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                            </div>
                         </div>
-                    </div>
+                        <div id='idBloc4'>
+                            <div id='therapText4'>
+                                <h1> Massage Suédois </h1>
+                                <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
+                            </div>
+                            <div id='therap4'>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>
