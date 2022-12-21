@@ -89,12 +89,12 @@ export default function PageChoixService() {
     <>
       {affichageChoixServices && <div>
         <h1>Choisissez votre massage</h1>
-        <Grid container spacing={0} minHeight={"80vh"} justifyContent={"center"} style={{ backgroundColor: "pink" }}>
+        <Grid container spacing={0} minHeight={"80vh"} justifyContent={"center"}>
           <Box sx={{
             pt: 2,
             mt: 5,
             mb: 5,
-            bgcolor: 'green',
+            //bgcolor: 'white',
             display: 'grid',
             gridTemplateColumns: { md: '1fr 1fr' },
             width: "1000px",

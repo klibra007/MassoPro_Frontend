@@ -67,7 +67,7 @@ export default function StaticDatePickerDemo({setDisponibiliteTab}) {
           setValue(newValue);
           console.log("accept in change");
         }}
-
+        
         onAccept={() => {
           console.log("accept " + value);
           handleAccept();

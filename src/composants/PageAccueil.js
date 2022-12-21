@@ -20,7 +20,7 @@ export default function PageAccueil() {
 
     const handleClickReserver = () => {
         if(resultat !== null){
-            alert(affichageChoixServices)
+            //alert(affichageChoixServices)
             dispatch(setAffichageChoixServices(true));
             //dispatch(setAffichageChoixDureeEtMasso(true));
             dispatch(setAffichageReservation(false));

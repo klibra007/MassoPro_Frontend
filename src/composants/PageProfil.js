@@ -106,7 +106,7 @@ export default function PageProfil() {
             mt: 5,
             ml: 15,
             mr: 15,
-            bgcolor: 'green',
+            //bgcolor: 'green',
             display: 'grid',
             gridTemplateColumns: { md: '1fr' },
             gap: 0
