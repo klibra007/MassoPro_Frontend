@@ -58,8 +58,8 @@ function NavBar() {
                   <NavDropdown.Item href="/admin/durees">Désactiver une durée</NavDropdown.Item>
                 </NavDropdown> */}
                 <NavDropdown title="Mon Compte" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="#action3">Mon profil</NavDropdown.Item>
-                  <NavDropdown.Divider />
+                 {/* <NavDropdown.Item href="/profil">Mon profil</NavDropdown.Item>
+                  <NavDropdown.Divider />*/}
                   <NavDropdown.Item href="/" onClick={seDeconnecter}>
                     Se déconnecter
                   </NavDropdown.Item>
@@ -99,8 +99,8 @@ function NavBar() {
                 </NavDropdown> */}
                 
                 <NavDropdown title="Mon Compte" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="#action3">Mon profil</NavDropdown.Item>
-                  <NavDropdown.Divider />
+                  {/*<NavDropdown.Item href="/profil">Mon profil</NavDropdown.Item>
+                  <NavDropdown.Divider />*/}
                   <NavDropdown.Item href="/" onClick={seDeconnecter}>
                     Se déconnecter
                   </NavDropdown.Item>
@@ -122,7 +122,7 @@ function NavBar() {
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Mon Compte" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="#action3">Mon profil</NavDropdown.Item>
+                  <NavDropdown.Item href="/profil">Mon profil</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={seDeconnecter}>
                     Se déconnecter

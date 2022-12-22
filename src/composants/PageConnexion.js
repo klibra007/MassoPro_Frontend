@@ -10,6 +10,7 @@ import axios from 'axios';
 import { setConnexionData } from '../app/features/connexionSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { responsiveFontSizes } from '@mui/material';
 
 
 
@@ -52,10 +53,13 @@ export default function PageConnexion() {
         })
             .then((response) => {
                 console.log("La réponse: " + JSON.stringify(response));
-                if (response.data.status === true) {
+                if ((response.data.status === true && response.data.clientEstActif === 1) || (response.data.status === true && response.data.personnelEstActif === 1) || (response.data.status === true && response.data.idAdministrateur === 1) ) {
                     localStorage.setItem('connexionData', JSON.stringify(response.data));
                     dispatch(setConnexionData(response.data));
                     navigate('/');
+                }
+                else if (response.data.clientEstActif === 0 || response.data.personnelEstActif === 0 ){
+                    document.getElementById('idErreur').innerHTML = "Votre compte n'existe plus. Contactez l'administrateur svp!"
                 }
             })
             .catch((error) => {
@@ -70,11 +74,12 @@ export default function PageConnexion() {
     
     return (
         <Container>
-            <Row className='justify-content-md-center mt-5'>
+            <Row className='justify-content-md-center justify-content-sm-center mt-5'>
                 <Col xs={4}>
                     <Form>
                         <div className="mb-5">
-                            <h4>Page de connexion</h4>
+                            {/* <h4>Page de connexion</h4> */}
+                            <p> Veuillez saisir votre adresse e-mail client et mot de passe pour continuer.</p>
                         </div>
                         <Form.Group className="mb-3">
                             <Form.Control type='email' id="formCourriel" placeholder='Votre courriel' value={courriel} onChange={handleChangeCourriel} required />
@@ -84,12 +89,12 @@ export default function PageConnexion() {
                             <p id='idErreur'></p>
                         </Form.Group>
                         <Stack gap={2} className="col-md-5 mx-auto mt-4">
-                            <Button variant='primary' onClick={handleClickConnexion}>Connexion</Button>
+                            <Button  style={{ backgroundColor: "#a98467" ,borderColor: "#a98467" }} variant='primary' onClick={handleClickConnexion}>Connexion</Button>
                             <Button type="reset" variant='outline-secondary' onClick={handleClickAnnuler}>Annuler</Button>
                         </Stack>
 
                         <div className="mt-4">
-                            <p>Nouveau? <a href='/register' className="mleft-6">Créer un compte</a></p>
+                            <p>Nouveau? <a href='/inscription' className="mleft-6">Créer un compte</a></p>
                             <a href='#'>Mot de passe oublié?</a>
                         </div>
                     </Form>

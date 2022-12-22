@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { setHeureChoisie } from '../app/features/reservationSlice';
 import { useNavigate } from 'react-router-dom';
+import "../styles.css";
 
 export default function PageReservation() {
   const [disponibiliteTab, setDisponibiliteTab] = useState([]);
@@ -20,7 +21,7 @@ export default function PageReservation() {
       return <Box
         sx={{ display: 'grid', gridTemplateColumns: { md: '1fr 1fr 1fr', xs: '1fr 1fr 1fr' }, gap: 2, mt: 3 }}
       >
-        {disponibiliteTab.map((dispo, index) => <Button key={index} variant='contained' sx={{ width: "150px", borderRadius: 5 }} onClick={() => {
+        {disponibiliteTab.map((dispo, index) => <Button key={index} variant='contained' sx={{"&:hover": {backgroundColor:"#82654e"}, bgcolor: "#a98467", width: "150px", borderRadius: 5 }} onClick={() => {
           onClickHeuresReservation(dispo);
         }}>{dispo.heureDebut}</Button>)}
       </Box>
@@ -48,7 +49,7 @@ export default function PageReservation() {
       <div style={{ width: "50%", margin: "2ch auto " }}>
         <h5 style={{ textAlign: "left" }}>Sélectionnez l'heure</h5>
         <Disponibilites />
-        <Button variant='contained' href='/reservation' sx={{margin: 5}}>Retour sélection massages</Button>
+        <Button variant='contained' href='/reservation' sx={{margin: 5, "&:hover": {backgroundColor:"#82654e", color: "white"} , bgcolor: "#a98467"}}>Retour sélection massages</Button>
       </div>
     </div>
   )

@@ -6,7 +6,9 @@ export default function Header() {
   return (
     <div id='idHeader'>
       <Typography>MassoPro</Typography>
-      <NavBar/>
+      <NavBar style={{ backgroundColor: "#F0EFEB" }}
+      />
+
     </div>
   )
 }

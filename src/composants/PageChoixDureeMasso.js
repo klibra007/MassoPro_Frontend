@@ -52,8 +52,8 @@ export default function PageChoixDureeMasso() {
     }
 
     const handleClickSuivant = () => {
-        dispatch(setAffichageChoixDureeEtMasso());
-        dispatch(setAffichageReservation());
+        dispatch(setAffichageChoixDureeEtMasso(false));
+        dispatch(setAffichageReservation(true));
     }
 
     return (

@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardGroup, Row, Col } from 'react-bootstrap';
 
 
+
+
 export default function ReservationCard(props) {
     return (
         // <CardGroup>
