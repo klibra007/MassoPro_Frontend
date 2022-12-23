@@ -89,7 +89,7 @@ export default function PageConnexion() {
                             <p id='idErreur'></p>
                         </Form.Group>
                         <Stack gap={2} className="col-md-5 mx-auto mt-4">
-                            <Button  style={{ backgroundColor: "#a98467" ,borderColor: "#a98467" }} variant='primary' onClick={handleClickConnexion}>Connexion</Button>
+                            <Button  variant='primary' onClick={handleClickConnexion}>Connexion</Button>
                             <Button type="reset" variant='outline-secondary' onClick={handleClickAnnuler}>Annuler</Button>
                         </Stack>
 

@@ -216,7 +216,7 @@ export default function PageListeServices() {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Non</Button>
+                        <Button className="btn-secondary" onClick={handleClose}>Non</Button>
                         <Button autoFocus onClick={handleDeleteService}>Oui</Button>
                     </DialogActions>
                 </Dialog>
@@ -240,16 +240,16 @@ export default function PageListeServices() {
                     {servicesTab.map(srv => {
                         return (
                             <TableRow className="text-start" key={srv.id}>
-                                <TableCell className="test-top">{srv.id}</TableCell>
+                                <TableCell className="text-top">{srv.id}</TableCell>
                                 <TableCell >{srv.nomService}</TableCell>
                                 <TableCell>{srv.description}</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                                    {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                    ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
+                                    {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon className='app-icon app-icon-active' /></Link>
+                                    ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon className='app-icon app-icon-inactive'/></Link>)
                                     }
-                                    <Link onClick={() => handleModifyService(srv)}><EditIcon className='idPointerMouse' /></Link>
+                                    <EditIcon className='app-icon' onClick={() => handleModifyService(srv)}/>
                                     {/* <Link href='/admin/services/form'><EditIcon /></Link> */}
-                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon className='idPointerMouse' /></Link>
+                                        <DeleteForeverOutlinedIcon className='app-icon' onClick={() => handleConfirmDeleteService(srv)}/>
                                 </TableCell>
                             </TableRow>
                         )
@@ -288,7 +288,22 @@ export default function PageListeServices() {
             </Grid>
             <ConfirmDialog />
             
-            <FullScreenDialog setOpen={setOpen2} open={open2} setService={setService} setDescription={setDescription} handleAddService={handleAddService} service={service} description={description} modificationService={modificationService} handleModifyService={handleModifyService} alignment={alignment} setAlignment={setAlignment} handleValidateModification={handleValidateModification} serviceSelectionne={serviceSelectionne} boolService={boolService}/>
+            <FullScreenDialog 
+                setOpen={setOpen2} 
+                open={open2} 
+                setService={setService} 
+                setDescription={setDescription} 
+                handleAddService={handleAddService} 
+                service={service} 
+                description={description} 
+                modificationService={modificationService} 
+                handleModifyService={handleModifyService} 
+                alignment={alignment} 
+                setAlignment={setAlignment} 
+                handleValidateModification={handleValidateModification} 
+                serviceSelectionne={serviceSelectionne} 
+                boolService={boolService}
+            />
 
             <Snackbar sx={{marginTop: 14, marginLeft: 19}} open={open3} autoHideDuration={1000} onClose={handleClose2} anchorOrigin={{vertical: 'top', horizontal: 'center'}} >
                 <Alert  severity="success" sx={{ width: '100%' }}>

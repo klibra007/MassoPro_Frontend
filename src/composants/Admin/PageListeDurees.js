@@ -216,7 +216,7 @@ export default function PageListeDurees() {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Non</Button>
+                        <Button className="btn-secondary" onClick={handleClose}>Non</Button>
                         <Button autoFocus onClick={handleDeleteDuree}>Oui</Button>
                     </DialogActions>
                 </Dialog>

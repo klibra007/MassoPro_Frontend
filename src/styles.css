@@ -2,20 +2,20 @@ body{
     background-color: #faf8ed !important;
 }
 
-#idFooter{
+/* #idFooter{
     background-color: #CB997E;
     color: burlywood;
-}
+} */
 
-#idHeader{
+/* #idHeader{ */
     /* background-color: #6B705C; */
     /* background-color: #CB997E; */
-    background-color: #DDBEA9;
-}
+    /* background-color: #DDBEA9;
+} */
 
-#idHeader p{
+/* #idHeader p{
    color: aqua;
-}
+} */
 
 .navbar{
     /* background-color: #CB997E !important; */
@@ -61,7 +61,7 @@ body{
 
 .app-icon{
     cursor: pointer;
-    color: brown;
+    color: #82654e;
     margin: 0px 10px;
 }
 
@@ -72,11 +72,7 @@ body{
 }
 
 .app-icon.app-icon-inactive{
-    color: orangered;
-}
-
-.idPointerMouse{
-    cursor: pointer;
+    color: gray;
 }
 
 .MuiTableCell-head { font-weight: bold !important;}
@@ -85,6 +81,7 @@ body{
 .dureeTextField {text-align: center;}
 
 .MuiButton-root {border: 1px solid #666 !important; }
+
 .primary-button {    
     background-color: brown !important;
     color: white !important;
@@ -101,6 +98,86 @@ body{
     background-color: white;
 }
 
-.cardReservation{
+.cardReservation {
     height: "150px";
+}
+
+/* Generic button styling */
+
+.MuiButtonBase-root, 
+.btn.btn-primary,
+.MuiDialogActions-root .MuiButtonBase-root {
+    background-color:#a98467;
+    border-radius: 5;
+    border-color: #a38055;
+    color: white;
+}
+
+.MuiButtonBase-root:hover, 
+.btn.btn-primary:hover,
+.MuiDialogActions-root .MuiButtonBase-root:hover  {
+    background-color:#82654e;
+    border-color: #a38055;
+}
+
+.App .MuiButtonBase-root:active, 
+.App .btn.btn-primary:active, 
+.App :not(.btn-check) + .btn:active, 
+.MuiDialogActions-root .MuiButtonBase-root:active {
+    background-color:#534c30;
+    border-color: #a38055;
+}
+
+.MuiButtonBase-root.btn-secondary{
+    background-color: #6c757d;
+}
+
+.MuiButtonBase-root.btn-secondary:hover{
+    background-color:#5c636a;
+}
+
+
+
+
+/* End Generic button styling */
+
+/* Available times for booking in PageReservation */
+
+.MuiBox-root .MuiButtonBase-root, .btn.btn-primary {
+    background-color:#c3a188;
+    border-color: #a38055;
+}
+
+.MuiBox-root .MuiButtonBase-root:hover, .App .btn.btn-primary:hover {
+    background-color:#82654e;
+    border-color: #a38055;
+}
+
+/* End Available times for booking in PageReservation */
+
+/* Calendar */
+.App .MuiPickersDay-root:active{
+    background-color:#82654e; 
+}
+
+.App .MuiPickersDay-root.Mui-selected{
+    background-color:#82654e;
+}
+
+.App .MuiPickersDay-root.Mui-selected:hover, 
+.App .MuiPickersDay-root:focus.Mui-selected{
+    background-color:#82654e;
+}
+
+/* End Calendar */
+
+
+
+.MuiButtonBase-root.MuiToggleButton-root.Mui-selected {
+    background-color: #c3a188;
+    color: white;
+}
+
+.MuiButtonBase-root.MuiToggleButton-root.Mui-selected:hover {
+    background-color: #a98467;
 }

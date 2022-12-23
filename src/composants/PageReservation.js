@@ -21,7 +21,7 @@ export default function PageReservation() {
       return <Box
         sx={{ display: 'grid', gridTemplateColumns: { md: '1fr 1fr 1fr', xs: '1fr 1fr 1fr' }, gap: 2, mt: 3 }}
       >
-        {disponibiliteTab.map((dispo, index) => <Button key={index} variant='contained' sx={{"&:hover": {backgroundColor:"#82654e"}, bgcolor: "#a98467", width: "150px", borderRadius: 5 }} onClick={() => {
+        {disponibiliteTab.map((dispo, index) => <Button key={index} variant='contained'  onClick={() => {
           onClickHeuresReservation(dispo);
         }}>{dispo.heureDebut}</Button>)}
       </Box>

@@ -29,8 +29,8 @@ const ConfirmDialog = (props) => {
       </DialogContent>
       <DialogActions>
         <Button
-          variant="contained"
           onClick={closeDialog}
+          className="btn-secondary"
         >{txtCancel}</Button>
         <Button
           variant="contained"
