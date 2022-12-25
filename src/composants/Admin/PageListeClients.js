@@ -190,8 +190,8 @@ export default function PageListClients() {
             <Table className="Table">
                 <TableHead >
                     <TableRow className="text-start" >
-                        <TableCell>ID</TableCell>
-                        <TableCell>Prenom</TableCell>
+                        <TableCell>No client</TableCell>
+                        <TableCell>Prénom</TableCell>
                         <TableCell>Nom</TableCell>
                         <TableCell>Courriel</TableCell>
                         <TableCell className="text-center">Actions</TableCell>

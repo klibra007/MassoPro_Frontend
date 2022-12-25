@@ -230,7 +230,7 @@ export default function PageListeServices() {
             <Table className="Table">
                 <TableHead >
                     <TableRow className="text-start" >
-                        <TableCell className="text-center">ID</TableCell>
+                        <TableCell className="text-center">No service</TableCell>
                         <TableCell className="text-center">Nom service</TableCell>
                         <TableCell className="text-center">Description</TableCell>
                         <TableCell className="text-center">Actions</TableCell>

@@ -21,11 +21,12 @@ function NavBar() {
           <Nav className="ms-auto">
             {(connexionData.idAdministrateur) ?
               <>
-                <NavDropdown title="Clients" id="navbarScrollingDropdown">
+              <Nav.Link href="/admin/clients">Clients</Nav.Link>
+                {/* <NavDropdown title="Clients" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/admin/clients">Liste des clients</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/clients">Désactiver un client</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
                 {/* <NavDropdown title="Calendriers" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/admin/calendriers">Liste des calendriers</NavDropdown.Item>
                 </NavDropdown> */}
@@ -38,7 +39,8 @@ function NavBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/disponibilites">Supprimer une disponibilité</NavDropdown.Item>
                 </NavDropdown> */}
-                <NavDropdown title="Services" id="navbarScrollingDropdown">
+                <Nav.Link href="/admin/services">Services</Nav.Link>
+                {/* <NavDropdown title="Services" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/admin/services">Liste des services</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/services/form">Ajouter un service</NavDropdown.Item>
@@ -46,7 +48,7 @@ function NavBar() {
                   <NavDropdown.Item href="/admin/services">Modifier un service</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/services">Supprimer un service</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
                 <Nav.Link href="/admin/durees">Durées</Nav.Link>
                 {/* <NavDropdown title="Durées" id="navbarScrollingDropdown" href="/admin/durees">
                   <NavDropdown.Item href="/admin/durees">Liste des durées</NavDropdown.Item>
@@ -57,25 +59,27 @@ function NavBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/durees">Désactiver une durée</NavDropdown.Item>
                 </NavDropdown> */}
-                <NavDropdown title="Mon Compte" id="navbarScrollingDropdown">
+                <Nav.Link href="/" onClick={seDeconnecter}>Se déconnecter</Nav.Link>
+                {/* <NavDropdown title="Mon Compte" id="navbarScrollingDropdown"> */}
                  {/* <NavDropdown.Item href="/profil">Mon profil</NavDropdown.Item>
                   <NavDropdown.Divider />*/}
-                  <NavDropdown.Item href="/" onClick={seDeconnecter}>
+                  {/* <NavDropdown.Item href="/" onClick={seDeconnecter}>
                     Se déconnecter
                   </NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
               </>
               : ''} 
       
             {(connexionData.idPersonnel) ?
               <>
-                <NavDropdown title="Clients" id="navbarScrollingDropdown">
+              <Nav.Link href="/admin/clients">Clients</Nav.Link>
+                {/* <NavDropdown title="Clients" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/admin/clients">Liste des clients</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/clients/form">Ajouter un client</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/clients">Modifier un client</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
                 {/* <NavDropdown title="Réservations" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/admin/reservation">Liste des réservations</NavDropdown.Item>
                   <NavDropdown.Divider />
@@ -97,14 +101,14 @@ function NavBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/admin/disponibilites">Supprimer une disponibilité</NavDropdown.Item>
                 </NavDropdown> */}
-                
-                <NavDropdown title="Mon Compte" id="navbarScrollingDropdown">
+                <Nav.Link href="/" onClick={seDeconnecter}>Se déconnecter</Nav.Link>
+                {/* <NavDropdown title="Mon Compte" id="navbarScrollingDropdown"> */}
                   {/*<NavDropdown.Item href="/profil">Mon profil</NavDropdown.Item>
                   <NavDropdown.Divider />*/}
-                  <NavDropdown.Item href="/" onClick={seDeconnecter}>
+                  {/*<NavDropdown.Item href="/" onClick={seDeconnecter}>
                     Se déconnecter
                   </NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown>*/}
               </>
               : ''}
 
@@ -135,7 +139,8 @@ function NavBar() {
         </Container>
       </Navbar>
     } else {
-      return <Navbar bg="dark" variant="dark">
+      // return <Navbar bg="dark" variant="dark">
+      return <Navbar >
         <Container>
           <Navbar.Brand href="/">MassoPro</Navbar.Brand>
           <Nav className="ms-auto">

@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div id='idHeader'>
 
-      <NavBar style={{ backgroundColor: "#F0EFEB" }}/>
+      <NavBar/>
 
     </div>
   )

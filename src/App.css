@@ -108,16 +108,19 @@
   /* margin-left: 100px; */
 }
 
-/* #therap1 {
+#therap1 {
   height: 400px;
-  background-image: url('../images/therapi.jpg');
+  /* background-image: url('../images/therapi.jpg'); */
+  background-image: url('../images/therap2-male2.jpg');
+  
   width: 700px;
   margin: 20px;
 }
 
 #therap2 {
   height: 400px;
-  background-image: url('../images/therap3.jpg');
+  /* background-image: url('../images/therap3.jpg'); */
+  background-image: url('../images/therap2-female2.jpg');
   width: 700px;
   margin: 20px;
 }
@@ -125,7 +128,9 @@
 #therap3 {
  
   height: 400px;
-  background-image: url('../images/therap4.jpg');
+  /* background-image: url('../images/therap4.jpg'); */
+  background-image: url('../images/therap4-male.jpg');
+  
   width: 700px;
   margin: 20px;
 
@@ -134,11 +139,12 @@
 #therap4 {
  
   height: 400px;
-  background-image: url('../images/therap5.jpg');
+  /* background-image: url('../images/therap5.jpg'); */
+  background-image: url('../images/therap-male.jpg');
   width: 700px;
   margin: 20px;
 
-} */
+}
 
 #therapText1 {
   

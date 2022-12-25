@@ -233,7 +233,7 @@ export default function PageListeDurees() {
                         {/* <TableCell className="text-start">ID</TableCell> */}
                         <TableCell className="text-center">Durée</TableCell>
                         <TableCell className="text-center">Prix</TableCell>
-                        <TableCell className="text-center">Action</TableCell>
+                        <TableCell className="text-center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

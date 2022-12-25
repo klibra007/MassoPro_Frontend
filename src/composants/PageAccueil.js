@@ -46,7 +46,7 @@ export default function PageAccueil() {
                 <h1> Nos massages coup de coeur </h1>
                 <div id='services'>
                     <div id='idBloc1'>
-                        {/* <Paper id='therap1' elevation={2}></Paper> */}
+                        <Paper id='therap1' elevation={2}></Paper>
                         <Paper id='therapText1' elevation={2}>
                             <h1> Massage thérapeutique </h1>
                             <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
