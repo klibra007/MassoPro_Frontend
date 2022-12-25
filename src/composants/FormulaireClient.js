@@ -1,12 +1,7 @@
 import React from 'react';
-import { Container, Button, Row, Col, Form, ButtonGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
@@ -17,23 +12,33 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { textAlign } from '@mui/system';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 
+import isEmail, { isTelephone } from '../lib/FormValidator';
+
 export default function FormulaireClient(props) {
 
-    const [prenom, setPrenom] = useState(props.prenom);
-    const [nom, setNom] = useState(props.nom);
-    const [courriel, setCourriel] = useState(props.courriel);
-    const [motDePasse, setMotDePasse] = useState("");
-    const [telephone, setTelephone] = useState(props.telephone);
+    const [prenom, setPrenom] = useState(props.prenom ? props.prenom : '');
+    const [nom, setNom] = useState(props.nom ? props.nom : '');
+    const [courriel, setCourriel] = useState(props.courriel ? props.courriel : '');
+    const [motDePasse1, setMotDePasse1] = useState("");
+    const [motDePasse2, setMotDePasse2] = useState('');    
+    const [telephone, setTelephone] = useState(props.telephone ? props.telephone : '');
     const [open, setOpen] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
+
+    const [prenomError, setPrenomError] = useState('');  
+    const [nomError, setNomError] = useState('');   
+    const [courrielError, setCourrielError] = useState('');  
+    const [telephoneError, setTelephoneError] = useState('');
+    const [motDePasse1Error, setMotDePass1Error] = useState('');  
+    const [motDePasse2Error, setMotDePass2Error] = useState('');        
+    const [smsCourrielChkError, setSmsCourrielChkError] = useState('');   
 
     const navigate = useNavigate();
 
@@ -44,8 +49,8 @@ export default function FormulaireClient(props) {
     };
 
     const [state, setState] = useState({
-        sms: true,
-        courriel: false,
+        smsChk: true,
+        courrielChk: false,
     });
 
     const handleChange = (event) => {
@@ -55,7 +60,7 @@ export default function FormulaireClient(props) {
         });
     };
 
-    const { sms, courriel2 } = state;
+    const { smsChk, courrielChk } = state;
     //const error = [sms, courriel2].filter((v) => v).length !== 1;
 
 
@@ -75,11 +80,15 @@ export default function FormulaireClient(props) {
         setTelephone(event.target.value);
     }
 
-    const handleChangeMotDePasse = (event) => {
-        setMotDePasse(event.target.value);
+    const handleChangeMotDePasse1 = (event) => {
+        setMotDePasse1(event.target.value);
     }
 
-    const handleClickRegister = () => {
+    const handleChangeMotDePasse2 = (event) => {
+        setMotDePasse2(event.target.value);
+    }     
+
+    const RegisterProfile = () => {
         //let strDossierServeur = "https://dev.pascalrocher.com";
         //let strNomApplication = strDossierServeur + "/api/auth/register";
         let strNomApplication = props.strNomApplication;
@@ -90,8 +99,10 @@ export default function FormulaireClient(props) {
             "prenom": prenom,
             "nom": nom,
             "courriel": courriel,
-            "motDePasse": motDePasse,
+            "motDePasse": motDePasse1,
             "telephone": telephone,
+            "contactParSMS": smsChk,
+            "contactParCourriel": courrielChk
         }
 
         //alert(JSON.stringify(data))
@@ -102,30 +113,31 @@ export default function FormulaireClient(props) {
             }
         })
             .then((response) => {
-                alert("La réponse: " + JSON.stringify(response));
+                console.log("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     navigate('/connexion');
                 }
             })
             .catch((error) => {
-                console.log(error.response.data.status);
+              //  console.log(error.response.data.status);
                 //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
             });
     }
 
-    const handleClickValiderModification = () => {
+    const ModifierProfile = () => {
         let strNomApplication = props.strNomApplication;
-
-        //alert("dans modification " + strNomApplication);
+      //  console.log("Profile modification: " + strNomApplication);
 
         let data = {
             "prenom": prenom,
             "nom": nom,
             "courriel": courriel,
             "telephone": telephone,
+            "motDePasse": motDePasse2,
+            "ancienMotDePasse": motDePasse1,           
         }
 
-        //alert(JSON.stringify(data))
+       // console.log("Profile data: "+JSON.stringify(data))
 
         axios.put(strNomApplication, JSON.stringify(data), {
             headers: {
@@ -133,7 +145,7 @@ export default function FormulaireClient(props) {
             }
         })
             .then((response) => {
-                //alert("La réponse: " + JSON.stringify(response));
+                console.log("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     //props.setModification(false);
                     //navigate('/profil');
@@ -143,51 +155,217 @@ export default function FormulaireClient(props) {
                     setInterval(() => {
                         window.location.reload(false);
                     }, 2000);
-                    
                 }
             })
             .catch((error) => {
-                alert(error.response.data.status);
+              //  console.log("Error: "+error.response.status);
+                // 401 - Invalid ancien mot de passe               
+                if (error.response.status === 401) {
+                    setMotDePass1Error("Mauvais ancien mot de passe");  
+                } else {
+                    setMotDePass2Error("Mot de passe est requis");
+                }
+               
                 //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
+                return error;
             });
-    }
 
+    }  // end function
+  
+    const exitForm = () => {
+
+      if (props.profil === true) {
+        // Edit mode        
+        setInterval(() => {
+           window.location.reload(false);
+        }, 500);       
+      } else {
+        // New record mode. Go back to previous screen 
+        navigate(-1);
+      }
+    }  
+
+    const resetFormError = () => {
+        // init error fields 
+        setPrenomError('');
+        setNomError('');
+        setCourrielError('');
+        setTelephoneError('');      
+        setMotDePass1Error('');
+        setMotDePass2Error('');  
+        setSmsCourrielChkError();        
+    }    
+
+    const validerForm1 = () => {
+        let prenomValid=false;
+        let nomValid=false;
+        let courrielValid=false;
+        let telephoneValid=false;
+
+        if (!prenom || prenom.length === 0) {
+           setPrenomError("Prénom est requis");
+        } else {
+           prenomValid=true;
+        }
+ 
+        if (!nom || nom.length === 0) {
+           setNomError("Nom est requis");
+        } else {
+           nomValid=true;            
+        } 
+        
+        if (!courriel || courriel.length === 0) {
+           setCourrielError("Courriel est requis");
+        } else if (!isEmail(courriel)) {
+           setCourrielError("Courriel est invalide");          
+        } else {
+            courrielValid=true;
+        }        
+ 
+        if (!telephone || telephone.length === 0) {
+           setTelephoneError("Telephone est requis");
+        } else if (!isTelephone(telephone)) {
+           setTelephoneError("Telephone est invalide");         
+        }  else {
+           telephoneValid=true;
+        }       
+        
+        // Retourn True is validation OK pour les champs
+        return prenomValid && nomValid && courrielValid && telephoneValid;
+    }    
+
+    // Password et password confirmation devrait être le même
+    function validatePasswordConfirmation() {
+        let pass1Valid=true;
+        let pass2Valid=true;
+
+        if (motDePasse1.length === 0) {
+           setMotDePass1Error("Mot de passe est requis");          
+           pass1Valid=false;
+        }
+
+        if (motDePasse2.length === 0) {
+            setMotDePass2Error("Mot de passe confirmation est requis");    
+            pass2Valid=false;        
+        }
+
+        if (pass1Valid && pass2Valid) {
+           if (motDePasse1 !== motDePasse2) {
+              setMotDePass2Error("Les mots de passe ne correspondent pas");  
+              pass2Valid=false;
+           } 
+        }
+
+        return pass1Valid && pass2Valid;
+    }    
+
+    const handleClickRegister = () => {
+        let validation=true;
+
+        resetFormError(); 
+
+        if (!validerForm1()) {
+            validation=false;
+        } 
+        
+        if (!validatePasswordConfirmation()) {
+            validation=false;  
+        }       
+        
+       // Une case à cocher sms ou courriel doit être cochée
+       if (!smsChk && !courrielChk) {
+          setSmsCourrielChkError("Case à cocher Sms ou Courriel requis");
+          validation=false;
+       }  
+       
+       if (validation) {
+          RegisterProfile();
+       }
+    }    
+
+    function validateChangePassword() {
+        let pass1Valid=true;
+        let pass2Valid=true;
+
+        // Si l'utilisateur saisit l'ancien mot de passe mais n'a pas saisi le nouveau mot de passe
+        if (motDePasse1 !== '' && motDePasse2 === '') {
+            setMotDePass2Error("Nouveau mot de passe est requis");    
+            pass2Valid=false;   
+        } else 
+        if (motDePasse2.length > 0 && motDePasse1.length === 0) {
+            setMotDePass1Error("Mot de passe est requis");    
+            pass1Valid=false;            
+        }
+
+        return pass1Valid && pass2Valid;
+    }   // end function
+
+    const handleClickValiderModification = () => { 
+        let validation=true;
+
+        resetFormError(); 
+
+        if (!validerForm1()) {
+            validation=false;
+        } 
+
+        // Valider si l'utilisateur saisit l'un des mots de passe
+        if (motDePasse1 !== '' ||  motDePasse2 !== '') {
+           if (!validateChangePassword()) {
+              validation=false;  
+           }          
+        }
+
+        if (validation) {
+           ModifierProfile();
+        }        
+    }   //  end function
 
     return (
         <>
             <div>
                 <TextField
+                    error={prenomError && prenomError.length ? true : false }
                     required
-                    id="outlined-required1"
+                    id="formPrenom"
                     label="Prénom"
                     size='small'
                     onChange={handleChangePrenom}
                     defaultValue={props.profil === true ? props.prenom : ""}
+                    InputLabelProps={{ shrink: true }}
+                    helperText={prenomError}
                 />
             </div>
             <div>
                 <TextField
+                    error={nomError && nomError.length ? true : false }
                     required
-                    id="outlined-required2"
+                    id="formNom"
                     label="Nom"
                     size='small'
                     onChange={handleChangeNom}
                     defaultValue={props.profil === true ? props.nom : ""}
+                    InputLabelProps={{ shrink: true }}
+                    helperText={nomError} 
                 />
             </div>
             <div>
                 <TextField
+                    error={courrielError && courrielError.length ? true : false }
                     required
-                    id="outlined-required3"
+                    id="formCourriel"
                     label="Courriel"
                     type={'email'}
                     size='small'
                     onChange={handleChangeCourriel}
                     defaultValue={props.profil === true ? props.courriel : ""}
+                    InputLabelProps={{ shrink: true }}
+                    helperText={courrielError}   
                 />
             </div>
             <div>
                 <TextField
+                    error={telephoneError && telephoneError.length ? true : false }
                     required
                     id="outlined-required4"
                     label="Numéro de téléphone"
@@ -195,58 +373,65 @@ export default function FormulaireClient(props) {
                     size='small'
                     onChange={handleChangeTelephone}
                     defaultValue={props.profil === true ? props.telephone : ""}
+                    InputLabelProps={{ shrink: true }}
+                    helperText={telephoneError}   
                 />
             </div>
 
             <div>
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password1">{props.profil === true ? "ancien mot de passe" : "mot de passe"}</InputLabel>
-                    <OutlinedInput
-                        id="outlined-adornment-password2"
-                        type={showPassword ? 'text' : 'password'}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label="Mot de passe"
-
-                    />
-                </FormControl>
-
+                <TextField
+                     error={motDePasse1Error && motDePasse1Error.length ? true : false }
+                     required
+                     id="formPassword1"
+                     label={props.profil === true ? "Ancien mot de passe" : "Mot de passe"}
+                     type={showPassword ? 'text' : 'password'}
+                     size='small'
+                     onChange={handleChangeMotDePasse1}
+                     InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                    }}     
+                    InputLabelProps={{ shrink: true }}            
+                    helperText={motDePasse1Error}                             
+                />
             </div>
+
             <div>
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">{props.profil === true ? "nouveau mot de passe" : "confirmation"}</InputLabel>
-                    <OutlinedInput
-                        required
-                        id="outlined-adornment-password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={handleChangeMotDePasse}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label="Mot de passe"
-
-                    />
-                </FormControl>
-
+                <TextField
+                     error={motDePasse2Error && motDePasse2Error.length ? true : false }
+                     required
+                     id="formPassword2"
+                     label={props.profil === true ? "Nouveau mot de passe" : "Confirmation"}
+                     type={showPassword ? 'text' : 'password'}
+                     size='small'
+                     onChange={handleChangeMotDePasse2}
+                     InputProps={{
+                       endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton
+                               aria-label="toggle password visibility"
+                               onClick={handleClickShowPassword}
+                               onMouseDown={handleMouseDownPassword}
+                               edge="end"
+                           >
+                           {showPassword ? <VisibilityOff /> : <Visibility />}
+                           </IconButton>
+                       </InputAdornment>
+                       )
+                     }}    
+                  InputLabelProps={{ shrink: true }}              
+                  helperText={motDePasse2Error}                             
+               />
             </div>
 
 
@@ -255,22 +440,25 @@ export default function FormulaireClient(props) {
                 <FormGroup>
                     <FormControlLabel
                         control={
-                            <Checkbox checked={sms} onChange={handleChange} name="sms" />
+                            <Checkbox checked={smsChk} onChange={handleChange} name="smsChk" />
                         }
                         label="Sms"
                     />
                     <FormControlLabel
                         control={
-                            <Checkbox checked={courriel2} onChange={handleChange} name="courriel" />
+                            <Checkbox checked={courrielChk} onChange={handleChange} name="courrielChk" />
                         }
                         label="Courriel"
                     />
+                    <FormHelperText
+                       error={smsCourrielChkError && smsCourrielChkError.length ? true : false }
+                    >{smsCourrielChkError}</FormHelperText>
                 </FormGroup>
                 {/*<FormHelperText>Be careful</FormHelperText>*/}
             </FormControl>}
 
             <Stack direction="horizontal" gap={2} className={props.profil === false ? `col-sm-4 col-md-3 col-lg-3 col-xl-2 col-xxl-1 mx-auto` : "col-md-3 mx-auto mt-3"}>
-                <Button type="reset" variant='outline-secondary'>Annuler</Button>
+                <Button type="reset" variant='outline-secondary' onClick={exitForm}>Annuler</Button>
                 <Button className="mleft-16" variant='primary' onClick={props.profil === false ? handleClickRegister : handleClickValiderModification}>{props.profil === false ? `S'incrire` : `Modifier`}</Button>
             </Stack>
             <Snackbar sx={{marginTop: 14, marginLeft: 19}} open={open} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} >

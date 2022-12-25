@@ -1,3 +1,4 @@
+import '../../styles.css';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Grid } from '@mui/material';
@@ -25,11 +26,9 @@ import {
     DialogContent,
     DialogContentText
 } from '@mui/material'
-
-
-import '../../styles.css';
-
-
+import PageEditDureeForm from './PageEditDureeForm'
+import PageAddDureeForm from './PageAddDureeForm'
+import ConfirmDialogDelIcon from '../ConfirmDialogDelIcon'
 
 import axios from 'axios';
 
@@ -54,8 +53,8 @@ export default function PageListeDurees() {
         console.log("Add Duree")
     }
 
-    const handleAddDuree = () => {
-        console.log("Add Duree")
+    const addDuree = (duree, prix) => {
+        console.log("Add Duree. duree="+duree+" prix="+prix)
     }
 
     const handleDisableDuree = () => {
@@ -67,9 +66,8 @@ export default function PageListeDurees() {
         console.log("Enable duree")
     }
 
-    const handleModifyDuree = () => {
-        console.log("Modify duree")
-
+    const updateDuree = (id, newDuree, newPrix) => {
+        console.log("Update duree. id="+id+" duree="+newDuree+" prix="+newPrix)  
     }
 
     const handleConfirmDeleteDuree = (duree) => {
@@ -131,11 +129,12 @@ export default function PageListeDurees() {
                                 <TableCell className="text-center">{duree.duree}</TableCell>
                                 <TableCell className="text-center">{duree.prix}</TableCell>
                                 <TableCell className="text-center" sx={{ whiteSpace: 'nowrap' }}>
-                                    {/* {duree.estActif === 1 ? (<Link onClick={() => handleDisableDuree()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                    ) : (<Link onClick={() => handleEnableDuree()}><HighlightOffIcon /></Link>)
-                                    } */}
-                                    {/* <Link onClick={() => handleModifyDuree()}><EditIcon /></Link> */}
-                                    <Link href='/admin/durees/form'><EditIcon /></Link>
+                                  <PageEditDureeForm
+                                     id={duree.id}
+                                     duree={duree.duree}
+                                     prix={duree.prix}
+                                     callbackFunc={updateDuree}
+                                  /> 
                                     <Link onClick={() => handleConfirmDeleteDuree(duree)}><DeleteForeverOutlinedIcon /></Link>
                                 </TableCell>
                             </TableRow>
@@ -168,7 +167,11 @@ export default function PageListeDurees() {
                         />
                     </div> */}
                     <div className="text-start mleft-16 mtop-40 mb-3">
-                        <h5>Créer une nouvelle durée  &nbsp;&nbsp;&nbsp; <Link href='/admin/durees/form'><AddCircleOutlineIcon /></Link></h5>
+                        <h5>Créer une nouvelle durée  &nbsp;&nbsp;&nbsp; 
+                          <PageAddDureeForm
+                              callbackFunc={addDuree}
+                          />
+                        </h5>
                     </div>
                     <ListeDurees />
                 </Grid>
