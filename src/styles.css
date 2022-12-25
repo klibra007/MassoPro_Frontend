@@ -2,43 +2,52 @@ body{
     background-color: #faf8ed !important;
 }
 
-/* #idFooter{
-    background-color: #CB997E;
-    color: burlywood;
-} */
 
-/* #idHeader{ */
+#idFooter {
+    background-color: #463f3a;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    min-height: 10vh;
+    padding-top: 20px;
+    margin-top: 0px;
+    font-weight: bold;
+    color: white;
+  }
+#idHeader{ 
     /* background-color: #6B705C; */
     /* background-color: #CB997E; */
-    /* background-color: #DDBEA9;
-} */
-
-/* #idHeader p{
-   color: aqua;
-} */
-
-.navbar{
-    /* background-color: #CB997E !important; */
-    /* background-color: #6B705C !important; */
-    background-color: rgb(253, 237, 237);
-    
- 
+    /* background-color: #DDBEA9; */
+    background-color: #463f3a;
+    height: 10vh;
 }
 
+/* .navbar{ */
+    /* background-color: #CB997E !important; */
+    /* background-color: #6B705C !important; */
+    /* background-color: rgb(253, 237, 237); */
+    /* background-color: #F0EFEB; */
+/* } */
+
 .navbar .navbar-brand{
-    color: violet;
+    padding-top: 20px;
+    color: white;
 }
 
 .navbar .navbar-brand:hover{
-    color: rgb(164, 130, 238);
+    color: #ccd5ae;
 }
 
 .navbar .nav-link{
-    color: #f918cc;
+    padding-top: 25px;
+    color: white;
 }
 
 .navbar .nav-link:hover{
-    color: #18f945;
+    color: #ccd5ae;
 }
 
 .admin-menu li {
@@ -55,10 +64,29 @@ body{
 .mtop-40 { margin-top: 40px; }
 .mtop-100 { margin-top: 200px; }
 
+.mb-20 {margin-bottom: 20px;}
+
+.p20 { padding: 20px;}
+
 .text-aleft { text-align: left; }
 .text-aright { text-align: right; }
 
+.nowrap {
+    white-space: nowrap;
+}
 
+
+.App .input-border:focus, 
+.App .form-select:focus,
+.modal-dialog .form-control:focus, .form-control:focus{
+    border-color: #82654e;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(90, 72, 32, 0.6);
+}
+
+.App .MuiInputBase-input.MuiOutlinedInput-input:focus {
+    border-color: #82654e;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(90, 72, 32, 0.6);
+}
 .app-icon{
     cursor: pointer;
     color: #82654e;
@@ -156,6 +184,11 @@ body{
 /* End Available times for booking in PageReservation */
 
 /* Calendar */
+
+/* .App .MuiPickersDay-today.Mui-disabled{
+    color: white;
+} */
+
 .App .MuiPickersDay-root:active{
     background-color:#82654e; 
 }
@@ -167,6 +200,14 @@ body{
 .App .MuiPickersDay-root.Mui-selected:hover, 
 .App .MuiPickersDay-root:focus.Mui-selected{
     background-color:#82654e;
+}
+
+.MuiPickerStaticWrapper-root .MuiDialogActions-root button:first-child{
+    background-color: #6c757d;
+}
+
+.MuiPickerStaticWrapper-root .MuiDialogActions-root button:nth-child(2){
+    /* font-weight: bold; */
 }
 
 /* End Calendar */
@@ -181,3 +222,4 @@ body{
 .MuiButtonBase-root.MuiToggleButton-root.Mui-selected:hover {
     background-color: #a98467;
 }
+

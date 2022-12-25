@@ -25,7 +25,7 @@ import {
     DialogContent,
     DialogContentText
 } from '@mui/material'
-
+import { Paper } from '@mui/material';
 
 import '../../styles.css';
 
@@ -260,9 +260,10 @@ export default function PageListeServices() {
     }   // end listeServices
 
     return (
-        <Container className='mb-5'>
+        <Container>
+            <Paper>
             <Grid container className='justify-content-center mtop-20'>
-                <Grid item xs={8}>
+                <Grid item xs={10}>
                     <div className="text-start mtop-40 mb-3">
                         <h2>Services</h2>
                     </div>
@@ -286,6 +287,7 @@ export default function PageListeServices() {
                     <ListeServices />
                 </Grid>
             </Grid>
+            </Paper>
             <ConfirmDialog />
             
             <FullScreenDialog 

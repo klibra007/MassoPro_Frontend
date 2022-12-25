@@ -43,11 +43,11 @@
 }
 
 /*************************************************************************/
-#idHeader {
+/* #idHeader {
   height: 10vh;
-}
+} */
 
-#idFooter {
+/* #idFooter {
   background-color: #463f3a;
   display: flex;
   flex-wrap: wrap;
@@ -60,24 +60,25 @@
   margin-top: 0px;
   font-weight: bold;
   color: white;
-}
+} */
 
 #idMain, #idContainerInscription {
   min-height: 80vh;
   
   background: linear-gradient(whitesmoke, #ccd5ae);
   padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 .headColor {
   background-color: red;
 }
 
-#formCourriel:focus,
+/* #formCourriel:focus,
 #formPassword:focus {
   border-color: yellow;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(242, 255, 0, 0.6);
-}
+} */
 
 #idImageAccueilNonConnecte {
   min-height: 1000px;

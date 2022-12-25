@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import TextField from '@mui/material/TextField';
@@ -19,6 +19,7 @@ export default function StaticDatePickerDemo({setDisponibiliteTab}) {
   const dispatch = useDispatch();
 
   console.log("obj: " + JSON.stringify(objReservation));
+
 
   const isWeekend = (date) => {
     const day = date.day();

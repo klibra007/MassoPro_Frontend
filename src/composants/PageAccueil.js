@@ -41,8 +41,8 @@ export default function PageAccueil() {
                 {/* <b>PageAccueil Client</b> */}
                 <h2>Bonjour {resultat.prenom}!</h2><br /><br />
                 {/* <p style={{ fontWeight: "bold" }}>Token : {resultat.token.substr(3)}</p> */}
-                <Button style={{ backgroundColor: "#a98467", borderColor: "#a98467", width: "300px" }} onClick={handleClickReserver}>Réserver un rendez-vous</Button><br /><br />
-
+                {/* <Button style={{ backgroundColor: "#a98467", borderColor: "#a98467", width: "300px" }} onClick={handleClickReserver}>Réserver un rendez-vous</Button><br /><br /> */}
+                <Button style={{ width: "300px" }} onClick={handleClickReserver}>Réserver un rendez-vous</Button><br /><br />
                 <h1> Nos massages coup de coeur </h1>
                 <div id='services'>
                     <div id='idBloc1'>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
-import { Alert, Grid, Snackbar } from '@mui/material';
+import { Alert, Grid, Snackbar, Paper } from '@mui/material';
 import Link from '@mui/material/Link';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from "@mui/material/IconButton";
@@ -21,6 +21,7 @@ import ConfirmDialog from './ConfirmDialog';
 import FullScreenDialog from './FullScreenDialog';
 import { useSelector } from 'react-redux';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+
 
 export default function PageListClients() {
 
@@ -204,7 +205,7 @@ export default function PageListClients() {
                                 <TableCell>{client.prenom}</TableCell>
                                 <TableCell>{client.nom}</TableCell>
                                 <TableCell>{client.courriel}</TableCell>
-                                <TableCell className="text-center">
+                                <TableCell className="text-center nowrap">
                                     {client.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className="app-icon app-icon-active" onClick={() => disableClient()} />
                                         : <HighlightOffIcon className="app-icon app-icon-inactive" onClick={() => enableClient()} />
                                     }
@@ -221,13 +222,15 @@ export default function PageListClients() {
 
     return (
         <>
-            <Container className='mb-5'>
-                <Grid container className='justify-content-center mtop-20'>
-                    <Grid item xs={8}>
-                        <div className="text-start mtop-40 mb-3">
-                            <h2>Clients</h2>
-                        </div>
-                        {/* <div className="search">
+            <Container>
+                <Paper>
+                    <Grid container className='justify-content-center mtop-20'>
+
+                        <Grid item xs={10}>
+                            <div className="text-start mtop-40 mb-3">
+                                <h2>Clients</h2>
+                            </div>
+                            {/* <div className="search">
                     <TextField className="searchBox" size="small"
                         InputProps={{
                         type: 'search',
@@ -241,13 +244,14 @@ export default function PageListClients() {
                         }}
                     />
                 </div> */}
-                        {(connexionData.idPersonnel) && <div className="text-start mtop-40 mb-3">
-                            <h5>Ajouter un nouveau client<AddCircleOutlineIcon className="app-icon" onClick={handleClickOpen} /></h5>
-                        </div>}
-                        <ListeClients />
-                    </Grid>
-                </Grid>
+                            {(connexionData.idPersonnel) && <div className="text-start mtop-40 mb-3">
+                                <h5>Ajouter un nouveau client<AddCircleOutlineIcon className="app-icon" onClick={handleClickOpen} /></h5>
+                            </div>}
+                            <ListeClients />
+                        </Grid>
 
+                    </Grid>
+                </Paper>
                 <ConfirmDialog
                     title={`Désactiver le client ${clientSelectionne.prenom} ${clientSelectionne.nom} ?`}
                     txtCancel="Non"

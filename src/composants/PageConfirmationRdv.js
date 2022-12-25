@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectConnexionData } from '../app/features/connexionSlice';
 import PageRdvConfirme from './PageRdvConfirme';
+import { Paper } from '@mui/material';
 
 export default function PageConfirmationRdv() {
 
@@ -78,8 +79,10 @@ export default function PageConfirmationRdv() {
     <>
       {affichageAvantConfirmation && <Container>
         <Row className='justify-content-center'>
-          <Col xs={8}>
+          <Col xs={12}>
+            
             <Form>
+            <Paper className="p20">
               <Card className="text-aleft">
                 <Card.Header className='p-2'>
                   Service: {nomServiceChoisi}<br />
@@ -157,10 +160,13 @@ export default function PageConfirmationRdv() {
                   <Col>Méthode de paiement: <i>Payer plus tard</i></Col>
                 </Row>
               </>
-              <Form.Group className="mt-4">
+              </Paper>
+              <Form.Group className="mt-4 mb-20">
                 <Button variant='primary' onClick={onClickConfirmer}>Confirmer la réservation</Button>
               </Form.Group>
+
             </Form>
+          
           </Col>
         </Row>
       </Container>}

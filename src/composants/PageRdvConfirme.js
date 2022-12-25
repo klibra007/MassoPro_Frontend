@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Card, Button } from 'react-bootstrap';
 import { selectNomServiceChoisi, selectDateChoisie, selectPrix } from '../app/features/reservationSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Paper } from '@mui/material';
 
 export default function PageRdvConfirme({ numeroReservation }) {
   const nomServiceChoisi = useSelector(selectNomServiceChoisi);
@@ -22,6 +23,7 @@ export default function PageRdvConfirme({ numeroReservation }) {
       <Row className='justify-content-center'>
         <Col xs={8}>
           <Form>
+          <Paper className="p20">
                 <Card className="text-aleft mb-2">
                   <Card.Header className='p-2'>
                     {nomServiceChoisi}<br />
@@ -52,8 +54,8 @@ export default function PageRdvConfirme({ numeroReservation }) {
                   dossier des courriers indésirables</Card.Text>
               </Card.Header>
             </Card>
-
-            <Form.Group className="mt-4">
+            </Paper>
+            <Form.Group className="mt-4 mb-20">
               <Button variant='primary' onClick={handleClickMenu}>Retour à l'accueil</Button>
             </Form.Group>
           </Form>

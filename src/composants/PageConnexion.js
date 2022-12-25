@@ -82,10 +82,10 @@ export default function PageConnexion() {
                             <p> Veuillez saisir votre adresse e-mail client et mot de passe pour continuer.</p>
                         </div>
                         <Form.Group className="mb-3">
-                            <Form.Control type='email' id="formCourriel" placeholder='Votre courriel' value={courriel} onChange={handleChangeCourriel} required />
+                            <Form.Control type='email' id="formCourriel" placeholder='Votre courriel' value={courriel} className="input-border" onChange={handleChangeCourriel} required />
                         </Form.Group>
                         <Form.Group className='mt-20'>
-                            <Form.Control type='password' id="formPassword" placeholder='Votre mot de passe' onChange={handleChangeMotDePasse} required />
+                            <Form.Control type='password' id="formPassword" placeholder='Votre mot de passe' className="input-border" onChange={handleChangeMotDePasse} required />
                             <p id='idErreur'></p>
                         </Form.Group>
                         <Stack gap={2} className="col-md-5 mx-auto mt-4">

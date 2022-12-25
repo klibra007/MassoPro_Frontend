@@ -4,6 +4,7 @@ import {  setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceC
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { Paper } from '@mui/material';
 
 export default function PageChoixDureeMasso() {
     const [dureeTab, setDureeTab] = useState([]);
@@ -61,10 +62,11 @@ export default function PageChoixDureeMasso() {
             <Row className='justify-content-center'>
                 <Col xs={6}>
                     <Form>
+                        <Paper className="p20">
                         <Form.Group>
                             <Form.Control placeholder={nomServiceChoisi} disabled />
                         </Form.Group>
-                        <div className='text-start mt-4 text-primary'>Durée</div>
+                        <div className='text-start mt-4'>Durée</div>
 
                         <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
                             <option value={0}>Veuillez choisir une durée svp</option>
@@ -74,14 +76,14 @@ export default function PageChoixDureeMasso() {
                             })}
                         </Form.Select>
 
-                        <div className='text-start mt-3 text-primary'>Massothérapeute</div>
+                        <div className='text-start mt-3'>Massothérapeute</div>
                         <Form.Select id='idMasso' onChange={(e) => { handleChangeMasso(e) }}>
                             <option value={0}>Veuillez choisir un massothérapeute svp</option>
                             {massoTab.map((masso) => {
                                 return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
                             })}
                         </Form.Select>
-
+                        </Paper>
                         <Form.Group className="mt-4">
                             <Button variant='primary' onClick={handleClickSuivant}>Suivant</Button>
                         </Form.Group>
