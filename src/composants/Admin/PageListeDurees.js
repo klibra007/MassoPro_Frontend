@@ -1,6 +1,5 @@
 import '../../styles.css';
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { Grid } from '@mui/material';
@@ -15,18 +14,23 @@ import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'; 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EditIcon from '@mui/icons-material/Edit';
 
 import PageAddUpdateDuree from './PageAddUpdateDuree'
 import ConfirmDialog from '../ConfirmDialog'
 
 export default function PageListeDurees() {
-    const navigate = useNavigate();
 
     const [dureesTab, setDureesTab] = useState([]);
 
-    const [open, setOpen] = useState(false);
+    const [openSnackBar, setOpenSnackBar] = useState(false);
     const [notifyMsg, setNotifyMsg] = useState('');
+
+    const handleCloseSnack = () => {
+       setOpenSnackBar(false);
+    };
 
     let strDossierServeur = "https://dev.pascalrocher.com";
     let strNomApplication = strDossierServeur + "/api/durees";
@@ -42,7 +46,7 @@ export default function PageListeDurees() {
     
     const notify = ( msg, isReload ) => {
         setNotifyMsg(msg); 
-        setOpen(true); 
+        setOpenSnackBar(true);
 
         if (isReload) {   
             setInterval(() => {       
@@ -51,13 +55,10 @@ export default function PageListeDurees() {
         }          
     }   
 
-    const updateDuree = (id, newDuree, newPrix) => {
+    const updateDuree = (id, data) => {
+        // console.log("Update Duree. id="+data.id+" duree="+data.duree+" prix="+data.prix+" estActif="+data.estActif) 
         let apiStr=strNomApplication+"/"+id;
-        // console.log("update duree. id="+id+" duree="+newDuree+" prix="+newPrix+"\nApi: "+apiStr) 
-        let data = {
-            "duree": newDuree,
-            "prix": newPrix
-        }      
+        // console.log("update duree. id="+id+" duree="+newDuree+" prix="+newPrix+"\nApi: "+apiStr)   
         
         axios.put(apiStr, JSON.stringify(data), {
             headers: {
@@ -76,12 +77,8 @@ export default function PageListeDurees() {
         });
     }        
 
-    const addDuree = (duree, prix) => {
-        // console.log("Add Duree. duree="+duree+" prix="+prix)
-        let data = {
-            "duree": duree,
-            "prix": prix
-        }      
+    const addDuree = ( data ) => {
+        // console.log("Add Duree. duree="+data.duree+" prix="+data.prix+" estActif="+data.estActif) 
         
         axios.post(strNomApplication, JSON.stringify(data), {
             headers: {
@@ -140,23 +137,28 @@ const ListeDurees = () => {
                     <TableRow className="text-start" key={item.id}>
                       <TableCell>{item.duree}</TableCell>
                       <TableCell>{item.prix}</TableCell>   
-                      <TableCell>
+                      <TableCell>                        
                         <Grid container className="text-end">
-                          <Grid item xs={8}>
+                          <Grid item xs={7}>
+                            { item.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className='app-icon app-icon-active cursor-default' />
+                              : <HighlightOffIcon className='app-icon app-icon-inactive cursor-default'/>
+                            }                            
+                          </Grid>
+                          <Grid item xs={3}>
                             <PageAddUpdateDuree
-                               data={ {id: item.id, duree: item.duree, prix: item.prix} }
+                               data={ {id: item.id, duree: item.duree, prix: item.prix, estActif: item.estActif} }
                                txtConfirm="Sauvegarder"
-                               icon={<EditIcon />}
+                               icon={<EditIcon className='app-icon'/>}
                                callbackFunc={updateDuree}
                             />                              
                           </Grid>
-                          <Grid item xs={3}>
+                          <Grid item xs={2}>
                             <ConfirmDialog
                               title="Supprimer"
-                              children="Etes-vous sûr que vous voulez supprimer?"
+                              children="Etes-vous sûr de vouloir le désactiver?"
                               txtCancel="Non"
                               txtConfirm="Oui"
-                              icon={<DeleteForeverOutlinedIcon />}   
+                              icon={<DeleteForeverOutlinedIcon className='app-icon'/>}   
                               callbackFunc={deleteDuree} 
                               callbackData={item.id}                                
                             />   
@@ -182,7 +184,7 @@ return (
            <div className="text-start mb-2">
                Ajouter une Durée&nbsp;&nbsp;&nbsp; 
                <PageAddUpdateDuree
-                    data={ {id: 0, duree: '', prix: ''} }
+                    data={ {id: 0, duree: '', prix: '', estActif: 1 }} 
                     txtConfirm="Ajouter"
                     icon={<AddCircleOutlineIcon />}
                     callbackFunc={addDuree}
@@ -192,7 +194,8 @@ return (
         </Grid> 
       </Grid>      
       <Snackbar sx={{marginTop: 14, marginLeft: 19}} 
-          open={open} 
+          open={openSnackBar} 
+          onClose={handleCloseSnack}
           autoHideDuration={3000} 
           anchorOrigin={{vertical: 'top', horizontal: 'center'}} 
       >

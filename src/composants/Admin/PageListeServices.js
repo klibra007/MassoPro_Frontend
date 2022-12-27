@@ -244,12 +244,12 @@ export default function PageListeServices() {
                                 <TableCell >{srv.nomService}</TableCell>
                                 <TableCell>{srv.description}</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                                    {srv.estActif === 1 ? (<Link onClick={() => handleDisableService()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                    ) : (<Link onClick={() => handleEnableService()}><HighlightOffIcon /></Link>)
+                                    {srv.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className="app-icon app-icon-active" onClick={() => handleDisableService()}/>
+                                     : <HighlightOffIcon className="app-icon app-icon-inactive" onClick={() => handleEnableService()}/>
                                     }
-                                    <Link onClick={() => handleModifyService(srv)}><EditIcon className='idPointerMouse' /></Link>
+                                    <EditIcon className='app-icon' onClick={() => handleModifyService(srv)}/>
                                     {/* <Link href='/admin/services/form'><EditIcon /></Link> */}
-                                    <Link onClick={() => handleConfirmDeleteService(srv)}><DeleteForeverOutlinedIcon className='idPointerMouse' /></Link>
+                                    <DeleteForeverOutlinedIcon className='app-icon' onClick={() => handleConfirmDeleteService(srv)}/>
                                 </TableCell>
                             </TableRow>
                         )

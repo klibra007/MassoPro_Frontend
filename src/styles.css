@@ -1,3 +1,51 @@
+body{
+    background-color: #faf8ed !important;
+}
+
+/* #idFooter{
+    background-color: #CB997E;
+    color: burlywood;
+} */
+
+/* #idHeader{ */
+    /* background-color: #6B705C; */
+    /* background-color: #CB997E; */
+    /* background-color: #DDBEA9;
+} */
+
+/* #idHeader p{
+   color: aqua;
+} */
+
+.navbar{
+    /* background-color: #CB997E !important; */
+    /* background-color: #6B705C !important; */
+    background-color: rgb(253, 237, 237);
+    
+ 
+}
+
+.navbar .navbar-brand{
+    color: violet;
+}
+
+.navbar .navbar-brand:hover{
+    color: rgb(164, 130, 238);
+}
+
+.navbar .nav-link{
+    color: #f918cc;
+}
+
+.navbar .nav-link:hover{
+    color: #18f945;
+}
+
+.admin-menu li {
+    list-style-type: none;
+    text-align: left;
+
+}
 .mleft-6 { margin-left: 6px; }
 .mleft-16 { margin-left: 16px; }
 .mleft-40 { margin-left: 40px; }
@@ -10,14 +58,128 @@
 .text-aleft { text-align: left; }
 .text-aright { text-align: right; }
 
+
+.app-icon{
+    cursor: pointer;
+    color: #82654e;
+    margin: 0px 10px;
+}
+
+.app-icon.app-icon-active{
+    color: green;
+}
+
+.app-icon.app-icon-inactive{
+    color: gray;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
 .MuiTableCell-head { font-weight: bold !important;}
 
 .searchBox {width: 60%;}
+.dureeTextField {text-align: center;}
 
-.idPointerMouse{
-    cursor: pointer;
+.MuiButton-root {border: 1px solid #666 !important; }
+
+.primary-button {    
+    background-color: brown !important;
+    color: white !important;
 }
 
-.cardReservation{
+.MuiTextField-root .MuiOutlinedInput-input{
+    border-color:  brown;
+    border-style: solid;
+    border-width: 3px;    
+}
+
+.MuiTextField-root label{
+    padding: 7px;
+    background-color: white;
+}
+
+.cardReservation {
     height: "150px";
+}
+
+/* Generic button styling */
+
+.MuiButtonBase-root, 
+.btn.btn-primary,
+.MuiDialogActions-root .MuiButtonBase-root {
+    background-color:#a98467;
+    border-radius: 5;
+    border-color: #a38055;
+    color: white;
+}
+
+.MuiButtonBase-root:hover, 
+.btn.btn-primary:hover,
+.MuiDialogActions-root .MuiButtonBase-root:hover  {
+    background-color:#82654e;
+    border-color: #a38055;
+}
+
+.App .MuiButtonBase-root:active, 
+.App .btn.btn-primary:active, 
+.App :not(.btn-check) + .btn:active, 
+.MuiDialogActions-root .MuiButtonBase-root:active {
+    background-color:#534c30;
+    border-color: #a38055;
+}
+
+.MuiButtonBase-root.btn-secondary{
+    background-color: #6c757d;
+}
+
+.MuiButtonBase-root.btn-secondary:hover{
+    background-color:#5c636a;
+}
+
+
+
+
+/* End Generic button styling */
+
+/* Available times for booking in PageReservation */
+
+.MuiBox-root .MuiButtonBase-root, .btn.btn-primary {
+    background-color:#c3a188;
+    border-color: #a38055;
+}
+
+.MuiBox-root .MuiButtonBase-root:hover, .App .btn.btn-primary:hover {
+    background-color:#82654e;
+    border-color: #a38055;
+}
+
+/* End Available times for booking in PageReservation */
+
+/* Calendar */
+.App .MuiPickersDay-root:active{
+    background-color:#82654e; 
+}
+
+.App .MuiPickersDay-root.Mui-selected{
+    background-color:#82654e;
+}
+
+.App .MuiPickersDay-root.Mui-selected:hover, 
+.App .MuiPickersDay-root:focus.Mui-selected{
+    background-color:#82654e;
+}
+
+/* End Calendar */
+
+
+
+.MuiButtonBase-root.MuiToggleButton-root.Mui-selected {
+    background-color: #c3a188;
+    color: white;
+}
+
+.MuiButtonBase-root.MuiToggleButton-root.Mui-selected:hover {
+    background-color: #a98467;
 }

@@ -3,6 +3,8 @@ import Stack from 'react-bootstrap/Stack';
 import { Grid } from '@mui/material';
 import Link from '@mui/material/Link'; 
 import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { 
     Button,
     Dialog,
@@ -16,6 +18,7 @@ export default function PageAddUpdateDuree(props) {
 
     const [duree, setDuree] = useState(data.duree);
     const [prix, setPrix] = useState(data.prix);    
+    const [estActif, setEstActif] = useState(data.estActif);    
 
     const [dureeError, setDureeError] = useState('');       
     const [prixError, setPrixError] = useState('');           
@@ -27,6 +30,11 @@ export default function PageAddUpdateDuree(props) {
          cancelForm();
       }
     }
+
+    const handleChangeActif = (event, newActif) => {
+       // console.log("newActif="+newActif);
+       setEstActif(newActif);
+    }
     
     const resetFormError = () => {
         setDureeError('');
@@ -36,6 +44,7 @@ export default function PageAddUpdateDuree(props) {
     const resetForm = () => {
        setDuree('');
        setPrix('');
+       setEstActif(1);
     }
     
     const cancelForm = () => {
@@ -48,6 +57,7 @@ export default function PageAddUpdateDuree(props) {
            // Modify mode. Restore previous input values
            setDuree(data.duree);
            setPrix(data.prix);
+           setEstActif(data.estActif);
         }
 
         setOpen(false);    // close popup
@@ -82,8 +92,11 @@ export default function PageAddUpdateDuree(props) {
     const submitHandler = (event) => {
         if (validateForm()) {
            event.preventDefault();
-           let saveDuree=duree;
-           let savePrix=prix;
+           let data = {
+             "duree": duree,
+             "prix": prix,
+             "estActif": estActif
+           }     
 
            resetForm();
            setOpen(false);  // close popup
@@ -91,10 +104,10 @@ export default function PageAddUpdateDuree(props) {
            // Callback function with parameters add data
            if (props.data.id === 0) {
               // Add
-              callbackFunc(saveDuree, savePrix);   
+              callbackFunc(data);   
            } else {
               // Update
-              callbackFunc(props.data.id, saveDuree, savePrix);               
+              callbackFunc(props.data.id, data);               
            }
         } 
     }     
@@ -114,7 +127,8 @@ export default function PageAddUpdateDuree(props) {
         > 
           <DialogTitle id='dialog-title'>Ajouter une durée</DialogTitle>
           <DialogContent>
-            <Grid container direction="column" spacing={2}>
+            <Grid container direction="column">
+               <Grid item>Durée</Grid>            
                <Grid item xs={6}>
                  <TextField
                     error={dureeError && dureeError.length ? true : false }
@@ -122,29 +136,37 @@ export default function PageAddUpdateDuree(props) {
                     id="formDuree"
                     type="number"
                     size='small'
-                    label="Durée"
-                    value={duree}      
-                    margin="dense"               
+                    value={duree}                   
                     onChange={(e) => {setDuree(e.target.value);}}
-                    InputLabelProps={{ shrink: true }}
+                    className="mb-2"
                     helperText={dureeError}   
                   />                     
                </Grid>
+               <Grid item>Prix</Grid>                  
                <Grid item xs={6}>
-               <TextField
+                  <TextField
                     error={prixError && prixError.length ? true : false }
                     required
                     id="formPrix"
                     type={'number'}
                     size='small'
-                    label="Prix"
                     value={prix}
-                    margin="dense"  
                     onChange={(e) => {setPrix(e.target.value);}}
-                    InputLabelProps={{ shrink: true }}
+                    className="mb-3"                    
                     helperText={prixError}   
-                />                 
+                  />                 
                </Grid>
+               <Grid item>État d'activité</Grid>   
+               <ToggleButtonGroup
+                  color="primary"
+                  value={estActif}
+                  exclusive
+                  onChange={handleChangeActif}
+                  aria-label="Duree Actif"
+               >
+                  <ToggleButton value={1} aria-label="1">Actif</ToggleButton>
+                  <ToggleButton value={0} aria-label="0">Non Actif</ToggleButton>
+               </ToggleButtonGroup>               
             </Grid>               
           </DialogContent> 
           <DialogActions>   
