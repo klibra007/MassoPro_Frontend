@@ -545,3 +545,8 @@ body {
 .MuiButtonBase-root.MuiToggleButton-root.Mui-selected:hover {
     background-color: #a98467;
 }
+
+
+.cursor-default {
+    cursor: default;
+}

@@ -14,7 +14,7 @@ import PageClientForm from './Admin/PageClientForm';
 import PageListeServices from './Admin/PageListeServices';
 import PageServiceForm from './Admin/PageServiceForm';
 import PageListeDurees from './Admin/PageListeDurees';
-import PageDureeForm from './Admin/PageDureeForm';
+// import PageDuree from './Admin/PageDuree';
 import PageListeDisponibilites from './Admin/PageListeDisponibilites';
 import PageProfil from './PageProfil';
 
@@ -38,7 +38,7 @@ export default function Main() {
         <Route path='/admin/services' element={<PageListeServices />}></Route>        
         <Route path='/admin/services/form' element={<PageServiceForm />}></Route>
         <Route path='/admin/durees' element={<PageListeDurees />}></Route>
-        <Route path='/admin/durees/form' element={<PageDureeForm />}></Route>
+      {/*  <Route path='/admin/durees/form' element={<PageDureeForm />}></Route>   */}
       </Routes>
       {/* <PageListeServices/> */}
     </div>

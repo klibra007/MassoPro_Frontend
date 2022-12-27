@@ -76,6 +76,7 @@ export default function FullScreenDialog(props) {
     };
 
     const handleChoixActivation = (event, newChoix) => {
+        // console.log("newChoix="+newChoix);
         props.setChoixActivation(newChoix);
     };
 
