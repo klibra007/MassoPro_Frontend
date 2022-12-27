@@ -30,7 +30,7 @@ const ConfirmDialog = (props) => {
       <DialogActions>
         <Button
           onClick={closeDialog}
-          className="btn-secondary"
+          className="btn btn-secondary"
         >{txtCancel}</Button>
         <Button
           variant="contained"

@@ -1,3 +1,4 @@
+import '../../styles.css';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Grid } from '@mui/material';
@@ -26,11 +27,9 @@ import {
     DialogContent,
     DialogContentText
 } from '@mui/material'
-
-
-import '../../styles.css';
-
-
+import PageEditDureeForm from './PageEditDureeForm'
+import PageAddDureeForm from './PageAddDureeForm'
+import ConfirmDialogDelIcon from '../ConfirmDialogDelIcon'
 
 import axios from 'axios';
 import AdminMenu from './AdminMenu';
@@ -67,8 +66,8 @@ export default function PageListeDurees() {
         console.log("Add Duree")
     }
 
-    const handleAddDuree = () => {
-        console.log("Add Duree")
+    const addDuree = (duree, prix) => {
+        console.log("Add Duree. duree="+duree+" prix="+prix)
     }
 
     const handleDisableDuree = () => {
@@ -80,15 +79,9 @@ export default function PageListeDurees() {
         console.log("Enable duree")
     }
 
-    const handleModifyDuree = (index) => {
-        console.log("Modify duree");
-        console.log(dureesTab[index]);
-        setCurrentDuree(index);
-    }
-    const updateDuree = (event) => {
-        console.log("UpdateDuree OnChange: ", event.target.value);
-        dureesTab[currentDuree].duree = event.target.value;
-        setDureesTab(dureesTab);
+
+    const updateDuree = (id, newDuree, newPrix) => {
+        console.log("Update duree. id="+id+" duree="+newDuree+" prix="+newPrix)  
     }
 
     const updatePrix = (event) => {
@@ -96,25 +89,7 @@ export default function PageListeDurees() {
         dureesTab[currentDuree].prix = event.target.value;
         setDureesTab(dureesTab);
     }
-
-    const handleSaveDuree = () => {
-        console.log("Save duree");
-        const duree = dureesTab[currentDuree];
-        console.log("Duree: ", duree);
-        axios.put(strNomApplication + '/' + duree.id, duree)
-            .then((response) => {
-                console.log("La réponse : ", response.data);
-                if (response.data.status === true) {
-                    setCurrentDuree(null);                 
-                }
-                else {
-                    alert(response.data.message);
-                }
-            })
-            .catch(error => alert(error))
-
-    }
-
+    
     const handleNewDureeTextFieldChangeDuree = (event) => {
         console.log("New Duree OnChange: ", event.target.value);
         newDuree.duree = event.target.value;
@@ -253,17 +228,13 @@ export default function PageListeDurees() {
                                         : duree.prix}
                                 </TableCell>
                                 <TableCell className="text-center" sx={{ whiteSpace: 'nowrap' }}>
-                                    {/* {duree.estActif === 1 ? (<Link onClick={() => handleDisableDuree()}><CheckCircleOutlineOutlinedIcon /></Link>
-                                    ) : (<Link onClick={() => handleEnableDuree()}><HighlightOffIcon /></Link>)
-                                    } */}
-                                    {/* <Link onClick={() => handleModifyDuree()}><EditIcon /></Link> */}
-                                    {(currentDuree === index) ?
-                                        <SaveIcon className="app-icon" onClick={() => handleSaveDuree(index)}/>
-                                        :
-                                        <EditIcon className="app-icon" onClick={() => handleModifyDuree(index)}/>
-                                    }
-
-                                    <DeleteForeverOutlinedIcon className="app-icon" onClick={() => handleConfirmDeleteDuree(duree)}/>
+                                  <PageEditDureeForm
+                                     id={duree.id}
+                                     duree={duree.duree}
+                                     prix={duree.prix}
+                                     callbackFunc={updateDuree}
+                                  /> 
+                                    <Link onClick={() => handleConfirmDeleteDuree(duree)}><DeleteForeverOutlinedIcon /></Link>
                                 </TableCell>
                             </TableRow>
                         )
@@ -303,7 +274,11 @@ export default function PageListeDurees() {
                         />
                     </div> */}
                     <div className="text-start mleft-16 mtop-40 mb-3">
-                        <h5>Créer une nouvelle durée  <AddCircleOutlineIcon className="app-icon" pl={5} onClick={() => { setOpenNew(true) }}/></h5>
+                        <h5>Créer une nouvelle durée  &nbsp;&nbsp;&nbsp; 
+                          <PageAddDureeForm
+                              callbackFunc={addDuree}
+                          />
+                        </h5>
                     </div>
                     <ListeDurees />
                 </Grid>

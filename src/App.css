@@ -62,10 +62,15 @@
   color: white;
 } */
 
-#idMain, #idContainerInscription {
+#idMain{
   min-height: 80vh;
   
   background: linear-gradient(whitesmoke, #ccd5ae);
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+#idContainerInscription {
   padding-top: 20px;
   padding-bottom: 30px;
 }
@@ -94,11 +99,11 @@
   background-image: url("../images/head1.jpg");
 }
 
-#idAccueilNonConnecte {
+/* #idAccueilNonConnecte {
   /* height: 222vh; */
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   /* background-image: url(C:\Users\stephanie\Masso\MassoPro_Frontend\images\head.jpg); */
-}
+/* } */ 
 
 #services {
   min-height: 350px;

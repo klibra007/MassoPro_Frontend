@@ -8,6 +8,7 @@ import { setTabReservation, selectTabReservation } from '../app/features/reserva
 import { selectConnexionData } from '../app/features/connexionSlice';
 import { useNavigate } from 'react-router-dom';
 import { getYear } from 'date-fns';
+import { Paper, Grid } from '@mui/material';
 
 export default function PageVosReservations() {
   const tabReservations = useSelector(selectTabReservation);
@@ -44,6 +45,8 @@ export default function PageVosReservations() {
       console.log("length" + tabReservations.length)
       return tabReservations.map(rdv => {
         return (
+       
+  
           <div key={rdv.reservation}>
             <br/>
             <ReservationCard  date={rdv.date} idPersonnel={`${rdv.prenom} ${rdv.nom}`} idService={rdv.nomService} duree={`${rdv.duree} mn`} prix={`${rdv.prix}`} reservation={rdv.reservation} heure={rdv.heureDebut} />
@@ -51,6 +54,8 @@ export default function PageVosReservations() {
             <Button className="mright-16" variant="primary">Modifier</Button> <br /><br /><br />*/}
             <br />
           </div>
+      
+      
         )
       }
       )
@@ -74,17 +79,25 @@ export default function PageVosReservations() {
 
   return (
     <Container className={"m-5 mx-auto"}>
+      {/* <Grid container>
+      <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
+          <Paper className='whitesmoke p-20'> */}
       <Row className='justify-content-center'>
-        <Col xs={6}>
-          <h4 className="mb-3 justify-content-center" id="titleMsg">Vos réservations</h4>
+        <Col xs={4}>
+          <h4 className=" justify-content-center mtop-20"  id="titleMsg">Vos réservations</h4>
           <Reservation />
         </Col>
       </Row>
+      {/* </Paper> */}
       <Row className='justify-content-center'>
         <Col>
-          <Button onClick={handleClickRetour} variant="primary">Retour à l'accueil</Button>
+          <Button className="mtop-40" onClick={handleClickRetour} variant="primary">Retour à l'accueil</Button>
         </Col>
       </Row>
+{/*       
+      </Grid>
+      </Grid> */}
     </Container>
   )  
 }  

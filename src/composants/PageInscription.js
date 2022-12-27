@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Container, Button, Row, Col, Form, ButtonGroup } from 'react-bootstrap';
+import { Button, Row, Col, Form, ButtonGroup } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
-import Box from '@mui/material/Box';
+import {Box, Paper, Container, Grid} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import FilledInput from '@mui/material/FilledInput';
@@ -21,13 +21,19 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { textAlign } from '@mui/system';
 import FormulaireClient from './FormulaireClient';
 
+
 export default function PageInscription() {
     let strDossierServeur = "https://dev.pascalrocher.com";
     let strNomApplication = strDossierServeur + "/api/auth/register";
     const profil = false;
     return (
-        <Box id='idContainerInscription'
-            className='mt-5'
+        <Container>
+            <Grid container>
+            <Grid item xs={2}></Grid>
+                <Grid item xs={8}>
+                <Paper   sx={{backgroundColor: "whitesmoke"}}>
+        <Box id='idContainerInscription' 
+            className='mt-5 p-20 mb-40'
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '35ch' },
@@ -37,10 +43,16 @@ export default function PageInscription() {
         /*flexDirection={'column'}
         flexWrap={'wrap'}*/
         >
+            
             <div className="mb-3">
                 <h4>S'incrire</h4>
             </div>
             <FormulaireClient strNomApplication={strNomApplication} profil={profil} />
-        </Box>
+            </Box>
+            </Paper>
+        
+        </Grid>
+        </Grid>
+        </Container>
     )
 }  

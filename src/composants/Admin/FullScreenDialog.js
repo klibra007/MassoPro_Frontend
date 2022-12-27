@@ -238,7 +238,7 @@ export default function FullScreenDialog(props) {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="outline-secondary" onClick={handleClose}>
                         Annuler
                     </Button>
                     <Button variant="primary" onClick={props.modificationService === false ? props.handleAddService : props.handleValidateModification} >
@@ -307,7 +307,7 @@ export default function FullScreenDialog(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={props.boolModificationClient ? handleClose4 : handleClose2}>
+                    <Button variant="outline-secondary" onClick={props.boolModificationClient ? handleClose4 : handleClose2}>
                         Annuler
                     </Button>
                     <Button variant="primary" onClick={props.boolModificationClient ? handleClickModifier : handleClickAjouter}>
@@ -339,7 +339,7 @@ export default function FullScreenDialog(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose3}>
+                    <Button variant="outline-secondary" onClick={handleClose3}>
                         Annuler
                     </Button>
                     <Button variant="primary" onClick={props.handleValidateActiveClient}>

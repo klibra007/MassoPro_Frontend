@@ -79,7 +79,7 @@ export default function PageConnexion() {
                     <Form>
                         <div className="mb-5">
                             {/* <h4>Page de connexion</h4> */}
-                            <p> Veuillez saisir votre adresse e-mail client et mot de passe pour continuer.</p>
+                            <p> Veuillez saisir votre adresse e-mail et mot de passe pour continuer.</p>
                         </div>
                         <Form.Group className="mb-3">
                             <Form.Control type='email' id="formCourriel" placeholder='Votre courriel' value={courriel} className="input-border" onChange={handleChangeCourriel} required />

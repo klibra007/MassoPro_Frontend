@@ -23,7 +23,7 @@ export default function PageRdvConfirme({ numeroReservation }) {
       <Row className='justify-content-center'>
         <Col xs={8}>
           <Form>
-          <Paper className="p20">
+          <Paper className="p-20">
                 <Card className="text-aleft mb-2">
                   <Card.Header className='p-2'>
                     {nomServiceChoisi}<br />

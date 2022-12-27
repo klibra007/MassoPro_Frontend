@@ -82,7 +82,7 @@ export default function PageConfirmationRdv() {
           <Col xs={12}>
             
             <Form>
-            <Paper className="p20">
+            <Paper className="p-20">
               <Card className="text-aleft">
                 <Card.Header className='p-2'>
                   Service: {nomServiceChoisi}<br />

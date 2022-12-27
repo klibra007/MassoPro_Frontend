@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #faf8ed !important;
 }
 
@@ -16,8 +16,9 @@ body{
     margin-top: 0px;
     font-weight: bold;
     color: white;
-  }
-#idHeader{ 
+}
+
+#idHeader {
     /* background-color: #6B705C; */
     /* background-color: #CB997E; */
     /* background-color: #DDBEA9; */
@@ -26,27 +27,27 @@ body{
 }
 
 /* .navbar{ */
-    /* background-color: #CB997E !important; */
-    /* background-color: #6B705C !important; */
-    /* background-color: rgb(253, 237, 237); */
-    /* background-color: #F0EFEB; */
+/* background-color: #CB997E !important; */
+/* background-color: #6B705C !important; */
+/* background-color: rgb(253, 237, 237); */
+/* background-color: #F0EFEB; */
 /* } */
 
-.navbar .navbar-brand{
+.navbar .navbar-brand {
     padding-top: 20px;
     color: white;
 }
 
-.navbar .navbar-brand:hover{
+.navbar .navbar-brand:hover {
     color: #ccd5ae;
 }
 
-.navbar .nav-link{
+.navbar .nav-link {
     padding-top: 25px;
     color: white;
 }
 
-.navbar .nav-link:hover{
+.navbar .nav-link:hover {
     color: #ccd5ae;
 }
 
@@ -55,76 +56,208 @@ body{
     text-align: left;
 
 }
-.mleft-6 { margin-left: 6px; }
-.mleft-16 { margin-left: 16px; }
-.mleft-40 { margin-left: 40px; }
 
-.mtop-10 { margin-top: 10px; }
-.mtop-20 { margin-top: 20px; }
-.mtop-40 { margin-top: 40px; }
-.mtop-100 { margin-top: 200px; }
+.mleft-6 {
+    margin-left: 6px;
+}
 
-.mb-20 {margin-bottom: 20px;}
+.mleft-16 {
+    margin-left: 16px;
+}
 
-.p20 { padding: 20px;}
+.mleft-40 {
+    margin-left: 40px;
+}
 
-.text-aleft { text-align: left; }
-.text-aright { text-align: right; }
+.mtop-10 {
+    margin-top: 10px;
+}
+
+.mtop-20 {
+    margin-top: 20px;
+}
+
+.mtop-40 {
+    margin-top: 40px;
+}
+
+.mtop-100 {
+    margin-top: 200px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.text-aleft {
+    text-align: left;
+}
+
+.text-aright {
+    text-align: right;
+}
+
+
+.whitesmoke {
+    background-color: whitesmoke;
+}
 
 .nowrap {
     white-space: nowrap;
 }
 
+.MuiTextField-root .MuiOutlinedInput-input {
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 1px;
+}
 
-.App .input-border:focus, 
+.MuiTextField-root label {
+    color: #888;
+    padding: 1px 7px;
+    background-color: whitesmoke;
+}
+
+
+.App .input-border:focus,
 .App .form-select:focus,
-.modal-dialog .form-control:focus, .form-control:focus{
+.modal-dialog .form-control:focus,
+.form-control:focus {
     border-color: #82654e;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(90, 72, 32, 0.6);
 }
 
-.App .MuiInputBase-input.MuiOutlinedInput-input:focus {
+.App .MuiInputBase-input.MuiOutlinedInput-input:focus,
+.App .MuiInputBase-input.MuiOutlinedInput-input:focus-visible,
+.App .MuiInputBase-input.MuiOutlinedInput-input:focus-within {
     border-color: #82654e;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(90, 72, 32, 0.6);
+    outline: 0;
+
 }
-.app-icon{
+
+
+/* Hides the border of field including show password icon */
+
+
+
+.App .show-password-icon div:focus-within fieldset{
+    border-width: 0px !important;
+    
+}
+
+.App .MuiOutlinedInput-notchedOutline,
+.App .MuiOutlinedInput-notchedOutline:focus {
+    border-width: 0px;
+}
+
+/* .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
+    border-color: purple;
+  } */
+
+.App .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #82654e;
+}
+
+.App .MuiFormLabel-root.MuiInputLabel-root.Mui-focused {
+    color: #82654e;
+}
+
+
+/* For text above checkboxes in FormulaireClient.js */
+
+.legend {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    padding: 0;
+    position: relative;
+}
+
+
+  /* If using FormLabel component="legend"*/
+.App .MuiFormLabel-root.Mui-focused {
+    /* color: rgba(0, 0, 0, 0.87); */
+    color: #888;
+}
+
+/* End For text above checkboxes in FormulaireClient.js */
+
+
+/* Checkboxes */
+
+.App .MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+    background-color: transparent;
+}
+
+.App .MuiSvgIcon-root {
+    color: #82654e;
+
+}
+
+.App .MuiSvgIcon-root:hover {
+    color: #c3a188;
+
+}
+
+.App .MuiBox-root .MuiButtonBase-root.MuiCheckbox-root,
+.App .MuiBox-root .MuiButtonBase-root.MuiCheckbox-root:hover {
+    background-color: transparent;
+}
+
+/* End Checkboxes */
+
+
+.app-icon {
     cursor: pointer;
     color: #82654e;
     margin: 0px 10px;
 }
 
 
-.app-icon.app-icon-active{
+.app-icon.app-icon-active,
+.app-icon.app-icon-active:hover{
+    cursor:unset;
     color: green;
 
 }
 
-.app-icon.app-icon-inactive{
+.app-icon.app-icon-inactive,
+.app-icon.app-icon-inactive:hover {
+    cursor:unset;
     color: gray;
 }
 
-.MuiTableCell-head { font-weight: bold !important;}
-
-.searchBox {width: 60%;}
-.dureeTextField {text-align: center;}
-
-.MuiButton-root {border: 1px solid #666 !important; }
-
-.primary-button {    
-    background-color: brown !important;
-    color: white !important;
+.MuiTableCell-head {
+    font-weight: bold !important;
 }
 
-.MuiTextField-root .MuiOutlinedInput-input{
-    border-color:  brown;
-    border-style: solid;
-    border-width: 3px;    
+.searchBox {
+    width: 60%;
 }
 
-.MuiTextField-root label{
-    padding: 7px;
-    background-color: white;
+.dureeTextField {
+    text-align: center;
 }
+
+.MuiButton-root {
+    border: 1px solid #666 !important;
+}
+
+
+
+
 
 .cardReservation {
     height: "150px";
@@ -132,36 +265,41 @@ body{
 
 /* Generic button styling */
 
-.MuiButtonBase-root, 
+.MuiButtonBase-root,
 .btn.btn-primary,
 .MuiDialogActions-root .MuiButtonBase-root {
-    background-color:#a98467;
+    background-color: #a98467;
     border-radius: 5;
     border-color: #a38055;
     color: white;
 }
 
-.MuiButtonBase-root:hover, 
+.MuiButtonBase-root:hover,
 .btn.btn-primary:hover,
-.MuiDialogActions-root .MuiButtonBase-root:hover  {
-    background-color:#82654e;
+.MuiDialogActions-root .MuiButtonBase-root:hover {
+    background-color: #82654e;
     border-color: #a38055;
 }
 
-.App .MuiButtonBase-root:active, 
-.App .btn.btn-primary:active, 
-.App :not(.btn-check) + .btn:active, 
+.App .MuiButtonBase-root:active,
+.App .btn.btn-primary:active,
+.App :not(.btn-check)+.btn:active,
 .MuiDialogActions-root .MuiButtonBase-root:active {
-    background-color:#534c30;
+    background-color: #534c30;
     border-color: #a38055;
 }
 
-.MuiButtonBase-root.btn-secondary{
-    background-color: #6c757d;
+
+.MuiButtonBase-root.btn-secondary {
+    color: #6c757d;
+    background-color: transparent;
 }
 
-.MuiButtonBase-root.btn-secondary:hover{
-    background-color:#5c636a;
+.MuiButtonBase-root.btn-secondary:hover {
+    /* background-color:#5c636a; */
+    /* background-color: rgba(108, 117, 125, 0.298); */
+    color: white;
+    background-color: #6c757d;
 }
 
 
@@ -171,13 +309,15 @@ body{
 
 /* Available times for booking in PageReservation */
 
-.MuiBox-root .MuiButtonBase-root, .btn.btn-primary {
-    background-color:#c3a188;
+.MuiBox-root .MuiButtonBase-root,
+.btn.btn-primary {
+    background-color: #c3a188;
     border-color: #a38055;
 }
 
-.MuiBox-root .MuiButtonBase-root:hover, .App .btn.btn-primary:hover {
-    background-color:#82654e;
+.MuiBox-root .MuiButtonBase-root:hover,
+.App .btn.btn-primary:hover {
+    background-color: #82654e;
     border-color: #a38055;
 }
 
@@ -189,24 +329,26 @@ body{
     color: white;
 } */
 
-.App .MuiPickersDay-root:active{
-    background-color:#82654e; 
+.App .MuiPickersDay-root:active {
+    background-color: #82654e;
 }
 
-.App .MuiPickersDay-root.Mui-selected{
-    background-color:#82654e;
+.App .MuiPickersDay-root.Mui-selected {
+    background-color: #82654e;
 }
 
-.App .MuiPickersDay-root.Mui-selected:hover, 
-.App .MuiPickersDay-root:focus.Mui-selected{
-    background-color:#82654e;
+.App .MuiPickersDay-root.Mui-selected:hover,
+.App .MuiPickersDay-root:focus.Mui-selected {
+    background-color: #82654e;
 }
 
-.MuiPickerStaticWrapper-root .MuiDialogActions-root button:first-child{
-    background-color: #6c757d;
+.MuiPickerStaticWrapper-root .MuiDialogActions-root button:first-child {
+    /* background-color: #6c757d; */
+    color: #6c757d;
+    background-color: transparent;
 }
 
-.MuiPickerStaticWrapper-root .MuiDialogActions-root button:nth-child(2){
+.MuiPickerStaticWrapper-root .MuiDialogActions-root button:nth-child(2) {
     /* font-weight: bold; */
 }
 
@@ -222,4 +364,3 @@ body{
 .MuiButtonBase-root.MuiToggleButton-root.Mui-selected:hover {
     background-color: #a98467;
 }
-

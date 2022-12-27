@@ -62,7 +62,7 @@ export default function PageChoixDureeMasso() {
             <Row className='justify-content-center'>
                 <Col xs={6}>
                     <Form>
-                        <Paper className="p20">
+                        <Paper className="p-20">
                         <Form.Group>
                             <Form.Control placeholder={nomServiceChoisi} disabled />
                         </Form.Group>

@@ -97,8 +97,8 @@ export default function PageAccueil() {
         } else {
             return <div>
 
-                <div id='idImageAccueilNonConnecte'></div>
-                <div id='idAccueilNonConnecte'>
+                <div id='idImageAccueilNonConnecte' ></div>
+                <div id='idAccueilNonConnecte' className='whitesmoke'>
                     <p style={{ fontWeight: "bold", fontSize: "20px" }}> La massothérapie est l’une des plus anciennes thérapies existantes pour traiter ou soulager les douleurs physiques. Elle réunit différentes techniques manuelles pour relaxer les groupes musculaires.</p>
                     <Button
                         style={{ backgroundColor: "#a98467", borderColor: "#a98467" }}
