@@ -76,7 +76,8 @@
   #therap1 {
     height: 400px;
     /* background-image: url('../images/therapi.jpg'); */
-    background-image: url('../images/therap2-male2.jpg');
+    /* background-image: url('../images/therap2-male2.jpg'); */
+    background-image: url('../images/therap4-male2-400H.png');
     
     width: 700px;
     margin: 20px;
@@ -85,7 +86,7 @@
   #therap2 {
     height: 400px;
     /* background-image: url('../images/therap3.jpg'); */
-    background-image: url('../images/therap2-female2.jpg');
+    background-image: url('../images/therap2-female2-700.png');
     width: 700px;
     margin: 20px;
   }
@@ -94,7 +95,8 @@
    
     height: 400px;
     /* background-image: url('../images/therap4.jpg'); */
-    background-image: url('../images/therap4-male.jpg');
+    /* background-image: url('../images/therap4-male.jpg'); */
+    background-image: url('../images/therap4-male1-700W.png');
     
     width: 700px;
     margin: 20px;
@@ -105,7 +107,7 @@
    
     height: 400px;
     /* background-image: url('../images/therap5.jpg'); */
-    background-image: url('../images/therap-male.jpg');
+    background-image: url('../images/therap-male-150PRCT-CRPD.png');
     width: 700px;
     margin: 20px;
   
@@ -510,7 +512,10 @@ body {
 }
 
 .App .MuiPickersDay-root.Mui-selected {
-    background-color: #82654e;
+    /* background-color: #ccd5ae; */
+    /* background-color: #82654e; */
+    background-color: #a98467;
+    
 }
 
 .App .MuiPickersDay-root.Mui-selected:hover,
