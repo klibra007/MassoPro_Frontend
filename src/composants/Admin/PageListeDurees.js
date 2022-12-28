@@ -183,12 +183,12 @@ const ListeDurees = () => {
 return (
     <Container>
       <Grid container className='justify-content-center mtop-10'>
-        <Grid item xs={8}>
+        <Grid item xs={10}>
            <div className="text-start mb-4">
               <h4>Durée</h4>
            </div>     
            <div className="text-start mb-2">
-               Ajouter une Durée
+               Ajouter une Durée 
                <PageAddUpdateDuree
                     data={ {id: 0, duree: '', prix: '', estActif: 1 }} 
                     txtConfirm="Ajouter"

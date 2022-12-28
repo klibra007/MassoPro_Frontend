@@ -113,8 +113,8 @@ export default function PageAddUpdateDuree(props) {
     }     
    
     return (
-      <Container xs={10}>
-        <Link   
+      <>
+        <Link pl={5}
             onClick={handleClickOpen}
         >{icon}</Link> 
 
@@ -123,9 +123,15 @@ export default function PageAddUpdateDuree(props) {
            onClose={handleClose}
            disableEscapeKeyDown={true}  // Disable ESC key
            aria-labelledby='dialog-title'
-           aria-describedby='dialog-description'   
+           aria-describedby='dialog-description'  
+           PaperProps={{
+            sx: {
+               width: "30%",
+               maxHeight: 450
+            }
+         }} 
         > 
-          <DialogTitle id='dialog-title'>Ajouter une durée</DialogTitle>
+          <DialogTitle id='dialog-title'>{props.data.id === 0 ? "Ajouter" : "Modifier"} une durée</DialogTitle>
           <DialogContent>
             <Grid container direction="column">
                <Grid item>Durée</Grid>            
@@ -133,6 +139,7 @@ export default function PageAddUpdateDuree(props) {
                  <TextField
                     error={dureeError && dureeError.length ? true : false }
                     required
+                    fullWidth
                     id="formDuree"
                     type="number"
                     size='small'
@@ -147,6 +154,7 @@ export default function PageAddUpdateDuree(props) {
                   <TextField
                     error={prixError && prixError.length ? true : false }
                     required
+                    fullWidth
                     id="formPrix"
                     type={'number'}
                     size='small'
@@ -184,6 +192,6 @@ export default function PageAddUpdateDuree(props) {
             </Stack>
           </DialogActions>
         </Dialog>                 
-      </Container>            
+      </>            
     )   // end return    
 }   // end function

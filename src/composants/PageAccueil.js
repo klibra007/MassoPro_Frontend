@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { selectAffichageReservation, selectRefresh, setAffichageChoixDureeEtMasso, setAffichageReservation, setRefresh, selectAffichageChoixServices, setAffichageChoixServices } from '../app/features/reservationSlice';
 import { set } from 'date-fns';
 import { Paper } from '@mui/material';
+import AdminMenu from './Admin/AdminMenu';
 
 export default function PageAccueil() {
     const resultat = useSelector(selectConnexionData);
@@ -86,13 +87,16 @@ export default function PageAccueil() {
             return <div>
                 <b>PageAccueil Personnel</b>
                 <p>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</p>
-                <p>Token : {resultat.token.substr(3)}</p>
+                {/* <p>Token : {resultat.token.substr(3)}</p> */}
+                <div id="idImageAccueilPersonnel"></div>
             </div>
         } else if (resultat.idAdministrateur !== null && resultat.idAdministrateur !== undefined) {
             return <div>
                 <b>PageAccueil Admin</b>
                 <p>Bonjour {resultat.prenom}, vous êtes connecté!</p>
-                <p>Token : {resultat.token.substr(3)}</p>
+                {/* <p>Token : {resultat.token.substr(3)}</p> */}
+                <div id="idImageAccueilAdmin"></div>
+                < AdminMenu />
             </div>
         } else {
             return <div>
@@ -130,13 +134,13 @@ export default function PageAccueil() {
 
                             </div>
                             <div id='therapText3'>
-                                <h1> Massage pierres chauffantes </h1>
+                                <h1>  Massage Suédois </h1>
                                 <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
                             </div>
                         </div>
                         <div id='idBloc4'>
                             <div id='therapText4'>
-                                <h1> Massage Suédois </h1>
+                                <h1> Massage pierres chauffantes </h1>
                                 <p> Massage en profondeur ciblé sur les tensions et douleurs ou sur un besoin spécifique. </p>
                             </div>
                             <div id='therap4'>
