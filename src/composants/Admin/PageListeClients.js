@@ -194,6 +194,7 @@ export default function PageListClients() {
                         <TableCell>Prénom</TableCell>
                         <TableCell>Nom</TableCell>
                         <TableCell>Courriel</TableCell>
+                        <TableCell className="text-center">État</TableCell>
                         <TableCell className="text-center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
@@ -209,6 +210,8 @@ export default function PageListClients() {
                                     {client.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className="app-icon app-icon-active" onClick={() => disableClient()} />
                                         : <HighlightOffIcon className="app-icon app-icon-inactive" onClick={() => enableClient()} />
                                     }
+                                </TableCell>    
+                                <TableCell className="text-center nowrap">
                                     <EditIcon className="app-icon" onClick={() => (connexionData.idPersonnel) ? handleModifyClient(client) : handleActivateClient(client)} />
                                     {!connexionData.idPersonnel && <DeleteForeverOutlinedIcon className="app-icon" onClick={() => openInPopup(client)} />}
                                 </TableCell>

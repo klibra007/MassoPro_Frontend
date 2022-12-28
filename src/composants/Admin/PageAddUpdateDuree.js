@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Stack from 'react-bootstrap/Stack';
-import { Grid } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import Link from '@mui/material/Link'; 
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -113,7 +113,7 @@ export default function PageAddUpdateDuree(props) {
     }     
    
     return (
-      <>
+      <Container xs={10}>
         <Link   
             onClick={handleClickOpen}
         >{icon}</Link> 
@@ -172,6 +172,7 @@ export default function PageAddUpdateDuree(props) {
           <DialogActions>   
             <Stack direction="horizontal" gap={2} className='mx-auto mb-2'>
               <Button 
+               className="btn btn-secondary"
                variant="outlined"
                onClick={handleClose}
                >Annuler</Button>
@@ -183,6 +184,6 @@ export default function PageAddUpdateDuree(props) {
             </Stack>
           </DialogActions>
         </Dialog>                 
-      </>            
+      </Container>            
     )   // end return    
 }   // end function

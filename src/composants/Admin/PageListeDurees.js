@@ -122,10 +122,11 @@ const ListeDurees = () => {
                 <TableRow className="text-start" >
                   <TableCell>Minutes</TableCell>
                   <TableCell>Prix</TableCell>
+                  <TableCell className="text-center">État</TableCell>
                   <TableCell>
-                    <Grid container className="text-end">
+                    <Grid container className="text-center">
                       <Grid item xs={10}>
-                         Action
+                         Actions
                       </Grid>
                     </Grid>
                   </TableCell>
@@ -138,13 +139,18 @@ const ListeDurees = () => {
                       <TableCell>{item.duree}</TableCell>
                       <TableCell>{item.prix}</TableCell>   
                       <TableCell>                        
-                        <Grid container className="text-end">
-                          <Grid item xs={7}>
+                        <Grid container className="text-center">
+                          <Grid item xs={12} className="text-center">
                             { item.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className='app-icon app-icon-active cursor-default' />
                               : <HighlightOffIcon className='app-icon app-icon-inactive cursor-default'/>
                             }                            
                           </Grid>
-                          <Grid item xs={3}>
+                          </Grid>
+                          </TableCell>
+                          <TableCell>
+                            <Grid container  xs={8} className="text-center">
+                             <Grid item xs={2}></Grid>   
+                          <Grid item xs={6} className="text-center">
                             <PageAddUpdateDuree
                                data={ {id: item.id, duree: item.duree, prix: item.prix, estActif: item.estActif} }
                                txtConfirm="Sauvegarder"
@@ -177,12 +183,12 @@ const ListeDurees = () => {
 return (
     <Container>
       <Grid container className='justify-content-center mtop-10'>
-        <Grid item xs={5}>
+        <Grid item xs={8}>
            <div className="text-start mb-4">
               <h4>Durée</h4>
            </div>     
            <div className="text-start mb-2">
-               Ajouter une Durée&nbsp;&nbsp;&nbsp; 
+               Ajouter une Durée
                <PageAddUpdateDuree
                     data={ {id: 0, duree: '', prix: '', estActif: 1 }} 
                     txtConfirm="Ajouter"

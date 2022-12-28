@@ -233,6 +233,7 @@ export default function PageListeServices() {
                         <TableCell className="text-center">No service</TableCell>
                         <TableCell className="text-center">Nom service</TableCell>
                         <TableCell className="text-center">Description</TableCell>
+                        <TableCell className="text-center">État</TableCell>
                         <TableCell className="text-center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
@@ -247,6 +248,8 @@ export default function PageListeServices() {
                                     {srv.estActif === 1 ? <CheckCircleOutlineOutlinedIcon className="app-icon app-icon-active" onClick={() => handleDisableService()}/>
                                      : <HighlightOffIcon className="app-icon app-icon-inactive" onClick={() => handleEnableService()}/>
                                     }
+                                </TableCell>
+                                <TableCell className="nowrap">
                                     <EditIcon className='app-icon' onClick={() => handleModifyService(srv)}/>
                                     {/* <Link href='/admin/services/form'><EditIcon /></Link> */}
                                     <DeleteForeverOutlinedIcon className='app-icon' onClick={() => handleConfirmDeleteService(srv)}/>
