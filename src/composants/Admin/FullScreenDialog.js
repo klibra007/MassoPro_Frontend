@@ -206,7 +206,7 @@ export default function FullScreenDialog(props) {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Nom Service</Form.Label>
+                            <Form.Label>Nom du service</Form.Label>
                             <Form.Control
                                 type="text"
                                 defaultValue={props.modificationService === false ? "" : props.serviceSelectionne.nomService}

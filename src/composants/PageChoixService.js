@@ -67,14 +67,18 @@ export default function PageChoixService() {
     if (JSON.stringify(resultat) !== "{}") {
       return servicesTab.map((service) => {
         if (service.estActif === 1) {
-          return <Grid item xs={12} m={0} bgcolor={"yellow"} key={service.id} style={{ height: "250px" }} >
+          return <Grid item xs={12} m={0} bgcolor={"yellow"} key={service.id}  >
             <Card className='h-100' >
               <Card.Header className='text-aleft'>{service.nomService}</Card.Header>
-              <Card.Body>
-                <Card.Text className='text-aleft'>
+              <Card.Body className="reservation-card">
+                <div>
+                  <Card.Text className='text-aleft'>
                   {service.description}
                 </Card.Text>
-                <Button variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
+                </div>
+                <div className="reservation-card-btn">
+                <Button  variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
+                </div>
               </Card.Body>
             </Card>
           </Grid>

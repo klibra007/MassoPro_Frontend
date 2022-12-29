@@ -230,9 +230,9 @@ export default function PageListeServices() {
             <Table className="Table">
                 <TableHead >
                     <TableRow className="text-start" >
-                        <TableCell className="text-center">No service</TableCell>
-                        <TableCell className="text-center">Nom service</TableCell>
-                        <TableCell className="text-center">Description</TableCell>
+                        <TableCell className="text-start">No service</TableCell>
+                        <TableCell className="text-start">Nom service</TableCell>
+                        <TableCell className="text-start">Description</TableCell>
                         <TableCell className="text-center">État</TableCell>
                         <TableCell className="text-center">Actions</TableCell>
                     </TableRow>
@@ -285,7 +285,7 @@ export default function PageListeServices() {
                         />
                     </div> */}
                     <div className="text-start mleft-16 mtop-40 mb-3">
-                        <h5>Créer un nouveau service<Link pl={5} ><AddCircleOutlineIcon className='app-icon' onClick={handleClickOpen} /></Link></h5>
+                        <h5>Ajouter un service<Link pl={5} ><AddCircleOutlineIcon className='app-icon' onClick={handleClickOpen} /></Link></h5>
                     </div>
                     <ListeServices />
                 </Grid>

@@ -184,17 +184,18 @@ return (
     <Container>
       <Grid container className='justify-content-center mtop-10'>
         <Grid item xs={10}>
-           <div className="text-start mb-4">
-              <h4>Durée</h4>
+           <div className="text-start mtop-40 mb-3">
+              <h2>Durée</h2>
            </div>     
-           <div className="text-start mb-2">
-               Ajouter une Durée 
+           <div className="text-start mtop-40 mb-3">
+               <h5>Ajouter une durée
                <PageAddUpdateDuree
                     data={ {id: 0, duree: '', prix: '', estActif: 1 }} 
                     txtConfirm="Ajouter"
                     icon={<AddCircleOutlineIcon />}
                     callbackFunc={addDuree}
-                />                 
+                />     
+                </h5>            
             </div>             
             <ListeDurees />    
         </Grid> 

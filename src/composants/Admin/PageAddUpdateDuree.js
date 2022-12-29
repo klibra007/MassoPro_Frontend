@@ -114,7 +114,7 @@ export default function PageAddUpdateDuree(props) {
    
     return (
       <>
-        <Link pl={5}
+        <Link pl={5} 
             onClick={handleClickOpen}
         >{icon}</Link> 
 
