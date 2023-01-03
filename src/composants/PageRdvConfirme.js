@@ -45,13 +45,13 @@ export default function PageRdvConfirme({ numeroReservation }) {
 
             <Card className="text-aleft mt-2">
               <Card.Header className='p-1'>
-                <Card.Text>Un courriel électronique a été envoyé à 'email' avec touts les détails de la réservation</Card.Text>
+                <Card.Text>Un courriel électronique a été envoyé à 'email' avec tous les détails de la réservation.</Card.Text>
               </Card.Header>
             </Card>
             <Card className="text-aleft mt-2">
               <Card.Header className='p-1'>
                 <Card.Text>Si vous ne le trouvez pas dans votre boite aux lettres sous peu, veuillez vérifier le
-                  dossier des courriers indésirables</Card.Text>
+                  dossier des courriers indésirables.</Card.Text>
               </Card.Header>
             </Card>
             </Paper>
