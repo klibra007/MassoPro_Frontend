@@ -107,27 +107,6 @@
   }
   
   #therap2 {
-    height: 400px;
-    /* background-image: url('../images/therap3.jpg'); */
-    background-image: url('../images/therap4-male2-400H.png');
-   
-    width: 700px;
-    margin: 20px;
-  }
-  
-  #therap3 {
-   
-    height: 400px;
-    /* background-image: url('../images/therap4.jpg'); */
-    /* background-image: url('../images/therap4-male.jpg'); */
-    background-image: url('../images/feet-700W.png');
-    
-    width: 700px;
-    margin: 20px;
-  
-  }
-  
-  #therap4 {
    
     height: 400px;
     /* background-image: url('../images/therap5.jpg'); */
@@ -139,6 +118,27 @@
     width: 700px;
     margin: 20px;
   
+  }
+  
+  
+  #therap3 {
+   
+    height: 400px;
+    /* background-image: url('../images/therap4.jpg'); */
+    /* background-image: url('../images/therap4-male.jpg'); */
+    background-image: url('../images/feet-700W.png');
+    
+    width: 700px;
+    margin: 20px;
+  }
+  
+  #therap4 {
+    height: 400px;
+    /* background-image: url('../images/therap3.jpg'); */
+    background-image: url('../images/therap4-male2-400H.png');
+   
+    width: 700px;
+    margin: 20px;
   }
   
   #therapText1 {

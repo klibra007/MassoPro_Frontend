@@ -58,13 +58,13 @@ export default function PageAccueil() {
                         </Paper>
                     </div>
                     <div id='idBloc2'>
-                        <Paper id='therapText2' elevation={2}>
-                        <h1 className="therapTextTitle"> Massage Suédois </h1>
-                                <p className="therapTextDetail"> Un massage suédois devrait figurer en tête de votre liste si vous cherchez un moyen de vous détendre, ou si vous voulez expérimenter votre premier traitement.
-                                    Il s'agit d'utiliser de longs mouvements et des pressions légères à fermes qui vous donneront une sensation de rajeunissement.
-                                    En général, votre thérapeute utilise cinq techniques : caresses et glissements, pétrissage, frottement, tapotement ou martèlement, et vibration.
-                                    Si vous cherchez à réduire les tensions ou si vous souffrez d'anxiété, optez sans hésiter pour un massage suédois. </p>
+                    <Paper id='therapText2' elevation={2}>
+                        <h1 className="therapTextTitle"> Massage pierres chaudes </h1>
+                                <p className="therapTextDetail"> Lorsque vous réservez un massage aux pierres chaudes, vous pouvez vous attendre à ce que des pierres lisses et chauffées, faites de roche volcanique, soient placées sur certaines parties de votre corps.
+                                    Les endroits typiques sont la colonne vertébrale, le ventre, la poitrine, le visage, les paumes, les pieds et les orteils pour soulager les tensions musculaires et améliorer le sommeil. Des pierres froides peuvent également être utilisées pour apaiser la peau et calmer les vaisseaux sanguins gonflés. 
+                                </p>
                             </Paper>
+                    
                         <Paper id='therap2' elevation={2}></Paper>
                     </div>
                     <div id='idBloc3'>
@@ -77,13 +77,14 @@ export default function PageAccueil() {
                     </div>
 
                     <div id='idBloc4'>
+                       
                         <Paper id='therapText4' elevation={2}>
-                        <h1 className="therapTextTitle"> Massage pierres chaudes </h1>
-                                <p className="therapTextDetail"> Lorsque vous réservez un massage aux pierres chaudes, vous pouvez vous attendre à ce que des pierres lisses et chauffées, faites de roche volcanique, soient placées sur certaines parties de votre corps.
-                                    Les endroits typiques sont la colonne vertébrale, le ventre, la poitrine, le visage, les paumes, les pieds et les orteils pour soulager les tensions musculaires et améliorer le sommeil. Des pierres froides peuvent également être utilisées pour apaiser la peau et calmer les vaisseaux sanguins gonflés. 
-                                </p>
+                        <h1 className="therapTextTitle"> Massage Suédois </h1>
+                                <p className="therapTextDetail"> Un massage suédois devrait figurer en tête de votre liste si vous cherchez un moyen de vous détendre, ou si vous voulez expérimenter votre premier traitement.
+                                    Il s'agit d'utiliser de longs mouvements et des pressions légères à fermes qui vous donneront une sensation de rajeunissement.
+                                    En général, votre thérapeute utilise cinq techniques : caresses et glissements, pétrissage, frottement, tapotement ou martèlement, et vibration.
+                                    Si vous cherchez à réduire les tensions ou si vous souffrez d'anxiété, optez sans hésiter pour un massage suédois. </p>
                             </Paper>
-                    
                         <Paper id='therap4' elevation={2}></Paper>
                         <div >
 
