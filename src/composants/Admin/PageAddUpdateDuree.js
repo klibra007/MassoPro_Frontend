@@ -177,7 +177,7 @@ export default function PageAddUpdateDuree(props) {
                </ToggleButtonGroup>               
             </Grid>               
           </DialogContent> 
-          <DialogActions>   
+          <DialogActions className='align-self-right'>   
             <Stack direction="horizontal" gap={2} className='mx-auto mb-2'>
               <Button 
                className="btn btn-secondary"

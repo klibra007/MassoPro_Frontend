@@ -549,7 +549,9 @@ body {
     background-color: #6c757d;
 }
 
-
+.align-self-right{
+    align-self: flex-end;
+}
 
 
 /* End Generic button styling */
