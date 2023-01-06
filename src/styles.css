@@ -264,6 +264,11 @@ body {
     text-shadow: 0px 0px 3px black;
 }
 
+.navbar .navbar-brand:focus {
+    color: #aab193;
+    text-shadow: 0px 0px 3px black;
+}
+
 .navbar .nav-link {
     padding-top: 25px;
     color: white;
@@ -272,6 +277,12 @@ body {
 
 .navbar .nav-link:hover {
     color: #ccd5ae;
+    text-shadow: 0px 0px 3px black;
+}
+
+
+.navbar .nav-link:focus {
+    color: #aab193;
     text-shadow: 0px 0px 3px black;
 }
 
