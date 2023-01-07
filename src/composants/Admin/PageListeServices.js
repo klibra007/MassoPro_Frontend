@@ -104,7 +104,7 @@ export default function PageListeServices() {
             }
         })
             .then((response) => {
-                alert("La réponse: " + JSON.stringify(response));
+                //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     getServices();
                     //window.location.reload(false);

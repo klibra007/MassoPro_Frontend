@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Form } from 'react-bootstrap';
-import {  setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
+import { setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -63,26 +63,29 @@ export default function PageChoixDureeMasso() {
                 <Col xs={6}>
                     <Form>
                         <Paper className="p-20">
-                        <Form.Group>
-                            <Form.Control placeholder={nomServiceChoisi} disabled />
-                        </Form.Group>
-                        <div className='text-start mt-4'>Durée</div>
+                            <Form.Group>
+                                <Form.Control placeholder={nomServiceChoisi} disabled />
+                            </Form.Group>
+                            <div className='text-start mt-4'>Durée</div>
 
-                        <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
-                            <option value={0}>Veuillez choisir une durée svp</option>
-                            {dureeTab.map((data) => {
-                                const { id, duree, prix, idService } = data;
-                                return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
-                            })}
-                        </Form.Select>
+                            <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
+                                <option value={0}>Veuillez choisir une durée svp</option>
+                                {dureeTab.map((data) => {
+                                    const { id, duree, prix, estActif } = data;
+                                    if (estActif === 1) {
+                                        return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                    }
 
-                        <div className='text-start mt-3'>Massothérapeute</div>
-                        <Form.Select id='idMasso' onChange={(e) => { handleChangeMasso(e) }}>
-                            <option value={0}>Veuillez choisir un massothérapeute svp</option>
-                            {massoTab.map((masso) => {
-                                return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
-                            })}
-                        </Form.Select>
+                                })}
+                            </Form.Select>
+
+                            <div className='text-start mt-3'>Massothérapeute</div>
+                            <Form.Select id='idMasso' onChange={(e) => { handleChangeMasso(e) }}>
+                                <option value={0}>Veuillez choisir un massothérapeute svp</option>
+                                {massoTab.map((masso) => {
+                                    return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
+                                })}
+                            </Form.Select>
                         </Paper>
                         <Form.Group className="mt-4">
                             <Button variant='primary' onClick={handleClickSuivant}>Suivant</Button>
@@ -91,5 +94,5 @@ export default function PageChoixDureeMasso() {
                 </Col>
             </Row>
         </Container>
-    ) 
+    )
 }  

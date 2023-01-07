@@ -142,13 +142,13 @@ export default function PageListClients() {
     const handleValidateActiveClient = () => {
         let strNomApplication = strDossierServeur + `/api/client/${clientSelectionne.id}`;
 
-        alert("dans activation client " + strNomApplication);
+        //alert("dans activation client " + strNomApplication);
 
         let data = {
             "estActif": choixActivation,
         }
 
-        alert(JSON.stringify(data))
+        //alert(JSON.stringify(data))
 
         axios.put(strNomApplication, JSON.stringify(data), {
             headers: {
@@ -156,7 +156,7 @@ export default function PageListClients() {
             }
         })
             .then((response) => {
-                alert("La réponse: " + JSON.stringify(response));
+                //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     getClients();
                     //window.location.reload(false);

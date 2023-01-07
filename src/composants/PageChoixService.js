@@ -31,8 +31,6 @@ export default function PageChoixService() {
 
   const affichageReservation = useSelector(selectAffichageReservation);
 
-  const refresh = useSelector(selectRefresh);
-
   console.log(resultat);
 
   let strDossierServeur = "https://dev.pascalrocher.com";
@@ -57,6 +55,9 @@ export default function PageChoixService() {
 
   const handleClickReserver = (service) => {
     if (JSON.stringify(resultat) === "{}") {
+      localStorage.setItem('idService', service.id);
+      dispatch(setObjetReservationIdService(service.id));
+      dispatch(setNomServiceChoisi(service.nomService));
       navigate('/connexion');
     }
     else{
@@ -64,7 +65,7 @@ export default function PageChoixService() {
     console.log("dans handleClickReserver : " + JSON.stringify(objReservation));
     dispatch(setAffichageChoixServices(false));
     dispatch(setAffichageChoixDureeEtMasso(true));
-    dispatch(setNomServiceChoisi(service.nomService))
+    dispatch(setNomServiceChoisi(service.nomService));
     }
   }
 
@@ -82,12 +83,13 @@ export default function PageChoixService() {
                 </Card.Text>
                 </div>
                 <div className="reservation-card-btn">
-                <Button  variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
+                <Button variant="primary" onClick={() => { handleClickReserver(service) }}>RÉSERVER</Button>
                 </div>
               </Card.Body>
             </Card>
           </Grid>
         }
+        return null;
       }
       )
 

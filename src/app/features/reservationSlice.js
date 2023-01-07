@@ -20,6 +20,7 @@ const initialState = {
     heureChoisie: {},
     tabReservation: [],
     refresh: false,
+    
 }
 
 export const reservationSlice = createSlice({

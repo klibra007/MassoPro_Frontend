@@ -4,9 +4,12 @@ import { selectNomServiceChoisi, selectDateChoisie, selectPrix } from '../app/fe
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Paper } from '@mui/material';
+import { selectConnexionData } from '../app/features/connexionSlice';
 
 export default function PageRdvConfirme({ numeroReservation }) {
   const nomServiceChoisi = useSelector(selectNomServiceChoisi);
+
+  const connexionData = useSelector(selectConnexionData);
 
   const dateChoisie = useSelector(selectDateChoisie);
 
@@ -45,13 +48,12 @@ export default function PageRdvConfirme({ numeroReservation }) {
 
             <Card className="text-aleft mt-2">
               <Card.Header className='p-1'>
-                <Card.Text>Un courriel électronique a été envoyé à 'email' avec tous les détails de la réservation.</Card.Text>
+                <Card.Text>Un courriel électronique a été envoyé à {<b>{connexionData.courriel}</b>} avec tous les détails de la réservation.</Card.Text>
               </Card.Header>
             </Card>
             <Card className="text-aleft mt-2">
               <Card.Header className='p-1'>
-                <Card.Text>Si vous ne le trouvez pas dans votre boite aux lettres sous peu, veuillez vérifier le
-                  dossier des courriers indésirables.</Card.Text>
+                <Card.Text>Si vous ne le trouvez pas sous peu, veuillez vérifier dans vos courriers indésirables.</Card.Text>
               </Card.Header>
             </Card>
             </Paper>

@@ -11,6 +11,7 @@ function NavBar() {
   const connexionData = useSelector(selectConnexionData);
   const seDeconnecter = () => {
     localStorage.removeItem('connexionData');
+    localStorage.removeItem('idService');
   }
 
   const NavBar = () => {
