@@ -102,7 +102,7 @@ export default function PageConfirmationRdv() {
               </Card>
 
               <Row className='p-1 mt-1'>
-                <Col>Votre réservation n'est pas encore confirmée</Col>
+                <Col>Votre réservation n'est pas encore confirmée.</Col>
               </Row>
               <Row className='p-1 mt-1'>
                 <Col>Veuillez vérifier tous les détails de la réservation ci-dessous avant de continuer.</Col>

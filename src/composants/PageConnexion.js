@@ -98,8 +98,8 @@ export default function PageConnexion() {
                                     </Stack>
 
                                     <div className="mt-4">
-                                        <p>Nouveau? <a href='/inscription' className="mleft-6">Créer un compte</a></p>
-                                        <a href='#'>Mot de passe oublié?</a>
+                                        <p >Nouveau? <a href='/inscription' className="mleft-6 App-link">Créer un compte</a></p>
+                                        <a className="App-link" href='#'>Mot de passe oublié?</a>
                                     </div>
                                 </Form>
                             </Col>

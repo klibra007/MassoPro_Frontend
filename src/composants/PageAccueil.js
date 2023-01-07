@@ -9,6 +9,7 @@ import { Paper } from '@mui/material';
 
 import PageListeServices from './Admin/PageListeServices';
 import PageListeClients from './Admin/PageListeClients';
+import { color, fontWeight } from '@mui/system';
 
 export default function PageAccueil() {
     const resultat = useSelector(selectConnexionData);
@@ -97,7 +98,7 @@ export default function PageAccueil() {
         } else if (resultat.idPersonnel !== null && resultat.idPersonnel !== undefined) {
             return <div>
                 <b>PageAccueil Personnel</b>
-                <p><h2>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</h2></p>
+                <h2>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</h2>
                 {/* <p>Token : {resultat.token.substr(3)}</p> */}
                 {/* <div id="idImageAccueilPersonnel"></div> */}
                 <PageListeClients />
@@ -105,9 +106,11 @@ export default function PageAccueil() {
         } else if (resultat.idAdministrateur !== null && resultat.idAdministrateur !== undefined) {
             return <div>
                 <b>PageAccueil Admin</b>
-                <p><h2>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</h2></p>
+                <h2>Bonjour <b>{resultat.prenom}</b>, vous êtes connecté!</h2><br/><br/>
                 {/* <p>Token : {resultat.token.substr(3)}</p> */}                
                 {/* <div id="idImageAccueilAdmin"></div> */}
+                <h4 style={{color:"#82654e", fontWeight:"bold"}}>Fonctionalité la plus utilisée</h4>
+
                 <PageListeServices />
             </div>
         } else {
@@ -134,12 +137,11 @@ export default function PageAccueil() {
 
                         </div>
                         <div id='idBloc2'>
-                            <div id='therapText2'>
-                                <h1 className="therapTextTitle"> Massage Suédois </h1>
-                                <p className="therapTextDetail"> Un massage suédois devrait figurer en tête de votre liste si vous cherchez un moyen de vous détendre, ou si vous voulez expérimenter votre premier traitement.
-                                    Il s'agit d'utiliser de longs mouvements et des pressions légères à fermes qui vous donneront une sensation de rajeunissement.
-                                    En général, votre thérapeute utilise cinq techniques : caresses et glissements, pétrissage, frottement, tapotement ou martèlement, et vibration.
-                                    Si vous cherchez à réduire les tensions ou si vous souffrez d'anxiété, optez sans hésiter pour un massage suédois. </p>
+                        <div id='therapText2'>
+                                <h1 className="therapTextTitle"> Massage pierres chaudes </h1>
+                                <p className="therapTextDetail"> Lorsque vous réservez un massage aux pierres chaudes, vous pouvez vous attendre à ce que des pierres lisses et chauffées, faites de roche volcanique, soient placées sur certaines parties de votre corps.
+                                    Les endroits typiques sont la colonne vertébrale, le ventre, la poitrine, le visage, les paumes, les pieds et les orteils pour soulager les tensions musculaires et améliorer le sommeil. Des pierres froides peuvent également être utilisées pour apaiser la peau et calmer les vaisseaux sanguins gonflés. 
+                                </p>
                             </div>
                             <div id='therap2'>
 
@@ -156,11 +158,13 @@ export default function PageAccueil() {
                             </div>
                         </div>
                         <div id='idBloc4'>
+                          
                             <div id='therapText4'>
-                                <h1 className="therapTextTitle"> Massage pierres chaudes </h1>
-                                <p className="therapTextDetail"> Lorsque vous réservez un massage aux pierres chaudes, vous pouvez vous attendre à ce que des pierres lisses et chauffées, faites de roche volcanique, soient placées sur certaines parties de votre corps.
-                                    Les endroits typiques sont la colonne vertébrale, le ventre, la poitrine, le visage, les paumes, les pieds et les orteils pour soulager les tensions musculaires et améliorer le sommeil. Des pierres froides peuvent également être utilisées pour apaiser la peau et calmer les vaisseaux sanguins gonflés. 
-                                </p>
+                                <h1 className="therapTextTitle"> Massage Suédois </h1>
+                                <p className="therapTextDetail"> Un massage suédois devrait figurer en tête de votre liste si vous cherchez un moyen de vous détendre, ou si vous voulez expérimenter votre premier traitement.
+                                    Il s'agit d'utiliser de longs mouvements et des pressions légères à fermes qui vous donneront une sensation de rajeunissement.
+                                    En général, votre thérapeute utilise cinq techniques : caresses et glissements, pétrissage, frottement, tapotement ou martèlement, et vibration.
+                                    Si vous cherchez à réduire les tensions ou si vous souffrez d'anxiété, optez sans hésiter pour un massage suédois. </p>
                             </div>
                             <div id='therap4'>
 

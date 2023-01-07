@@ -115,7 +115,7 @@ function NavBar() {
               
             {(connexionData.idClient) ?
              <>
-                <Nav.Link href="/">Massages</Nav.Link>
+                <Nav.Link href="/reservation">Massages</Nav.Link>
                 <NavDropdown title="Réservations" id="navbarScrollingDropdown">
                   <NavDropdown.Item href="/vosreservations">
                     Mes réservations
@@ -145,7 +145,7 @@ function NavBar() {
           <Navbar.Brand href="/">MassoPro</Navbar.Brand>
           <Nav className="ms-auto">
             <Nav.Link href="/"></Nav.Link>
-            <Nav.Link href="/vosreservations">Nos massages</Nav.Link>
+            <Nav.Link href="/reservation">Nos massages</Nav.Link>
             <Nav.Link href="/connexion">Se connecter</Nav.Link>
           </Nav>
         </Container>

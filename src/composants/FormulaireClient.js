@@ -440,7 +440,7 @@ export default function FormulaireClient(props) {
 
            
             {(props.profil === false ? true : false) && <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className="mx-auto">
-            <div className="legend">Comment devrons-nous communiquer avec vous ?</div>
+            <div className="legend">Comment devrions-nous communiquer avec vous ?</div>
             {/* <FormLabel component="legend" className='text-start'>Comment devrons-nous communiquer avec vous ?</FormLabel> */}
                 <FormGroup>
                 

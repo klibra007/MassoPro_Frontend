@@ -49,25 +49,30 @@ export default function PageChoixService() {
 
   console.log("services " + servicesTab.length)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (JSON.stringify(resultat) === "{}") {
+  //     navigate('/connexion');
+  //   }
+  // })
+
+  const handleClickReserver = (service) => {
     if (JSON.stringify(resultat) === "{}") {
       navigate('/connexion');
     }
-  })
-
-  const handleClickReserver = (service) => {
+    else{
     dispatch(setObjetReservationIdService(service.id));
     console.log("dans handleClickReserver : " + JSON.stringify(objReservation));
     dispatch(setAffichageChoixServices(false));
     dispatch(setAffichageChoixDureeEtMasso(true));
     dispatch(setNomServiceChoisi(service.nomService))
+    }
   }
 
   const Services = () => {
-    if (JSON.stringify(resultat) !== "{}") {
+    // if (JSON.stringify(resultat) !== "{}") {
       return servicesTab.map((service) => {
         if (service.estActif === 1) {
-          return <Grid item xs={12} m={0} bgcolor={"yellow"} key={service.id}  >
+          return <Grid item xs={12} m={0} bgcolor={"whitesmoke"} key={service.id} >
             <Card className='h-100' >
               <Card.Header className='text-aleft'>{service.nomService}</Card.Header>
               <Card.Body className="reservation-card">
@@ -86,7 +91,7 @@ export default function PageChoixService() {
       }
       )
 
-    }
+    // }
   }
 
   return (
