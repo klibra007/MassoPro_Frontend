@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import ReservationCard from './ReservationCard';
+import ConfirmDialog from './Admin/ConfirmDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTabReservation, selectTabReservation } from '../app/features/reservationSlice';
 import { selectConnexionData } from '../app/features/connexionSlice';
@@ -15,28 +15,36 @@ export default function PageVosReservations() {
   const connexionData = useSelector(selectConnexionData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [reservationId, setReservationId] = useState();
+  const openDialog = (reservationId) => {
+    console.log("In OpenDialog")
+    setReservationId(reservationId);
+    setOpen(true);
+    console.log("Open = ", open);
+  }
 
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
       navigate('/connexion');
     }
   })
-  
+
   let strDossierServeur = "https://dev.pascalrocher.com";
   let strNomApplication = strDossierServeur + "/api/rendezvous";
 
   const getReservations = () => {
     axios.post(strNomApplication, { "idClient": connexionData.idClient })
-        .then((response) => {
-          if(response.data.status === true)
+      .then((response) => {
+        if (response.data.status === true)
           dispatch(setTabReservation(response.data.reservations));
-        })
-        .catch(error => alert(error))
+      })
+      .catch(error => alert(error))
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getReservations();
-  },[]);
+  }, []);
 
 
   const Reservation = () => {
@@ -45,17 +53,27 @@ export default function PageVosReservations() {
       console.log("length" + tabReservations.length)
       return tabReservations.map(rdv => {
         return (
-       
-  
+
+
           <div key={rdv.reservation}>
-            <br/>
-            <ReservationCard  date={rdv.date} idPersonnel={`${rdv.prenom} ${rdv.nom}`} idService={rdv.nomService} duree={`${rdv.duree} mn`} prix={`${rdv.prix}`} reservation={rdv.reservation} heure={rdv.heureDebut} />
+            <br />
+            <ReservationCard
+              date={rdv.date}
+              idPersonnel={`${rdv.prenom} ${rdv.nom}`}
+              idService={rdv.nomService}
+              duree={`${rdv.duree} mn`}
+              prix={`${rdv.prix}`}
+              reservation={rdv.reservation}
+              heure={rdv.heureDebut}
+              openDialog={openDialog}
+            />
+
             {/*<Button className="mright-16" variant="primary">Annuler</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Button className="mright-16" variant="primary">Modifier</Button> <br /><br /><br />*/}
             <br />
           </div>
-      
-      
+
+
         )
       }
       )
@@ -70,6 +88,7 @@ export default function PageVosReservations() {
   }
 
   const handleAnnuler = () => {
+    console.log("handleAnnuler: ", reservationId);
 
   }
 
@@ -85,7 +104,7 @@ export default function PageVosReservations() {
           <Paper className='whitesmoke p-20'> */}
       <Row className='justify-content-center'>
         <Col xs={4}>
-          <h4 className=" justify-content-center mtop-20"  id="titleMsg">Vos réservations</h4>
+          <h4 className=" justify-content-center mtop-20" id="titleMsg">Vos réservations</h4>
           <Reservation />
         </Col>
       </Row>
@@ -95,9 +114,18 @@ export default function PageVosReservations() {
           <Button className="mtop-40" onClick={handleClickRetour} variant="primary">Retour à l'accueil</Button>
         </Col>
       </Row>
-{/*       
+      {/*       
       </Grid>
       </Grid> */}
+      <ConfirmDialog
+        title={"Êtes-vous certain de vouloir annuler votre réservation?"}
+        txtCancel="Non"
+        txtConfirm="Oui"
+        open={open}
+        setOpen={setOpen}
+        callbackData={handleAnnuler}
+      />
+
     </Container>
-  )  
+  )
 }  
