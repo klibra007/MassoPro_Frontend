@@ -30,10 +30,6 @@ export default function PageModifierReservation(props) {
     let strAppRdv = strDossierServeur + "/api/rendezvous";
 
     useEffect(() => {
-        setDuree(data.idDuree);
-        setMasso(data.idPersonnel);
-        setDateRes(data.dateRes);
-
         //recup des durées
         axios.get(strAppDuree)
             .then((response) => {
@@ -50,10 +46,19 @@ export default function PageModifierReservation(props) {
                 //console.log("PageModifierReservation. La réponse masso : " + JSON.stringify(response.data));
                 setMassoTab(response.data);
             })
-            .catch(error => alert(error));   
-            
-        getDisponibilite(); 
-    }, [data], dateRes) 
+            .catch(error => alert(error));               
+                    
+    }, [data]) 
+
+    const initForm = () => {
+       console.log("Inside initForm. idPersonnel="+data.idPersonnel);
+       setDuree(data.idDuree);
+       setMasso(data.idPersonnel);
+       setDateRes(data.dateRes);
+
+       getDisponibilite(); 
+       console.log("Dispo length="+disponibiliteTab.length);
+    }
 
     const getDisponibilite = () => {
        let objReservation = {
@@ -98,8 +103,8 @@ export default function PageModifierReservation(props) {
         const dateRes = event.target.value;
         setDateRes(dateRes);
         console.log(pageName+" Le date choisi: "+dateRes);
-    }  
-    
+    }      
+
     const handleChangeHeureRes = (event) => {    
         const heure = event.target.value;
         setHeureRes(heure);
@@ -117,7 +122,8 @@ export default function PageModifierReservation(props) {
     return (
       <Modal 
          show={show}
-         onHide={() => setShow(false)}    
+         onHide={() => setShow(false)}  
+         onShow={initForm}  
          backdrop="static"
          animation={false}    
       >
@@ -157,8 +163,8 @@ export default function PageModifierReservation(props) {
                   <Button id="idDateResBtn" variant="secondary" onClick={() => getDisponibilite()}>Changer Date</Button>                 
               </InputGroup>
                   
-              {disponibiliteTab.length > 0 ? <Form.Select className="mt-2" id='idHeureResSel' onChange={(e) => { handleChangeHeureRes(e) }}>
-                    <option value={0}>Veuillez choisir un heure disponibilité</option>
+              {disponibiliteTab.length > 0 ? <Form.Select className="mt-2" id='idDateResSel' onChange={(e) => { handleChangeHeureRes(e) }}>
+                    <option value={0}>Veuillez choisir un disponibilité</option>
                     {disponibiliteTab.map((dispo) => {
                       return <option key={dispo.heureDebut} value={dispo.heureDebut}>
                          {dispo.heureDebut}</option>
