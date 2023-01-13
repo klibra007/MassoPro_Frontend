@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import ReservationCard from './ReservationCard';
 import ConfirmDialog from './Admin/ConfirmDialog';
@@ -9,6 +10,7 @@ import { selectConnexionData } from '../app/features/connexionSlice';
 import { useNavigate } from 'react-router-dom';
 import { getYear } from 'date-fns';
 import { Paper, Grid } from '@mui/material';
+import PageModifierReservation from './CommonFiles/PageModifierReservation';
 
 export default function PageVosReservations() {
   const tabReservations = useSelector(selectTabReservation);
@@ -24,6 +26,9 @@ export default function PageVosReservations() {
     console.log("Open = ", open);
   }
 
+  const [showModRes, setShowModRes] = useState(false);
+  const [showData, setShowData] = useState({});
+
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
       navigate('/connexion');
@@ -35,11 +40,13 @@ export default function PageVosReservations() {
 
   const getReservations = () => {
     axios.post(strNomApplication, { "idClient": connexionData.idClient })
-      .then((response) => {
-        if (response.data.status === true)
-          dispatch(setTabReservation(response.data.reservations));
-      })
-      .catch(error => alert(error))
+        .then((response) => {
+          if(response.data.status === true) {
+             console.log("idClient="+connexionData.idClient+" La réponse /api/rendezvous: " + JSON.stringify(response.data.reservations));
+             dispatch(setTabReservation(response.data.reservations));
+          }
+        })
+        .catch(error => alert(error))
   }
 
   useEffect(() => {
@@ -52,28 +59,29 @@ export default function PageVosReservations() {
     if (tabReservations.length > 0) {
       console.log("length" + tabReservations.length)
       return tabReservations.map(rdv => {
-        return (
-
-
-          <div key={rdv.reservation}>
-            <br />
-            <ReservationCard
-              date={rdv.date}
-              idPersonnel={`${rdv.prenom} ${rdv.nom}`}
-              idService={rdv.nomService}
-              duree={`${rdv.duree} mn`}
-              prix={`${rdv.prix}`}
-              reservation={rdv.reservation}
-              heure={rdv.heureDebut}
-              openDialog={openDialog}
+        return (       
+          <div className="mtop-40" key={rdv.reservation}>
+            <ReservationCard  
+            date={rdv.date} 
+            idPersonnel={`${rdv.prenom} ${rdv.nom}`} 
+            idService={rdv.nomService} 
+            duree={`${rdv.duree} mn`} 
+            prix={`${rdv.prix}`} 
+            reservation={rdv.reservation} 
+            heure={rdv.heureDebut}
+            openDialog={openDialog}
             />
-
-            {/*<Button className="mright-16" variant="primary">Annuler</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Button className="mright-16" variant="primary">Modifier</Button> <br /><br /><br />*/}
-            <br />
-          </div>
-
-
+            <div>
+              <Button className="mt-2" variant="primary">Annuler</Button>
+              <Button className="mt-2 mleft-16" variant="primary" onClick={() => {
+                       setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, 
+                          idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut });
+                       setShowModRes(true);                       
+                     }
+                   }
+                 >Modifier</Button>
+            </div>
+          </div>            
         )
       }
       )
@@ -83,8 +91,8 @@ export default function PageVosReservations() {
     }
   }
 
-  const handleModifier = () => {
-
+  const handleModifierReservation = (data) => {
+     console.log("Modifier reservation");
   }
 
   const handleAnnuler = () => {
@@ -126,6 +134,13 @@ export default function PageVosReservations() {
         callbackData={handleAnnuler}
       />
 
+
+      <PageModifierReservation
+         data={showData}
+         show={showModRes}
+         setShow={setShowModRes}
+         callbackFunc={handleModifierReservation}
+      />
     </Container>
   )
 }  
