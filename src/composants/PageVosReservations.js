@@ -56,7 +56,8 @@ export default function PageVosReservations() {
             <div>
               <Button className="mt-2" variant="primary">Annuler</Button>
               <Button className="mt-2 mleft-16" variant="primary" onClick={() => {
-                       setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, idDuree: rdv.idDuree });
+                       setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, 
+                          idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut });
                        setShowModRes(true);                       
                      }
                    }
