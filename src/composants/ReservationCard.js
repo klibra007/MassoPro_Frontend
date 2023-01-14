@@ -16,8 +16,8 @@ export default function ReservationCard(props) {
             <Card.Header className='text-aleft'>{`${props.date} à ${props.heure}`}</Card.Header>
             <Card.Body>
                 <Card.Text className='text-aleft'>
-                    Massothérapeute: {props.idPersonnel}<br />
-                    Service: {props.idService}<br />
+                    Massothérapeute: {props.prenomNomPersonnel}<br />
+                    Service: {props.nomService}<br />
                     Durée: {props.duree}<br />
                     Prix total: ${props.prix}<br />
                     Numéro de réservation: {props.reservation}
@@ -25,8 +25,8 @@ export default function ReservationCard(props) {
                 </Card.Text>
             </Card.Body>
             <Card.Footer className="text-aright">                
-                    <Button className="btn btn-secondary" onClick={() => {props.openDialog(props.reservation)}}>Annuler</Button> &nbsp;
-                    <Button className="btn btn-primary">Modifier</Button>
+                    <Button className="btn btn-secondary" onClick={() => {props.openConfirmDialog(props.rdv)}}>Annuler</Button> &nbsp;
+                    <Button className="btn btn-primary" onClick={() => {props.openPageModifierReservation(props.rdv)}}>Modifier</Button>
             </Card.Footer>
         </Card>
 

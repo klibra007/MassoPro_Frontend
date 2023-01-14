@@ -18,16 +18,16 @@ export default function PageVosReservations() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [annulerMsg, setAnnulerMsg] = useState();
   const [reservationId, setReservationId] = useState();
-  const openDialog = (reservationId) => {
-    console.log("In OpenDialog")
-    setReservationId(reservationId);
-    setOpen(true);
-    console.log("Open = ", open);
-  }
-
   const [showModRes, setShowModRes] = useState(false);
   const [showData, setShowData] = useState({});
+
+
+  
+  
+
+ 
 
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
@@ -53,6 +53,7 @@ export default function PageVosReservations() {
     getReservations();
   }, []);
 
+  
 
   const Reservation = () => {
     console.log("DANS LE FRAGMENT REACT RESERVATION " + tabReservations.length);
@@ -62,25 +63,20 @@ export default function PageVosReservations() {
         return (       
           <div className="mtop-40" key={rdv.reservation}>
             <ReservationCard  
-            date={rdv.date} 
-            idPersonnel={`${rdv.prenom} ${rdv.nom}`} 
-            idService={rdv.nomService} 
+            dateRes={rdv.date} 
+            idPersonnel={`${rdv.idPersonnel}`} 
+            prenomNomPersonnel={`${rdv.prenom} ${rdv.nom}`} 
+            idService={rdv.idService} 
+            nomService={rdv.nomService} 
+            idDuree={`${rdv.idDuree}`}
             duree={`${rdv.duree} mn`} 
             prix={`${rdv.prix}`} 
             reservation={rdv.reservation} 
-            heure={rdv.heureDebut}
-            openDialog={openDialog}
+            heureDebut={rdv.heureDebut}
+            rdv={rdv}
+            openConfirmDialog={openConfirmDialog}
+            openPageModifierReservation={openPageModifierReservation}
             />
-            <div>
-              <Button className="mt-2" variant="primary">Annuler</Button>
-              <Button className="mt-2 mleft-16" variant="primary" onClick={() => {
-                       setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, 
-                          idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut });
-                       setShowModRes(true);                       
-                     }
-                   }
-                 >Modifier</Button>
-            </div>
           </div>            
         )
       }
@@ -90,6 +86,39 @@ export default function PageVosReservations() {
       return <p>Vous n'avez aucune réservation actuellement</p>
     }
   }
+
+
+
+  const openConfirmDialog = (rdv) => {
+    console.log("In OpenDialog")
+    setReservationId(rdv.reservation);
+    console.log("Type Personnel: ", connexionData.typePersonnel)
+
+    if (connexionData.idClient !== null && connexionData.idClient !== undefined) {
+
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler votre réservation numéro ${rdv.reservation} pour le ${rdv.nomService} avec ${rdv.prenom}  ${rdv.nom} le ${rdv.date}?`);
+    }
+    else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
+
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n Client : ${rdv.prenom} ${rdv.nom} \n Service: ${rdv.nomService} \n Massothérapeute : ${rdv.prenom}  ${rdv.nom} \n Date :  ${rdv.date}`);
+    }
+    else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
+
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n Client : ${rdv.prenom} ${rdv.nom} \n Service: ${rdv.nomService} \n Date :  ${rdv.date}`);
+    }
+    setOpen(true);
+    console.log("Open = ", open);
+  }
+
+  const openPageModifierReservation = (rdv) => {
+    console.log("In OpenDialog")
+    setReservationId(reservationId);
+    setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, 
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut });
+    setShowModRes(true);
+    console.log("OpenPageModifierReservation = ", open);
+  }
+
 
   const handleModifierReservation = (data) => {
      console.log("Modifier reservation");
@@ -103,6 +132,8 @@ export default function PageVosReservations() {
   const handleClickRetour = () => {
     navigate("/");
   }
+
+
 
   return (
     <Container className={"m-5 mx-auto"}>
@@ -125,8 +156,9 @@ export default function PageVosReservations() {
       {/*       
       </Grid>
       </Grid> */}
+      
       <ConfirmDialog
-        title={"Êtes-vous certain de vouloir annuler votre réservation?"}
+        title={annulerMsg}
         txtCancel="Non"
         txtConfirm="Oui"
         open={open}
