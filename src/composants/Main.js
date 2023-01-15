@@ -17,6 +17,7 @@ import PageListeDurees from './Admin/PageListeDurees';
 // import PageDuree from './Admin/PageDuree';
 import PageListeDisponibilites from './Admin/PageListeDisponibilites';
 import PageProfil from './PageProfil';
+import PageReservationAdmin from './Admin/PageReservationAdmin';
 
 
 export default function Main() {
@@ -33,6 +34,7 @@ export default function Main() {
         <Route path='/admin/reservations' element={<PageListeReservations />}></Route>
         <Route path='/admin/calendriers' element={<PageListeCalendriers />}></Route>
         <Route path='/admin/disponibilites' element={<PageListeDisponibilites />}></Route>
+        <Route path='/admin/reservation' element={<PageReservationAdmin />}></Route>
         <Route path='/admin/clients' element={<PageListeClients />}></Route>
         <Route path='/admin/clients/form' element={<PageClientForm />}></Route>
         <Route path='/admin/services' element={<PageListeServices />}></Route>        

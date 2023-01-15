@@ -13,7 +13,7 @@ export default function ReservationCard(props) {
         //     <Row className='justify-content-center'>
         //         <Col>
         <Card>
-            <Card.Header className='text-aleft'>{`${props.date} à ${props.heure}`}</Card.Header>
+            <Card.Header className='text-aleft'>{`${props.dateRes} à ${props.heureDebut}`}</Card.Header>
             <Card.Body>
                 <Card.Text className='text-aleft'>
                     Massothérapeute: {props.prenomNomPersonnel}<br />

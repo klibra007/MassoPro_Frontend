@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { getYear } from 'date-fns';
 import { Paper, Grid } from '@mui/material';
 import PageModifierReservation from './CommonFiles/PageModifierReservation';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 
 export default function PageVosReservations() {
   const tabReservations = useSelector(selectTabReservation);
@@ -20,14 +22,22 @@ export default function PageVosReservations() {
   const [open, setOpen] = useState(false);
   const [annulerMsg, setAnnulerMsg] = useState();
   const [reservationId, setReservationId] = useState();
+  const [reservationIdConfirmDialog, setReservationIdConfirmDialog] = useState();
+  const [reservation, setReservation] = useState();
   const [showModRes, setShowModRes] = useState(false);
   const [showData, setShowData] = useState({});
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [notifyMsg, setNotifyMsg] = useState('');
+
+  const handleCloseSnack = () => {
+    setOpenSnackBar(false);
+  };
 
 
-  
-  
 
- 
+
+
+
 
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
@@ -40,44 +50,50 @@ export default function PageVosReservations() {
 
   const getReservations = () => {
     axios.post(strNomApplication, { "idClient": connexionData.idClient })
-        .then((response) => {
-          if(response.data.status === true) {
-             console.log("idClient="+connexionData.idClient+" La réponse /api/rendezvous: " + JSON.stringify(response.data.reservations));
-             dispatch(setTabReservation(response.data.reservations));
-          }
-        })
-        .catch(error => alert(error))
+      .then((response) => {
+        if (response.data.status === true) {
+          console.log("idClient=" + connexionData.idClient + " La réponse /api/rendezvous: " + JSON.stringify(response.data.reservations));
+          dispatch(setTabReservation(response.data.reservations));
+          setReservation(response.data.reservations)
+        }
+
+      })
+      .catch(error => alert(error))
   }
+
 
   useEffect(() => {
     getReservations();
   }, []);
 
-  
+
 
   const Reservation = () => {
     console.log("DANS LE FRAGMENT REACT RESERVATION " + tabReservations.length);
     if (tabReservations.length > 0) {
       console.log("length" + tabReservations.length)
       return tabReservations.map(rdv => {
-        return (       
+        const currentDateTime = Date().toLocaleString();
+        console.log(currentDateTime);
+        return (
           <div className="mtop-40" key={rdv.reservation}>
-            <ReservationCard  
-            dateRes={rdv.date} 
-            idPersonnel={`${rdv.idPersonnel}`} 
-            prenomNomPersonnel={`${rdv.prenom} ${rdv.nom}`} 
-            idService={rdv.idService} 
-            nomService={rdv.nomService} 
-            idDuree={`${rdv.idDuree}`}
-            duree={`${rdv.duree} mn`} 
-            prix={`${rdv.prix}`} 
-            reservation={rdv.reservation} 
-            heureDebut={rdv.heureDebut}
-            rdv={rdv}
-            openConfirmDialog={openConfirmDialog}
-            openPageModifierReservation={openPageModifierReservation}
+            <ReservationCard
+              idRes={rdv.id}
+              dateRes={rdv.date}
+              idPersonnel={`${rdv.idPersonnel}`}
+              prenomNomPersonnel={`${rdv.prenom} ${rdv.nom}`}
+              idService={rdv.idService}
+              nomService={rdv.nomService}
+              idDuree={`${rdv.idDuree}`}
+              duree={`${rdv.duree} mn`}
+              prix={`${rdv.prix}`}
+              reservation={rdv.reservation}
+              heureDebut={rdv.heureDebut}
+              rdv={rdv}
+              openConfirmDialog={openConfirmDialog}
+              openPageModifierReservation={openPageModifierReservation}
             />
-          </div>            
+          </div>
         )
       }
       )
@@ -91,6 +107,7 @@ export default function PageVosReservations() {
 
   const openConfirmDialog = (rdv) => {
     console.log("In OpenDialog")
+    setReservationIdConfirmDialog(rdv.id);
     setReservationId(rdv.reservation);
     console.log("Type Personnel: ", connexionData.typePersonnel)
 
@@ -107,26 +124,51 @@ export default function PageVosReservations() {
       setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n Client : ${rdv.prenom} ${rdv.nom} \n Service: ${rdv.nomService} \n Date :  ${rdv.date}`);
     }
     setOpen(true);
+
     console.log("Open = ", open);
   }
 
   const openPageModifierReservation = (rdv) => {
     console.log("In OpenDialog")
-    setReservationId(reservationId);
-    setShowData({ reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel, 
-      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut });
+    setReservationId(rdv.idRes);
+    setShowData({
+      reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut
+    });
     setShowModRes(true);
     console.log("OpenPageModifierReservation = ", open);
   }
 
 
   const handleModifierReservation = (data) => {
-     console.log("Modifier reservation");
+    console.log("Modifier reservation");
   }
 
   const handleAnnuler = () => {
-    console.log("handleAnnuler: ", reservationId);
+    console.log("handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel + "This is PageVosReservations");
+    axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
+      .then((response) => {
 
+        if (response.data.status === true) {
+          //Check response.data because response.data.status and response.data.message may be undefined
+          console.log("idPersonnel=" + connexionData.idPersonnel + " La réponse /api/rendezvous: " + JSON.stringify(response.data.status, response.data.message));
+          getReservations();
+          notify("Votre réservations a été annulée.", true);
+          //  dispatch(setTabReservation(response.data.reservations));
+        }
+      })
+      .catch(error => alert(error))
+  }
+
+  const notify = (msg, isReload) => {
+    setNotifyMsg(msg);
+    setOpenSnackBar(true);
+
+    if (isReload) {
+      setInterval(() => {
+        window.location.reload(false);
+      }, 2000);
+    }
   }
 
   const handleClickRetour = () => {
@@ -144,6 +186,7 @@ export default function PageVosReservations() {
       <Row className='justify-content-center'>
         <Col xs={4}>
           <h4 className=" justify-content-center mtop-20" id="titleMsg">Vos réservations</h4>
+
           <Reservation />
         </Col>
       </Row>
@@ -156,7 +199,7 @@ export default function PageVosReservations() {
       {/*       
       </Grid>
       </Grid> */}
-      
+
       <ConfirmDialog
         title={annulerMsg}
         txtCancel="Non"
@@ -164,15 +207,27 @@ export default function PageVosReservations() {
         open={open}
         setOpen={setOpen}
         callbackData={handleAnnuler}
+        reservationId={reservationIdConfirmDialog}
       />
 
 
       <PageModifierReservation
-         data={showData}
-         show={showModRes}
-         setShow={setShowModRes}
-         callbackFunc={handleModifierReservation}
+        data={showData}
+        show={showModRes}
+        setShow={setShowModRes}
+        callbackFunc={handleModifierReservation}
       />
+
+      <Snackbar sx={{ marginTop: 14, marginLeft: 19 }}
+        open={openSnackBar}
+        onClose={handleCloseSnack}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          {notifyMsg}
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }  
