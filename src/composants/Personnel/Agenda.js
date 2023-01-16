@@ -134,7 +134,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         else {
             alert("Masso indisponible à cette date");
         }
-
+        
     }
 
     const handleEvents = (events) => {
