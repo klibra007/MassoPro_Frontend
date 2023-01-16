@@ -92,6 +92,7 @@ export default function PageVosReservations() {
               rdv={rdv}
               openConfirmDialog={openConfirmDialog}
               openPageModifierReservation={openPageModifierReservation}
+              isDisabled={handleValidateAnnuler(rdv.date, rdv.heureDebut)}
             />
           </div>
         )
@@ -144,8 +145,29 @@ export default function PageVosReservations() {
     console.log("Modifier reservation");
   }
 
+
+  const handleValidateAnnuler = (date, heureDebut) => {
+    console.log("In handleValidateAnnuler - Reservation date: " + typeof (date) + "Reservation heureDebut: " + typeof (heureDebut));
+
+    const resDateTime = new Date(`${date}T${heureDebut}:00`);
+    const currentDateTime = new Date();
+
+    console.log("In handleValidateAnnuler - Reservation time: ", typeof (resDateTime));
+    console.log("In handleValidateAnnuler - Current time: ", typeof (currentDateTime));
+
+    console.log(date);
+
+    if ((resDateTime - currentDateTime) > 48 * 60 * 60 * 1000) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
+
   const handleAnnuler = () => {
-    console.log("handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel + "This is PageVosReservations");
+    console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
     axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
       .then((response) => {
 
@@ -165,9 +187,9 @@ export default function PageVosReservations() {
     setOpenSnackBar(true);
 
     if (isReload) {
-      setInterval(() => {
-        window.location.reload(false);
-      }, 2000);
+      // setInterval(() => {
+      //   window.location.reload(false);
+      // }, 2000);
     }
   }
 

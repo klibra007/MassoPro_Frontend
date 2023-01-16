@@ -100,8 +100,10 @@ export default function PageChoixDureeMasso() {
                            <Form.Select id='idDuree' isInvalid={dureeInvalid} onChange={(e) => { handleChangeDuree(e) }}>
                               <option value={0}>Veuillez choisir une durée svp</option>
                               {dureeTab.map((data) => {
-                                  const { id, duree, prix, idService } = data;
+                                  const { id, duree, prix, estActif } = data;
+                                  if (estActif === 1) {
                                   return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                  }
                               })}
                            </Form.Select>
                            <Form.Control.Feedback type="invalid" className='text-start'>

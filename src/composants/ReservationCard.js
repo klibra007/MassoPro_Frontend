@@ -1,13 +1,14 @@
 import React from 'react';
 import { Card, CardGroup, Row, Col } from 'react-bootstrap';
 import { Button, Stack } from '@mui/material';
+import { useState } from 'react';
 
 
 
 
 export default function ReservationCard(props) {
 
-
+    const [message, setMessage] = useState('');
     return (
         // <CardGroup>
         //     <Row className='justify-content-center'>
@@ -25,9 +26,12 @@ export default function ReservationCard(props) {
                 </Card.Text>
             </Card.Body>
             <Card.Footer className="text-aright">                
-                    <Button className="btn btn-secondary" onClick={() => {props.openConfirmDialog(props.rdv)}}>Annuler</Button> &nbsp;
+                    <Button className="btn btn-secondary" disabled={props.isDisabled} onMouseOver={() => setMessage("Contactez MassoPro pour les annulations dans les 48 heures avant votre rendez-vous")} onClick={() => {props.openConfirmDialog(props.rdv)}}>Annuler</Button> &nbsp;
+                    {/* <Button className="btn btn-secondary buttonDisabled" disabled={props.isDisabled}  onClick={() => {props.openConfirmDialog(props.rdv)}}><span>Contactez MassoPro pour les annulations dans les 48 heures avant votre rendez-vou</span>Annuler</Button> &nbsp; */}
                     <Button className="btn btn-primary" onClick={() => {props.openPageModifierReservation(props.rdv)}}>Modifier</Button>
+                    
             </Card.Footer>
+
         </Card>
 
         //         </Col>

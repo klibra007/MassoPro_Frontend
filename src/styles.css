@@ -568,6 +568,13 @@ body {
     align-self: flex-end;
 }
 
+.disabledButton span{
+    display: none;
+}
+
+.disabledButton:hover span{
+    display: block;
+}
 
 /* End Generic button styling */
 
