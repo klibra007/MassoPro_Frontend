@@ -574,12 +574,9 @@ body {
     align-self: flex-end;
 }
 
-.disabledButton span{
-    display: none;
-}
 
-.disabledButton:hover span{
-    display: block;
+.disabledButton{
+    color: #a0a7ad;
 }
 
 /* End Generic button styling */
@@ -771,3 +768,8 @@ a.fc-h-event {
 /*.fc-event {
     height: 40px;
   }*/
+
+  .transparent-background{
+    background-color: whitesmoke;
+    
+  }

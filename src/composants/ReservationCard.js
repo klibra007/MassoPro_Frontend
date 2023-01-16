@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardGroup, Row, Col } from 'react-bootstrap';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, Tooltip } from '@mui/material';
 import { useState } from 'react';
 
 
@@ -8,11 +8,28 @@ import { useState } from 'react';
 
 export default function ReservationCard(props) {
 
-    const [message, setMessage] = useState('');
+    const handleButtonState = () => {
+        if (props.isDisabled === true) {
+            return (
+                <>
+                    <Tooltip title="Contactez MassoPro pour annuler une réservation moins de 48 heures avant votre rendez-vous.">
+                        <span>
+                            <Button className="btn btn-secondary" disabled={props.isDisabled} onClick={() => { props.openConfirmDialog(props.rdv) }}>Annuler</Button>&nbsp;
+                        </span>
+                    </Tooltip>{ }
+                    <Button className="btn btn-primary" onClick={() => { props.openPageModifierReservation(props.rdv) }}>Modifier</Button>
+                </>
+            )
+        } else return (
+            <>
+                <Button className="btn btn-secondary" disabled={props.isDisabled} onClick={() => { props.openConfirmDialog(props.rdv) }}>Annuler</Button> &nbsp;
+                <Button className="btn btn-primary" onClick={() => { props.openPageModifierReservation(props.rdv) }}>Modifier</Button>
+            </>
+
+        )
+    }
+
     return (
-        // <CardGroup>
-        //     <Row className='justify-content-center'>
-        //         <Col>
         <Card>
             <Card.Header className='text-aleft'>{`${props.dateRes} à ${props.heureDebut}`}</Card.Header>
             <Card.Body>
@@ -25,17 +42,19 @@ export default function ReservationCard(props) {
                     <br />
                 </Card.Text>
             </Card.Body>
-            <Card.Footer className="text-aright">                
-                    <Button className="btn btn-secondary" disabled={props.isDisabled} onMouseOver={() => setMessage("Contactez MassoPro pour les annulations dans les 48 heures avant votre rendez-vous")} onClick={() => {props.openConfirmDialog(props.rdv)}}>Annuler</Button> &nbsp;
-                    {/* <Button className="btn btn-secondary buttonDisabled" disabled={props.isDisabled}  onClick={() => {props.openConfirmDialog(props.rdv)}}><span>Contactez MassoPro pour les annulations dans les 48 heures avant votre rendez-vou</span>Annuler</Button> &nbsp; */}
-                    <Button className="btn btn-primary" onClick={() => {props.openPageModifierReservation(props.rdv)}}>Modifier</Button>
-                    
+            <Card.Footer className="text-aright">
+            {handleButtonState()}
+                {/* <Tooltip title="Contactez MassoPro pour annuler une réservation moins de 48 heures avant votre rendez-vous.">
+                    <span>
+                        <Button className="btn btn-secondary" disabled={props.isDisabled} onClick={() => { props.openConfirmDialog(props.rdv) }}>Annuler</Button>&nbsp;
+                    </span>
+                </Tooltip> */}
+                {/* <Button className="btn btn-secondary buttonDisabled" disabled={props.isDisabled}  onClick={() => {props.openConfirmDialog(props.rdv)}}><span>Contactez MassoPro pour les annulations dans les 48 heures avant votre rendez-vou</span>Annuler</Button> &nbsp; */}
+                {/* <Button className="btn btn-primary" onClick={() => { props.openPageModifierReservation(props.rdv) }}>Modifier</Button> */}
+
             </Card.Footer>
 
         </Card>
 
-        //         </Col>
-        //     </Row>
-        // </CardGroup>
     )
 } 

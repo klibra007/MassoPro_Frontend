@@ -163,7 +163,7 @@ export default function PageVosReservations() {
       return true;
     }
   }
-
+ 
 
 
   const handleAnnuler = () => {
