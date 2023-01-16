@@ -15,7 +15,7 @@ export default function Footer() {
       <div id='horaireFooter'>
         <h4><u>Horaires d'ouverture</u></h4><br/>
         <p>   Lundi au Vendredi : 9 h 00 à 20 h 00 </p>
-        <p>   Samedi : 9 h 00 à  17 h 00  </p>
+        <p>   Samedi : Fermé  </p>
         <p>   Dimanche : Fermé </p>
         {/* <p>   Lundi : 9 h 00 à 20 h 00 <br/>
            Mardi : 9 h 00 à 20 h 00 <br/>

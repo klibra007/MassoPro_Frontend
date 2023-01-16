@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Form } from 'react-bootstrap';
-import { setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
+import {  setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { Paper } from '@mui/material';
 
 export default function PageChoixDureeMasso() {
     const [dureeTab, setDureeTab] = useState([]);
@@ -12,6 +11,11 @@ export default function PageChoixDureeMasso() {
     const nomServiceChoisi = useSelector(selectNomServiceChoisi);
     const objReservation = useSelector(selectObjReservation);
     const dispatch = useDispatch();
+
+    const [selectDuree, setSelectDuree] = useState(0);
+    const [selectMasso, setSelectMasso] = useState(0);
+    const [dureeInvalid, setDureeInvalid] = useState(false);
+    const [massoInvalid, setMassoInvalid] = useState(false);      
 
     console.log("dans choixMasso : " + JSON.stringify(objReservation))
 
@@ -38,6 +42,8 @@ export default function PageChoixDureeMasso() {
     }, [])
 
     const handleChangeDuree = (event) => {
+        setSelectDuree(parseInt(event.target.value));
+
         const tab = event.target.value.split("-");
         dispatch(setObjetReservationIdDuree(tab[0]));
         dispatch(setDureeChoisie(tab[1]));
@@ -46,15 +52,38 @@ export default function PageChoixDureeMasso() {
     }
 
     const handleChangeMasso = (event) => {
+        setSelectMasso(parseInt(event.target.value));
+
         const tab = event.target.value.split("-");
         dispatch(setObjetReservationIdPersonnel(tab[0]));
         dispatch(setNomMassoChoisi(`${tab[1]} ${tab[2]}`))
         console.log("le masso choisi est : " + tab[1] + " " + tab[2])
     }
 
+    const validateForm = () => {
+        // console.log("selectDuree="+selectDuree+" selectMasso="+selectMasso);
+        let isValid=true;
+        setDureeInvalid(false); 
+        setMassoInvalid(false); 
+  
+        if (selectDuree === 0) {  // Pas selection. Value=0
+           setDureeInvalid(true);
+           isValid=false;
+        }
+  
+        if (selectMasso === 0) {  // Pas selection. Value=0
+           setMassoInvalid(true);
+           isValid=false;
+        }
+  
+        return isValid; 
+    }    
+
     const handleClickSuivant = () => {
-        dispatch(setAffichageChoixDureeEtMasso(false));
-        dispatch(setAffichageReservation(true));
+        if (validateForm()) {
+           dispatch(setAffichageChoixDureeEtMasso(false));
+           dispatch(setAffichageReservation(true));
+        }
     }
 
     return (
@@ -62,31 +91,39 @@ export default function PageChoixDureeMasso() {
             <Row className='justify-content-center'>
                 <Col xs={6}>
                     <Form>
-                        <Paper className="p-20">
-                            <Form.Group>
-                                <Form.Control placeholder={nomServiceChoisi} disabled />
-                            </Form.Group>
-                            <div className='text-start mt-4'>Durée</div>
+                        <Form.Group>
+                            <Form.Control placeholder={nomServiceChoisi} disabled />
+                        </Form.Group>
 
-                            <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
-                                <option value={0}>Veuillez choisir une durée svp</option>
-                                {dureeTab.map((data) => {
-                                    const { id, duree, prix, estActif } = data;
-                                    if (estActif === 1) {
-                                        return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
-                                    }
+                        <Form.Group>
+                           <div className='text-start mt-4 text-primary'>Durée</div>
+                           <Form.Select id='idDuree' isInvalid={dureeInvalid} onChange={(e) => { handleChangeDuree(e) }}>
+                              <option value={0}>Veuillez choisir une durée svp</option>
+                              {dureeTab.map((data) => {
+                                  const { id, duree, prix, estActif } = data;
+                                  if (estActif === 1) {
+                                  return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                  }
+                              })}
+                           </Form.Select>
+                           <Form.Control.Feedback type="invalid" className='text-start'>
+                                Veuillez choisir une durée
+                           </Form.Control.Feedback>                            
+                        </Form.Group>
 
-                                })}
-                            </Form.Select>
+                        <Form.Group>
+                           <div className='text-start mt-3 text-primary'>Massothérapeute</div>
+                           <Form.Select id='idMasso' isInvalid={massoInvalid} onChange={(e) => { handleChangeMasso(e) }}>
+                              <option value={0}>Veuillez choisir un massothérapeute svp</option>
+                              {massoTab.map((masso) => {
+                                 return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
+                              })}
+                           </Form.Select>
+                           <Form.Control.Feedback type="invalid" className='text-start'>
+                                Veuillez choisir un massothérapeute
+                           </Form.Control.Feedback>                            
+                        </Form.Group>
 
-                            <div className='text-start mt-3'>Massothérapeute</div>
-                            <Form.Select id='idMasso' onChange={(e) => { handleChangeMasso(e) }}>
-                                <option value={0}>Veuillez choisir un massothérapeute svp</option>
-                                {massoTab.map((masso) => {
-                                    return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
-                                })}
-                            </Form.Select>
-                        </Paper>
                         <Form.Group className="mt-4">
                             <Button variant='primary' onClick={handleClickSuivant}>Suivant</Button>
                         </Form.Group>
@@ -94,5 +131,5 @@ export default function PageChoixDureeMasso() {
                 </Col>
             </Row>
         </Container>
-    )
+    ) 
 }  

@@ -575,6 +575,10 @@ body {
 }
 
 
+.disabledButton{
+    color: #a0a7ad;
+}
+
 /* End Generic button styling */
 
 /* Available times for booking in PageReservation */
@@ -764,3 +768,8 @@ a.fc-h-event {
 /*.fc-event {
     height: 40px;
   }*/
+
+  .transparent-background{
+    background-color: whitesmoke;
+    
+  }
