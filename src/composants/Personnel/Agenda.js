@@ -10,6 +10,7 @@ import { formatDate } from '@fullcalendar/core';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FullScreenDialog from '../Admin/FullScreenDialog';
+import PageModifierReservation from '../CommonFiles/PageModifierReservation';
 
 export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso }) {
 
@@ -20,6 +21,8 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     const [currentEvents, setCurrentEvents] = useState([]);
 
     const [show, setShow] = useState(true);
+
+    const [show2, setShow2] = useState(true);
 
     const [objReservationFinal, setObjReservationFinal] = useState({});
 
@@ -99,7 +102,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         if(objReservationFinal.idClient !== undefined && objReservationFinal.idService !== undefined && objReservationFinal.idPersonnel !==undefined && objReservationFinal.idDuree !== undefined){
             setObjReservationFinal(objReservationFinal);
             setOpenReservationPersonnel(true);
-            setShow(true);
+            setShow2(true);
         }
         else{
             alert("Veuillez choisir tous les éléments de réservations (client, service, masso, durée)");
@@ -275,7 +278,9 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 snapDuration={'00:30:00'}
             />}
 
-            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show} setShow={setShow} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} />
+            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} />
+
+            {/*false && <PageModifierReservation data={} show={} setShow={} callbackFunc={}  />*/}
         </>
 
     )
