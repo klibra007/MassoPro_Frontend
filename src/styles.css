@@ -4,10 +4,10 @@
     overflow: hidden;
     display: block;
     position: relative;
-  }
-  
-  
-  .App-header {
+}
+
+
+.App-header {
     background-color: #282c34;
     min-height: 100vh;
     display: flex;
@@ -16,60 +16,60 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
-  }
-  
-  .App-link {
+}
+
+.App-link {
     /* color: #61dafb; */
     color: #82654e;
-  }
-  
-  .App-link:hover {
+}
+
+.App-link:hover {
     color: #534c30;
-  }
+}
 
 
-  /*************************************************************************/
+/*************************************************************************/
 
-  
-  #idMain{
+
+#idMain {
     min-height: 80vh;
-    
+
     background: linear-gradient(whitesmoke, #ccd5ae);
     padding-top: 20px;
     padding-bottom: 30px;
-  }
-  
-  #idContainerInscription {
+}
+
+#idContainerInscription {
     padding-top: 20px;
     padding-bottom: 30px;
-  }
-  
-  .headColor {
+}
+
+.headColor {
     background-color: red;
-  }
-  
-  
-  #idImageAccueilNonConnecte {
+}
+
+
+#idImageAccueilNonConnecte {
     min-height: 600px;
     background-image: url('../images/headH.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     margin-top: -20px;
-  }
+}
 
-  #idImageAccueilAdmin {
+#idImageAccueilAdmin {
     min-height: 600px;
     /* background-image: url('../images/head1.jpg'); */
     background-image: url('../images/accueil7HRes-2560x1600.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    
+
     background-position: center bottom;
     margin-top: -20px;
-  }
+}
 
-  #idImageAccueilPersonnel {
+#idImageAccueilPersonnel {
     min-height: 600px;
     /* background-image: url('../images/materials4-1024x768.jpg'); */
     background-image: url('../images/accueil19HRes-1600x640.jpg');
@@ -77,28 +77,28 @@
     background-size: cover;
     background-position: center 92%;
     margin-top: -20px;
-  }
+}
 
-  #idUserHead {
+#idUserHead {
     height: 1000px;
     background-image: url("../images/head1.jpg");
-  }
-  
-  /* #idAccueilNonConnecte {
+}
+
+/* #idAccueilNonConnecte {
     /* height: 222vh; */
-    /* background-color: whitesmoke; */
-    /* background-image: url(C:\Users\stephanie\Masso\MassoPro_Frontend\images\head.jpg); */
-  /* } */ 
-  
-  #services {
+/* background-color: whitesmoke; */
+/* background-image: url(C:\Users\stephanie\Masso\MassoPro_Frontend\images\head.jpg); */
+/* } */
+
+#services {
     min-height: 350px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     /* margin-left: 100px; */
-  }
-  
-  #therap1 {
+}
+
+#therap1 {
     height: 400px;
     /* background-image: url('../images/therapi.jpg'); */
     /* background-image: url('../images/therap2-male2.jpg'); */
@@ -108,10 +108,10 @@
     background-position: center center;
     width: 700px;
     margin: 20px;
-  }
-  
-  #therap2 {
-   
+}
+
+#therap2 {
+
     height: 400px;
     /* background-image: url('../images/therap5.jpg'); */
     /* background-image: url('../images/therap-male-150PRCT-CRPD.png'); */
@@ -121,12 +121,12 @@
     background-position: center 40%;
     width: 700px;
     margin: 20px;
-  
-  }
-  
-  
-  #therap3 {
-   
+
+}
+
+
+#therap3 {
+
     height: 400px;
     /* background-image: url('../images/therap4.jpg'); */
     /* background-image: url('../images/therap4-male.jpg'); */
@@ -135,91 +135,97 @@
     background-position: center center;
     width: 700px;
     margin: 20px;
-  }
-  
-  #therap4 {
+}
+
+#therap4 {
     height: 400px;
     /* background-image: url('../images/therap3.jpg'); */
     background-image: url('../images/therap4-male2-400H.png');
-   
+
     width: 700px;
     margin: 20px;
-  }
-  
-  #therapText1 {
-    
-    height: 400px;
-    width: 900px;
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #ccd5ae;
-   
-  }
-  #therapText2 {
-   
-    height: 400px;
-    width: 900px;
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #ccd5ae;
-    
-  }
-  #therapText3 {
-  
-    height: 400px;
-    width: 900px;
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #ccd5ae;
-    
-    
-  }
-  
-  #therapText4 {
-  
-    height: 400px;
-    width: 900px;
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #ccd5ae;
-    
-  }
+}
 
-  .therapTextTitle{
+#therapText1 {
+
+    height: 400px;
+    width: 900px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #ccd5ae;
+
+}
+
+#therapText2 {
+
+    height: 400px;
+    width: 900px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #ccd5ae;
+
+}
+
+#therapText3 {
+
+    height: 400px;
+    width: 900px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #ccd5ae;
+
+
+}
+
+#therapText4 {
+
+    height: 400px;
+    width: 900px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #ccd5ae;
+
+}
+
+.therapTextTitle {
     padding: 40px 30px 10px 30px;
-  }
+}
 
-  .therapTextDetail{
+.therapTextDetail {
     padding: 20px 100px;
     line-height: 35px;
     font-size: 18px;
 
-  }
-  
-  #idBloc1 {
+}
+
+#idBloc1 {
     display: flex;
     flex-wrap: wrap;
-  }
-  #idBloc2 {
+}
+
+#idBloc2 {
     display: flex;
     flex-wrap: wrap;
-  }
-  #idBloc3 {
+}
+
+#idBloc3 {
     display: flex;
     flex-wrap: wrap;
-  }
-  #idBloc4 {
+}
+
+#idBloc4 {
     display: flex;
     flex-wrap: wrap;
-  }
-  
-  #contactFooter {
+}
+
+#contactFooter {
     flex-basis: 25%;
     margin-right: 50px;
-  }
-   #horaireFooter {
+}
+
+#horaireFooter {
     flex-basis: 25%;
-  } 
+}
 
 
 body {
@@ -261,7 +267,7 @@ body {
     padding-top: 20px;
     color: white;
     font-size: 26px;
-    
+
 }
 
 .navbar .navbar-brand:hover {
@@ -292,15 +298,15 @@ body {
 }
 
 
-.navbar-expand .navbar-nav .nav-link:focus-within{
-    color:#aab193;
+.navbar-expand .navbar-nav .nav-link:focus-within {
+    color: #aab193;
     text-shadow: 0px 0px 3px black;
 }
 
 
-.welcome-msg{
+.welcome-msg {
     font-size: 18px;
-    
+
 }
 
 .admin-menu li {
@@ -402,9 +408,9 @@ body {
 
 
 
-.App .show-password-icon div:focus-within fieldset{
+.App .show-password-icon div:focus-within fieldset {
     border-width: 0px !important;
-    
+
 }
 
 .App .MuiOutlinedInput-notchedOutline,
@@ -439,7 +445,7 @@ body {
 }
 
 
-  /* If using FormLabel component="legend"*/
+/* If using FormLabel component="legend"*/
 .App .MuiFormLabel-root.Mui-focused {
     /* color: rgba(0, 0, 0, 0.87); */
     color: #888;
@@ -480,15 +486,15 @@ body {
 
 
 .app-icon.app-icon-active,
-.app-icon.app-icon-active:hover{
-    cursor:unset;
+.app-icon.app-icon-active:hover {
+    cursor: unset;
     color: green;
 
 }
 
 .app-icon.app-icon-inactive,
 .app-icon.app-icon-inactive:hover {
-    cursor:unset;
+    cursor: unset;
     color: gray;
 }
 
@@ -513,14 +519,14 @@ body {
 
 
 .reservation-card {
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    justify-content: space-between;  
+    justify-content: space-between;
 }
 
 .reservation-card-btn {
-   margin-top: 16px;
-  
+    margin-top: 16px;
+
 }
 
 /* Generic button styling */
@@ -564,7 +570,7 @@ body {
     background-color: #6c757d;
 }
 
-.align-self-right{
+.align-self-right {
     align-self: flex-end;
 }
 
@@ -601,7 +607,7 @@ body {
     /* background-color: #ccd5ae; */
     /* background-color: #82654e; */
     background-color: #a98467;
-    
+
 }
 
 .App .MuiPickersDay-root.Mui-selected:hover,
@@ -636,3 +642,125 @@ body {
 .cursor-default {
     cursor: default;
 }
+
+
+
+/**********************************AGENDA*************************************/
+
+h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+ul {
+    margin: 0;
+    padding: 0 0 0 1.5em;
+}
+
+li {
+    margin: 1.5em 0;
+    padding: 0;
+}
+
+b {
+    /* used for event dates/times */
+    margin-right: 3px;
+}
+
+.demo-app {
+    display: flex;
+    min-height: 100%;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.demo-app-sidebar {
+    width: 300px;
+    line-height: 1.5;
+    background: #eaf9ff;
+    border-right: 1px solid #d3e2e8;
+}
+
+.demo-app-sidebar-section {
+    padding: 2em;
+}
+
+.demo-app-main {
+    flex-grow: 1;
+    padding: 3em;
+}
+
+.fc {
+    /* the calendar root */
+    max-width: 1500px;
+    margin: 0 auto;
+    background-color: whitesmoke;
+    color: #82654e;
+}
+
+.fc td {
+    /* the calendar root */
+    /*width: 200px;*/
+
+    /*height: 100px*/
+}
+
+.fc th {
+    /* the calendar root */
+
+    /*width: 200px*/
+}
+
+button.fc-today-button.fc-button.fc-button-primary:disabled {
+    background-color: #82654e;
+}
+
+div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>.fc-toolbar-chunk button {
+    background-color: #82654e;
+}
+
+.fc-today-button.fc-button.fc-button-primary {
+    background-color: #82654e;
+}
+
+table.fc-scrollgrid.fc-scrollgrid-liquid a {
+    color: #82654e;
+}
+
+.fc-daygrid-day-frame.fc-scrollgrid-sync-inner:hover {
+    background-color: #c9d0b0;
+}
+
+.fc-daygrid-day-frame.fc-scrollgrid-sync-inner:active {
+    background-color: #c9d0b0;
+    --fc-highlight-color: none;
+
+}
+
+
+div.fc-event-main {
+    background-color: #c9d0b0;
+
+}
+
+a.fc-h-event {
+    background-color: #c9d0b0;
+    border: 1px solid #82654e;
+}
+
+/*:root {
+    --fc-today-bg-color: black;
+    --fc-event-border-color:#82654e; 
+}*/
+
+/*div.fc-dayGridMonth-view.fc-view.fc-daygrid tr{
+    width: "500px";
+  }*/
+
+  td.fc-timegrid-slot.fc-timegrid-slot-lane{
+   height: 45px
+  }
+
+/*.fc-event {
+    height: 40px;
+  }*/
