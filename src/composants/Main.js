@@ -18,9 +18,13 @@ import PageListeDurees from './Admin/PageListeDurees';
 import PageListeDisponibilites from './Admin/PageListeDisponibilites';
 import PageProfil from './PageProfil';
 import PageReservationAdmin from './Admin/PageReservationAdmin';
+import Agenda from './Personnel/Agenda';
+import PageAgenda from './Personnel/PageAgenda';
+
 
 
 export default function Main() {
+  
   return (
     <div id='idMain'>
       <Routes>
@@ -40,6 +44,7 @@ export default function Main() {
         <Route path='/admin/services' element={<PageListeServices />}></Route>        
         <Route path='/admin/services/form' element={<PageServiceForm />}></Route>
         <Route path='/admin/durees' element={<PageListeDurees />}></Route>
+        <Route path='/perso/agenda' element={<PageAgenda />}></Route>
       {/*  <Route path='/admin/durees/form' element={<PageDureeForm />}></Route>   */}
       </Routes>
       {/* <PageListeServices/> */}

@@ -4,12 +4,19 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Stack } from 'react-bootstrap';
+import { Card, Col, Container, Row, Stack } from 'react-bootstrap';
 import axios from 'axios';
+import PageConfirmationRdv from '../PageConfirmationRdv';
+import { Paper } from '@mui/material';
 
 export default function FullScreenDialog(props) {
-    
+
     const [dataClientSelectionne, setDataClientSelectionne] = useState({});
+    
+    //console.log("dans fullscreen: " + props.objReservationFinal.date)
+    const TPS = 0.05;
+
+    const TVQ = 0.09975;
 
     let strDossierServeur = "https://dev.pascalrocher.com";
     const [nomService, setService] = useState(props.serviceSelectionne === undefined ? "" : props.serviceSelectionne.nomService);
@@ -196,6 +203,35 @@ export default function FullScreenDialog(props) {
             });
     }
 
+    const onClickConfirmerPersonnel = () => {
+        let strDossierServeur = "https://dev.pascalrocher.com";
+        let strNomApplication = strDossierServeur + "/api/rendezvous";
+        //let objValidation = { ...objReservation, "idClient": `${connexionData.idClient}`, "heureDebut": `${disponibilite.heureDebut}`, "heureFin": `${disponibilite.heureFin}` }
+    
+        console.log('Dans ajout confirmerPersonnel '+ JSON.stringify(props.objReservationFinal));
+    
+    
+        axios.post(strNomApplication, JSON.stringify(props.objReservationFinal), {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => {
+            console.log("La réponse: " + JSON.stringify(response));
+            if (response.data.status === true) {
+            //   setNumeroReservation(response.data.reservation);
+            //   dispatch(setAffichageConfirmation());
+            //   dispatch(setAffichageAvantConfirmation());
+
+            //mettre ici le popup de confirmation 
+            alert("Votre réservation a été bien effectuée!!");
+            }
+          })
+          .catch((error) => {
+            alert("erreur:" + error.response);
+          });
+      }
+
     return (
         <>
 
@@ -347,6 +383,105 @@ export default function FullScreenDialog(props) {
                         Activer
                     </Button>
                 </Modal.Footer>
+            </Modal>}
+
+            {props.openReservationPersonnel && <Modal show={props.show} size={'lg'} className='mt-5' onHide={() => {props.setShow(false); props.getReservationMasso(props.objReservationFinal.idPersonnel)}}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmation de réservation du client n°{props.objReservationFinal.idClient}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Container>
+                        <Row className='justify-content-center'>
+                            <Col xs={12}>
+
+                                <Form>
+                                    <Paper className="p-20">
+                                        <Card className="text-aleft">
+                                            <Card.Header className='p-2'>
+                                                Service: {props.serviceChoisi.nomService}<br />
+                                                {props.objReservationFinal.date}<br />
+                                                Massothérapeute: {props.massoChoisi.nom}<br />
+                                                Durée: {props.dureeChoisiePersonnel.duree} min
+                                            </Card.Header>
+                                        </Card>
+
+
+                                        <Card className="text-aleft mt-1 mb-2">
+                                            <Card.Header className='p-2'>
+                                                Client: {props.clientChoisi.prenom} {props.clientChoisi.nom}
+                                            </Card.Header>
+                                        </Card>
+
+                                        <Row className='p-1 mt-1'>
+                                            <Col>Votre réservation n'est pas encore confirmée.</Col>
+                                        </Row>
+                                        <Row className='p-1 mt-1'>
+                                            <Col>Veuillez vérifier tous les détails de la réservation ci-dessous avant de continuer.</Col>
+                                        </Row>
+
+                                        <Card className="text-aleft mt-2">
+                                            <Card.Header className='p-1'>
+                                                <Row>
+                                                    <Col xs={7}>Description</Col>
+                                                    <Col className="text-end" xs={2}>Prix unitaire</Col>
+                                                    <Col className="text-center" xs={2}>Quantité</Col>
+                                                    <Col className="text-end" xs={1}>Prix</Col>
+                                                </Row>
+                                            </Card.Header>
+                                        </Card>
+
+
+                                        <>   {/* React Fragment  */}
+                                            <Row className='text-aleft p-1'>
+                                                <Col><b>{props.objReservationFinal.date} {props.objReservationFinal.heureDebut}</b></Col>
+                                            </Row>
+
+                                            <Row className='text-aleft p-1'>
+                                                <Col xs={7}>Service: {props.serviceChoisi.nomService}</Col>
+                                                <Col className="text-end" xs={2}></Col>
+                                                <Col className="text-center" xs={2}>1</Col>
+                                                <Col className="text-end" xs={1}></Col>
+                                            </Row>
+
+                                            <Row className='text-aleft p-1'>
+                                                <Col xs={7}>Durée: {props.dureeChoisiePersonnel.duree} min</Col>
+                                                <Col className="text-end" xs={2}>${props.dureeChoisiePersonnel.prix}</Col>
+                                                <Col className="text-center" xs={2}>1</Col>
+                                                <Col className="text-end" xs={1}>${props.dureeChoisiePersonnel.prix}</Col>
+                                            </Row>
+
+                                            <Row className='p-1'>
+                                                <Col className="text-end" xs={11}><b>Total</b></Col>
+                                                <Col className="text-end" xs={1}><b>${props.dureeChoisiePersonnel.prix}</b></Col>
+                                            </Row>
+
+                                            <Row className='text-aleft p-1 mb-1'>
+                                                <Col>Les taxes suivants sont incluses dans le prix:</Col>
+                                            </Row>
+                                            <Row className='p-1'>
+                                                <Col className='text-aleft' xs={11}>Inclus: TPS</Col>
+                                                <Col className="text-end" xs={1}>${((TPS * props.dureeChoisiePersonnel.prix / (1 + TVQ + TPS))).toFixed(2)}</Col>
+                                            </Row>
+                                            <Row className='p-1'>
+                                                <Col className='text-aleft' xs={10}>Inclus: TVQ</Col>
+                                                <Col className='text-end' xs={2}>${((TVQ * props.dureeChoisiePersonnel.prix / (1 + TVQ + TPS))).toFixed(2)}</Col>
+                                            </Row>
+
+                                            <Row className='text-aleft p-1 mt-2'>
+                                                <Col>Méthode de paiement: <i>Payer plus tard</i></Col>
+                                            </Row>
+                                        </>
+                                    </Paper>
+                                    <Form.Group className="mt-4 mb-20 float-end">
+                                        <Button variant='primary' onClick={onClickConfirmerPersonnel}>Confirmer la réservation</Button>
+                                    </Form.Group>
+
+                                </Form>
+
+                            </Col>
+                        </Row>
+                    </Container>
+                </Modal.Body>
             </Modal>}
         </>
     );
