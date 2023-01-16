@@ -60,8 +60,6 @@ export default function PageVosReservations() {
     getReservations();
   }, []);
 
-
-
   const Reservation = () => {
     console.log("DANS LE FRAGMENT REACT RESERVATION " + tabReservations.length);
     if (tabReservations.length > 0) {
@@ -126,7 +124,7 @@ export default function PageVosReservations() {
     setReservationId(rdv.idRes);
     setShowData({
       reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
-      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin
     });
     setShowModRes(true);
     console.log("OpenPageModifierReservation = ", open);
@@ -134,8 +132,10 @@ export default function PageVosReservations() {
 
 
   function handleModifierReservation (data, newData) {
-    console.log("Modifier reservation");
-    console.log("old idDuree="+data.idDuree, " new idDuree="+newData.idDuree);
+  //  console.log("Modifier reservation");
+    console.log("old idDuree="+data.idDuree, " new idDuree="+newData.idDuree+" new heureDebut="+newData.heureDebut+
+             " new heureFin="+newData.heureFin);
+   
   }
 
 
