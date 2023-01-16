@@ -12,6 +12,8 @@ export default function PageModifierReservation(props) {
 
     const {data, show, setShow, callbackFunc} = props;
 
+    const [hrFin, setHrFin] = useState(data.heureFin);
+
     const [dureeTab, setDureeTab] = useState([]);
     const [massoTab, setMassoTab] = useState([]);  
     const [disponibiliteTab, setDisponibiliteTab] = useState([]);    
@@ -20,14 +22,16 @@ export default function PageModifierReservation(props) {
         idDuree: data.idDuree,
         idPersonnel: data.idPersonnel,
         dateRes: data.dateRes,
-        heureDebut: data.heureDebut
+        heureDebut: data.heureDebut,
+        heureFin: data.heureFin
     }
 
     const [form, setForm] = useState({
        idDuree: '',
        idPersonnel: '',
        dateRes: '',
-       heureDebut: ''
+       heureDebut: '',
+       heureFin: ''
     }) 
     
     const [ formErrors, setFormErrors ] = useState({})
@@ -45,10 +49,14 @@ export default function PageModifierReservation(props) {
     }
 
     useEffect(() => {  
+       form.heureFin = hrFin;
+    }, [hrFin])  
+
+    useEffect(() => {  
        objRes.date = form.dateRes;
        objRes.idPersonnel = form.idPersonnel;
        objRes.idDuree = form.idDuree; 
-    }, [form])          
+    }, [form.idDuree, form.idPersonnel, form.dateRes])          
    
     useEffect(() => {      
         //recup des durées
@@ -95,7 +103,7 @@ export default function PageModifierReservation(props) {
            }
         })
          .then((response) => {
-           //console.log(pageName+" getDisponibilite. La réponse: " + JSON.stringify(response));
+           console.log(pageName+" getDisponibilite. La réponse: " + JSON.stringify(response));
            if (response.data.length > 0) {
               setDisponibiliteTab(response.data);
            } else {
@@ -143,6 +151,10 @@ export default function PageModifierReservation(props) {
            errors.dateRes = dateResErrMsg;
         }
 
+        if (form.heureDebut == 0) {   // No selection. Value is 9
+           errors.heureDebut = "Veuillez choisir un disponibilité";
+        }          
+
         return errors;        
     }    
 
@@ -154,29 +166,52 @@ export default function PageModifierReservation(props) {
            setFormErrors(frmErrors);  
         } else {        
            setFormErrors({});  // Reset error fields
-           setShow(false);
-           callbackFunc("data"); 
+           setShow(false);  // Close Modal Popup
+           callbackFunc(formInitState, form);   // Call next function with initial data and form data
         }        
     }    
     
     const handleCancelForm = (e) => {
+        setFormErrors({});  // Reset error fields
         setShow(false);
     }   
+
+    const removeFormError = (e) => {
+       // Check and see if errors exist, and remove them from the error object
+       if (!!formErrors[e.target.name]) setFormErrors({
+         ...formErrors,
+         [e.target.name]: null
+      })
+    }
 
     const handleChange = (e) => {
        setForm({ ...form, [e.target.name]: e.target.value })
 
-       // Check and see if errors exist, and remove them from the error object
-       if (!!formErrors[e.target.name]) setFormErrors({
-          ...formErrors,
-          [e.target.name]: null
-       })        
+       removeFormError( e );
     }    
+
+    function getHeureFin( hrDebut ) {
+       const idx=disponibiliteTab.findIndex((dispo) => dispo.heureDebut == hrDebut);
+       if (idx >= 0) {
+          return disponibiliteTab[idx].heureFin;
+       }
+       return '';
+    }
+
+    const handleChangeHeureDispo = (e) => {
+      setForm({ ...form, [e.target.name]: e.target.value })    // heureDebut  
+
+      let hFin=getHeureFin(e.target.value);
+      console.log("heureDebut="+e.target.value+" hrFin="+hFin);
+      setHrFin(hFin);
+     
+      removeFormError( e );           
+    }
 
     return (
         <Modal 
            show={show}
-           onHide={() => setShow(false)}   
+           onHide={handleCancelForm}   
            onShow={initForm}
            backdrop="static"
            animation={false}    
@@ -187,6 +222,8 @@ export default function PageModifierReservation(props) {
           <Modal.Body>          
             <Form>
                <div>Numéro de réservation: {data.reservation}</div>   
+               <div>Heure debut: {form.heureDebut}</div>
+               <div>Heure fin: {hrFin}</div>               
                <Form.Group>
                   <div className='text-start mt-2'>Durée</div>
                   <Form.Select id='idDuree' name="idDuree" value={form.idDuree} 
@@ -220,7 +257,7 @@ export default function PageModifierReservation(props) {
                   </Form.Control.Feedback>                                        
                 </Form.Group> 
 
-                <Form.Group>
+                <Form.Group>                  
                   <div className='text-start mt-2'>Choisir une date réservation</div>   
                   <InputGroup>
                      <Form.Control type='text' id="idDateRes" name="dateRes" value={form.dateRes} 
@@ -232,14 +269,21 @@ export default function PageModifierReservation(props) {
                   </InputGroup>               
                 </Form.Group>
 
-                {disponibiliteTab.length > 0 ? <Form.Select className="mt-2" id='idHeureDebut' name="heureDebut" onChange={handleChange}>
+                {disponibiliteTab.length > 0 ? 
+                 <Form.Group>                
+                   <Form.Select className="mt-2" id='idHeureDebut' name="heureDebut" 
+                      value={form.heureDebut} onChange={handleChangeHeureDispo} isInvalid={!!formErrors.heureDebut}>
                     <option value={0}>Veuillez choisir un disponibilité</option>
-                    {disponibiliteTab.map((dispo) => {
-                      return <option key={dispo.heureDebut} value={dispo.heureDebut}>
-                         {dispo.heureDebut}</option>
-                })}
-              </Form.Select>
-              : <div className='text-center mt-2'>{noDispoMsg}</div>}                                             
+                    {disponibiliteTab.map((dispo, index) => {
+                      return <option key={index+1} value={dispo.heureDebut}>
+                         {dispo.heureDebut} - {dispo.heureFin}</option>
+                     })}
+                   </Form.Select>
+                   <Form.Control.Feedback type="invalid" className='text-start'>
+                      {formErrors.heureDebut}
+                   </Form.Control.Feedback>                     
+                </Form.Group>
+              : <div className='text-center mt-2'>{noDispoMsg}</div>}                                                           
             </Form>
           </Modal.Body>     
           <Modal.Footer>
