@@ -95,7 +95,7 @@ export default function PageModifierReservation(props) {
            }
         })
          .then((response) => {
-           //console.log(pageName+" getDisponibilite. La réponse: " + JSON.stringify(response));
+           console.log(pageName+" getDisponibilite. La réponse: " + JSON.stringify(response));
            if (response.data.length > 0) {
               setDisponibiliteTab(response.data);
            } else {
@@ -143,6 +143,10 @@ export default function PageModifierReservation(props) {
            errors.dateRes = dateResErrMsg;
         }
 
+        if (form.heureDebut == 0) {   // No selection. Value is 0
+           errors.heureDebut = "Veuillez choisir un disponibilité";
+        }          
+
         return errors;        
     }    
 
@@ -154,12 +158,13 @@ export default function PageModifierReservation(props) {
            setFormErrors(frmErrors);  
         } else {        
            setFormErrors({});  // Reset error fields
-           setShow(false);
-           callbackFunc("data"); 
+           setShow(false);  // Close Modal Popup
+           callbackFunc(formInitState, form);   // Call next function with initial data and form data
         }        
     }    
     
     const handleCancelForm = (e) => {
+        setFormErrors({});  // Reset error fields
         setShow(false);
     }   
 
@@ -176,7 +181,7 @@ export default function PageModifierReservation(props) {
     return (
         <Modal 
            show={show}
-           onHide={() => setShow(false)}   
+           onHide={handleCancelForm}   
            onShow={initForm}
            backdrop="static"
            animation={false}    
@@ -187,6 +192,7 @@ export default function PageModifierReservation(props) {
           <Modal.Body>          
             <Form>
                <div>Numéro de réservation: {data.reservation}</div>   
+               <div>Heure debut: {form.heureDebut}</div>
                <Form.Group>
                   <div className='text-start mt-2'>Durée</div>
                   <Form.Select id='idDuree' name="idDuree" value={form.idDuree} 
@@ -220,7 +226,7 @@ export default function PageModifierReservation(props) {
                   </Form.Control.Feedback>                                        
                 </Form.Group> 
 
-                <Form.Group>
+                <Form.Group>                  
                   <div className='text-start mt-2'>Choisir une date réservation</div>   
                   <InputGroup>
                      <Form.Control type='text' id="idDateRes" name="dateRes" value={form.dateRes} 
@@ -232,14 +238,21 @@ export default function PageModifierReservation(props) {
                   </InputGroup>               
                 </Form.Group>
 
-                {disponibiliteTab.length > 0 ? <Form.Select className="mt-2" id='idHeureDebut' name="heureDebut" onChange={handleChange}>
+                {disponibiliteTab.length > 0 ? 
+                 <Form.Group>                
+                   <Form.Select className="mt-2" id='idHeureDebut' name="heureDebut" 
+                     value={form.heureDebut} onChange={handleChange} isInvalid={!!formErrors.heureDebut}>
                     <option value={0}>Veuillez choisir un disponibilité</option>
                     {disponibiliteTab.map((dispo) => {
                       return <option key={dispo.heureDebut} value={dispo.heureDebut}>
                          {dispo.heureDebut}</option>
-                })}
-              </Form.Select>
-              : <div className='text-center mt-2'>{noDispoMsg}</div>}                                             
+                     })}
+                   </Form.Select>
+                   <Form.Control.Feedback type="invalid" className='text-start'>
+                      {formErrors.heureDebut}
+                   </Form.Control.Feedback>                     
+                </Form.Group>
+              : <div className='text-center mt-2'>{noDispoMsg}</div>}                                                           
             </Form>
           </Modal.Body>     
           <Modal.Footer>

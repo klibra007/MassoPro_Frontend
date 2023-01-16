@@ -33,12 +33,6 @@ export default function PageVosReservations() {
     setOpenSnackBar(false);
   };
 
-
-
-
-
-
-
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
       navigate('/connexion');
@@ -104,8 +98,6 @@ export default function PageVosReservations() {
     }
   }
 
-
-
   const openConfirmDialog = (rdv) => {
     console.log("In OpenDialog")
     setReservationIdConfirmDialog(rdv.id);
@@ -141,8 +133,9 @@ export default function PageVosReservations() {
   }
 
 
-  const handleModifierReservation = (data) => {
+  function handleModifierReservation (data, newData) {
     console.log("Modifier reservation");
+    console.log("old idDuree="+data.idDuree, " new idDuree="+newData.idDuree);
   }
 
 
@@ -164,8 +157,6 @@ export default function PageVosReservations() {
     }
   }
  
-
-
   const handleAnnuler = () => {
     console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
     axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
