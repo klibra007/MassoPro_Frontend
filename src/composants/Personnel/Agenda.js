@@ -11,6 +11,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FullScreenDialog from '../Admin/FullScreenDialog';
 import PageModifierReservation from '../CommonFiles/PageModifierReservation';
+import { set } from 'date-fns';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectConnexionData } from '../../app/features/connexionSlice';
 
 export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso }) {
 
@@ -20,7 +24,9 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
     const [currentEvents, setCurrentEvents] = useState([]);
 
-    const [show, setShow] = useState(true);
+    const [selectedEvent, setSelectedEvent] = useState({});
+
+    const [show, setShow] = useState(false);
 
     const [show2, setShow2] = useState(true);
 
@@ -29,6 +35,8 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     const [openReservationPersonnel, setOpenReservationPersonnel] = useState(false);
 
     const [openWithSelect, setOpenWithSelect] = useState(false);
+
+    const connexionData = useSelector(selectConnexionData);
 
 
 
@@ -85,8 +93,32 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     /*let today = new Date().toISOString();
     alert(today)*/
 
-    const handleClick = () => {
+    const handleModifierReservation = (oldData, newData) => {
+        let strDossierServeur = "https://dev.pascalrocher.com";
+        let strNomApplication = strDossierServeur + `/api/rendezvous/${newData.idRendezVous}`;
 
+        axios.put(strNomApplication, JSON.stringify(newData), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                //alert("La réponse: " + JSON.stringify(response));
+                if (response.data.status === true) {
+                    alert("Votre modification a bien été prise en compte!!");
+                    getReservationMasso(objReservationFinal.idPersonnel);
+                    //window.location.reload(false);
+                    //setOpenActivationClient(false);
+                    setShow(false);
+                }
+                else{
+                    alert("Votre modification a échoué!!");
+                }
+            })
+            .catch((error) => {
+                console.log(error.response.data.status);
+                //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
+            });
     }
 
     const handleDateSelect = (selectInfo) => {
@@ -94,21 +126,21 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         let objReservationFinal = {
             ...objReservationPersonnel,
             date: selectInfo.startStr.replace(/T.*$/, ''),
-            heureDebut: selectInfo.startStr.substring(11).substring(0,5),
-            heureFin: selectInfo.endStr.substring(11).substring(0,5),
+            heureDebut: selectInfo.startStr.substring(11).substring(0, 5),
+            heureFin: selectInfo.endStr.substring(11).substring(0, 5),
             //myTest: selectInfo.start.toISOString().substring(11).substring(0,5)
         }
         //alert(JSON.stringify(objReservationFinal));
-        if(objReservationFinal.idClient !== undefined && objReservationFinal.idService !== undefined && objReservationFinal.idPersonnel !==undefined && objReservationFinal.idDuree !== undefined){
+        if (objReservationFinal.idClient !== undefined && objReservationFinal.idService !== undefined && objReservationFinal.idPersonnel !== undefined && objReservationFinal.idDuree !== undefined) {
             setObjReservationFinal(objReservationFinal);
             setOpenReservationPersonnel(true);
             setShow2(true);
         }
-        else{
+        else {
             alert("Veuillez choisir tous les éléments de réservations (client, service, masso, durée)");
         }
-        
-        
+
+
         /*let title = prompt('Please enter a new title for your event')
         let calendarApi = selectInfo.view.calendar
 
@@ -127,17 +159,21 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     }
 
     const handleEventClick = (clickInfo) => {
-        alert(JSON.stringify(clickInfo.event));
+        console.log("EVENT DATA: " + JSON.stringify(clickInfo.event.extendedProps));
         //alert(clickInfo.event.title)
         if (clickInfo.event.title !== "indisponible") {
-            if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+            /*if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
                 clickInfo.event.remove()
-            }
+            }*/
+            setSelectedEvent(clickInfo.event.extendedProps);
+            setShow(true);
+
+
         }
         else {
             alert("Masso indisponible à cette date");
         }
-        
+
     }
 
     const handleEvents = (events) => {
@@ -234,7 +270,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     day: 'Jour',
                     list: 'Mon planning',
                 }}
-                allDayText= {'Journée'}
+                allDayText={'Journée'}
                 headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
@@ -280,7 +316,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
             <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} />
 
-            {/*false && <PageModifierReservation data={} show={} setShow={} callbackFunc={}  />*/}
+            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} />}
         </>
 
     )

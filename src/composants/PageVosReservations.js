@@ -124,7 +124,7 @@ export default function PageVosReservations() {
     setReservationId(rdv.idRes);
     setShowData({
       reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
-      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin, idClient: rdv.idClient
     });
     setShowModRes(true);
     console.log("OpenPageModifierReservation = ", open);
@@ -133,8 +133,7 @@ export default function PageVosReservations() {
 
   function handleModifierReservation (data, newData) {
   //  console.log("Modifier reservation");
-    console.log("old idDuree="+data.idDuree, " new idDuree="+newData.idDuree+" new heureDebut="+newData.heureDebut+
-             " new heureFin="+newData.heureFin);
+    alert(`"old idDuree=${data.idDuree} new idDuree=${newData.idDuree} new heureDebut=${newData.heureDebut} new heureFin ${newData.heureFin}`);
    
   }
 
@@ -222,7 +221,6 @@ export default function PageVosReservations() {
         callbackData={handleAnnuler}
         reservationId={reservationIdConfirmDialog}
       />
-
 
       <PageModifierReservation
         data={showData}

@@ -79,13 +79,24 @@ export default function PageAgenda() {
                     setRendezVous(response.data.reservations);
                     setInitialData(response.data.reservations.map((reservation) => {
 
-                        if (reservation.idClient !== null) {
+                        if (reservation.idClient !== null && reservation.etat !== 0) {
                             return {
                                 id: reservation.id,
                                 title: reservation.nomService,
                                 //groupeId: reservation.idClient === null ? "indisponibilite" : "horaireNormal",
                                 start: reservation.date + `T${reservation.heureDebut}`,
                                 end: reservation.date + `T${reservation.heureFin}`,
+                                extendedProps: {
+                                    reservation: reservation.reservation, // numéro de réservation
+                                    idService: reservation.idService,
+                                    nomService: reservation.nomService,
+                                    idDuree: reservation.idDuree,
+                                    idPersonnel: reservation.idPersonnel,
+                                    dateRes: reservation.date,
+                                    heureDebut: reservation.heureDebut,
+                                    heureFin: reservation.heureFin, 
+                                    idClient: reservation.idClient
+                                }
                                 //constraint: reservation.idClient === null ? "indisponibilite" : 'businessHours',
                                 //display: 'background',
                                 //backgroundColor: 'blue'
@@ -93,7 +104,7 @@ export default function PageAgenda() {
                             }
                         }
 
-                        else {
+                        else if(reservation.etat !== 0) {
                             return {
                                 id: reservation.id,
                                 groupId: 'indisponibilites',
