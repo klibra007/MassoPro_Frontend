@@ -225,6 +225,8 @@ export default function FullScreenDialog(props) {
 
             //mettre ici le popup de confirmation 
             alert("Votre réservation a été bien effectuée!!");
+            props.setShow(false);
+            props.getReservationMasso(props.objReservationFinal.idPersonnel);
             }
           })
           .catch((error) => {

@@ -108,7 +108,7 @@ export default function PageVosReservations() {
     }
     else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
 
-      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n Client : ${rdv.prenom} ${rdv.nom} \n Service: ${rdv.nomService} \n Massothérapeute : ${rdv.prenom}  ${rdv.nom} \n Date :  ${rdv.date}`);
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n n° Client : ${rdv.idClient} \n Service: ${rdv.nomService} \n Massothérapeute : ${rdv.prenom}  ${rdv.nom} \n Date :  ${rdv.date}`);
     }
     else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
 
@@ -124,7 +124,7 @@ export default function PageVosReservations() {
     setReservationId(rdv.idRes);
     setShowData({
       reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
-      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin, idClient: rdv.idClient
     });
     setShowModRes(true);
     console.log("OpenPageModifierReservation = ", open);
@@ -133,13 +133,8 @@ export default function PageVosReservations() {
 
   function handleModifierReservation (data, newData) {
   //  console.log("Modifier reservation");
-    console.log("old idDuree="+data.idDuree+" new idDuree="+newData.idDuree+" data.heureDebut="+data.heureDebut+" data.heureFin="+data.heureFin+" new heureDebut="+newData.heureDebut+
-             " new heureFin="+newData.heureFin);
-     if (JSON.stringify(data) === JSON.stringify(newData)) {
-        console.log("Same data");
-     } else {
-        console.log("Different data");
-     }
+    alert(`"old idDuree=${data.idDuree} new idDuree=${newData.idDuree} new heureDebut=${newData.heureDebut} new heureFin ${newData.heureFin}`);
+   
   }
 
 
@@ -163,6 +158,7 @@ export default function PageVosReservations() {
  
   const handleAnnuler = () => {
     console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
+    
     axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
       .then((response) => {
 
@@ -226,7 +222,6 @@ export default function PageVosReservations() {
         callbackData={handleAnnuler}
         reservationId={reservationIdConfirmDialog}
       />
-
 
       <PageModifierReservation
         data={showData}

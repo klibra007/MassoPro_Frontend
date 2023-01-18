@@ -299,7 +299,7 @@ export default function PageModifierReservation(props) {
             <Button variant="primary" size="sm" onClick={handleSubmitForm}>
                Modifier ma réservation
             </Button>
-            {(props.idPersonnel) && <Button variant="primary" size="sm" onClick={handleDeleteReservation}>
+            {(props.idPersonnel) && <Button variant="primary" onClick={() => props.openConfirmDialog(props.data)}>
                Supprimer ma réservation
             </Button>}
          </Modal.Footer>

@@ -5,19 +5,21 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Container, Form } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setPrix } from '../../app/features/reservationSlice';
 import { Paper } from '@mui/material';
 import FullScreenDialog from '../Admin/FullScreenDialog';
+import { selectConnexionData } from '../../app/features/connexionSlice';
 
 export default function PageAgenda() {
 
+    const connexionData = useSelector(selectConnexionData);
     const [dureeTab, setDureeTab] = useState([]);
     const [dureeChoisiePersonnel, setDureeChoisiePersonnel] = useState([]);
     const [massoTab, setMassoTab] = useState([]);
-    const [massoChoisi, setMassoChoisi] = useState([]);
+    const [massoChoisi, setMassoChoisi] = useState((connexionData.typePersonnel === "Massothérapeute") ? {nom: "Vous-même"} : {});
     const [servicesTab, setServicesTab] = useState([]);
     const [serviceChoisi, setServiceChoisi] = useState({});
     const [rendezVous, setRendezVous] = useState([]);
@@ -25,6 +27,7 @@ export default function PageAgenda() {
     const [clientChoisi, setClientChoisi] = useState({});
     const [initialData, setInitialData] = useState([]);
     const [objReservationPersonnel, setObjReservationPersonnel] = useState({});
+    const [disponibilites, setDisponibilites] = useState({});
     const dispatch = useDispatch();
 
 
@@ -34,6 +37,7 @@ export default function PageAgenda() {
     let strNomApplication2 = strDossierServeur + "/api/servicespersonnels";
     let strNomApplication3 = strDossierServeur + "/api/services";
     let strNomApplication4 = strDossierServeur + "/api/client";
+    let strNomApplication5 = strDossierServeur + "/api/horairedetravail"
 
     const getMasso = (idService) => {
         axios.get(strNomApplication2 + `/${idService}`)
@@ -43,6 +47,28 @@ export default function PageAgenda() {
                     setMassoTab(response.data);
                 } else {
                     setMassoTab([]);
+                }
+
+            })
+            .catch(error => alert(error));
+    }
+
+    const getDisponibilites = (idPersonnel) => {
+        axios.get(strNomApplication5 + `/${idPersonnel}`)
+            .then((response) => {
+                //alert("La réponse horaireTravail : " + JSON.stringify(response.data));
+                if (response.data.status === true) {
+                    /*const disponibiliteFinale = response.data.horairesDeTravail.map((dispo) => {
+                        return {
+                            daysOfWeek: dispo.daysOfWeeks,
+                            startTime: dispo.startTime,
+                            endTime: dispo.endTime
+                        }
+                    });
+                    alert("La réponse horaireTravailFinal : " + JSON.stringify(disponibiliteFinale));*/
+                    setDisponibilites(response.data.horairesDeTravail);
+                } else {
+                    setDisponibilites({});
                 }
 
             })
@@ -65,7 +91,7 @@ export default function PageAgenda() {
 
         let objReservation = { idPersonnel: `${idPersonnel}` };
 
-        console.log(JSON.stringify(objReservation));
+        //alert("vérif id personnel"+JSON.stringify(objReservation));
 
         axios.post(strNomApplication, JSON.stringify(objReservation), {
             headers: {
@@ -87,6 +113,7 @@ export default function PageAgenda() {
                                 start: reservation.date + `T${reservation.heureDebut}`,
                                 end: reservation.date + `T${reservation.heureFin}`,
                                 extendedProps: {
+                                    id: reservation.id,
                                     reservation: reservation.reservation, // numéro de réservation
                                     idService: reservation.idService,
                                     nomService: reservation.nomService,
@@ -94,8 +121,10 @@ export default function PageAgenda() {
                                     idPersonnel: reservation.idPersonnel,
                                     dateRes: reservation.date,
                                     heureDebut: reservation.heureDebut,
-                                    heureFin: reservation.heureFin, 
-                                    idClient: reservation.idClient
+                                    heureFin: reservation.heureFin,
+                                    idClient: reservation.idClient,
+                                    prenom: reservation.prenom,
+                                    nom: reservation.nom,
                                 }
                                 //constraint: reservation.idClient === null ? "indisponibilite" : 'businessHours',
                                 //display: 'background',
@@ -104,7 +133,7 @@ export default function PageAgenda() {
                             }
                         }
 
-                        else if(reservation.etat !== 0) {
+                        else if (reservation.etat !== 0) {
                             return {
                                 id: reservation.id,
                                 groupId: 'indisponibilites',
@@ -128,6 +157,7 @@ export default function PageAgenda() {
                     console.log("setDateChoisie: " + value.format());*/
                 }
                 else {
+
                     setRendezVous([]);
                     setInitialData([]);
                 }
@@ -158,6 +188,16 @@ export default function PageAgenda() {
             .catch(error => alert(error));
 
         getClients();
+
+        // recup selon masso et non secretaire
+        if (connexionData.typePersonnel === "Massothérapeute") {
+            getReservationMasso(connexionData.idPersonnel);
+            getDisponibilites(connexionData.idPersonnel);
+        }
+
+        if (connexionData.typePersonnel === "Massothérapeute") {
+            setObjReservationPersonnel({ ...objReservationPersonnel, idPersonnel: connexionData.idPersonnel });
+        }
     }, [])
 
     const handleChangeService = (event) => {
@@ -197,9 +237,12 @@ export default function PageAgenda() {
         setMassoChoisi({ id: tab[0], nom: `${tab[1]} ${tab[2]}` });
         setObjReservationPersonnel({ ...objReservationPersonnel, idPersonnel: tab[0] });
         console.log("le masso choisi est : " + tab[1] + " " + tab[2]);
-
+        getDisponibilites(tab[0]);
         getReservationMasso(tab[0]);
     }
+
+
+
 
     //alert(initialData);
 
@@ -214,74 +257,75 @@ export default function PageAgenda() {
   <div class="p-2">Flex item 3</div> */}
                 {/* </div> */}
 
-                <Paper >
-                    <Form className='transparent-background'>
-                        <div className="d-flex flex-row justify-content-between">
-                            <div className='pl-2 pr-2 pt-2 pb-4'>
-                                <Form.Group >
-                                    <div className='text-start mleft-6 mt-2'>Client</div>
-                                    <Form.Select id='idDuree' onChange={(e) => { handleChangeClient(e) }}>
-                                        <option value={0}>Veuillez choisir votre client svp</option>
-                                        {clientsTab.map((client) => {
-                                            //const { id, nom, prix, estActif } = client;
-
-                                            if (client.estActif === 1) {
-                                                return <option value={`${client.id}-${client.prenom}-${client.nom}`} key={`${client.id}`}>{`${client.prenom} ${client.nom}`}</option>
-                                            }
-
-                                        })}
-                                    </Form.Select>
-                                </Form.Group>
-                            </div>
-                            <div className='pl-2 pr-2 pt-2 pb-4'>
-                                <Form.Group >
-                                    <div className='text-start mleft-6 mt-2'>Service</div>
-                                    <Form.Select id='idPersonnel' name="idPersonnel"
-                                        onChange={handleChangeService}>
-                                        <option value={0}>Veuillez choisir un service svp</option>
-                                        {servicesTab.map((service) => {
-                                            return <option key={service.id} value={`${service.id}-${service.nomService}`}>
-                                                {service.nomService}</option>
-                                        })}
-                                    </Form.Select>
-                                </Form.Group>
-                            </div>
-                            <div className='pl-2 pr-2 pt-2 pb-4'>
-                                <Form.Group>
-                                    <div className='text-start mleft-6 mt-2'>Durée</div>
-                                    <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
-                                        <option value={0}>Veuillez choisir une durée svp</option>
-                                        {dureeTab.map((data) => {
-                                            const { id, duree, prix, estActif } = data;
-                                            if (estActif === 1) {
-                                                return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
-                                            }
-
-                                        })}
-                                    </Form.Select>
-                                </Form.Group>
-                            </div>
-                            <div className='pl-2 pr-2 pt-2 pb-4'>
-                                <Form.Group>
-                                    <div className='text-start mleft-6 mt-2'>Massothérapeute</div>
-                                    <Form.Select id='idPersonnel' name="idPersonnel"
-                                        onChange={handleChangeMasso}>
-                                        <option value={0}>Veuillez choisir un massothérapeute svp</option>
-                                        {massoTab.map((masso) => {
-                                            return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
-                                        })}
-                                    </Form.Select>
-                                </Form.Group>
-                            </div>
-
-                        </div>
-                    </Form>
-                </Paper>
-
-
-
                 <div style={{ alignContent: "center" }}>
-                    <Agenda rendezVous={rendezVous} initialData={initialData} objReservationPersonnel={objReservationPersonnel} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} getReservationMasso={getReservationMasso} />
+                    <Paper >
+                        {(connexionData.typePersonnel === 'Massothérapeute') ? <div className='float-end mt-2'>{<Button variant="primary" >
+                            Ajouter horaire de travail
+                        </Button>}</div> : ""}
+
+                        <Form className='transparent-background pt-5'>
+                            <div className="d-flex flex-row justify-content-between">
+                                <div className='pl-2 pr-2 pt-2 pb-4'>
+                                    <Form.Group >
+                                        <div className='text-start mleft-6 mt-2'>Client</div>
+                                        <Form.Select id='idDuree' onChange={(e) => { handleChangeClient(e) }}>
+                                            <option value={0}>Veuillez choisir votre client svp</option>
+                                            {clientsTab.map((client) => {
+                                                //const { id, nom, prix, estActif } = client;
+
+                                                if (client.estActif === 1) {
+                                                    return <option value={`${client.id}-${client.prenom}-${client.nom}`} key={`${client.id}`}>{`${client.prenom} ${client.nom}`}</option>
+                                                }
+
+                                            })}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </div>
+                                <div className='pl-2 pr-2 pt-2 pb-4'>
+                                    <Form.Group >
+                                        <div className='text-start mleft-6 mt-2'>Service</div>
+                                        <Form.Select id='idPersonnel' name="idPersonnel"
+                                            onChange={handleChangeService}>
+                                            <option value={0}>Veuillez choisir un service svp</option>
+                                            {servicesTab.map((service) => {
+                                                return <option key={service.id} value={`${service.id}-${service.nomService}`}>
+                                                    {service.nomService}</option>
+                                            })}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </div>
+                                <div className='pl-2 pr-2 pt-2 pb-4'>
+                                    <Form.Group>
+                                        <div className='text-start mleft-6 mt-2'>Durée</div>
+                                        <Form.Select id='idDuree' onChange={(e) => { handleChangeDuree(e) }}>
+                                            <option value={0}>Veuillez choisir une durée svp</option>
+                                            {dureeTab.map((data) => {
+                                                const { id, duree, prix, estActif } = data;
+                                                if (estActif === 1) {
+                                                    return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                                }
+
+                                            })}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </div>
+                                {(connexionData.typePersonnel !== 'Massothérapeute') ? <div className='pl-2 pr-2 pt-2 pb-4'>
+                                    <Form.Group>
+                                        <div className='text-start mleft-6 mt-2'>Massothérapeute</div>
+                                        <Form.Select id='idPersonnel' name="idPersonnel"
+                                            onChange={handleChangeMasso}>
+                                            <option value={0}>Veuillez choisir un massothérapeute svp</option>
+                                            {massoTab.map((masso) => {
+                                                return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
+                                            })}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </div> : ''}
+
+                            </div>
+                        </Form>
+                    </Paper>
+                    <Agenda rendezVous={rendezVous} initialData={initialData} objReservationPersonnel={objReservationPersonnel} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} getReservationMasso={getReservationMasso} disponibilites={disponibilites} />
                 </div>
 
 
