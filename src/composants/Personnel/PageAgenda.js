@@ -91,8 +91,7 @@ export default function PageAgenda() {
 
         let objReservation = { idPersonnel: `${idPersonnel}` };
 
-        //
-        alert("vérif id personnel"+JSON.stringify(objReservation));
+        //alert("vérif id personnel"+JSON.stringify(objReservation));
 
         axios.post(strNomApplication, JSON.stringify(objReservation), {
             headers: {

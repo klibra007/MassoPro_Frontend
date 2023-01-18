@@ -116,11 +116,11 @@ export default function PageModifierReservation(props) {
    }
 
    const handleGetDisponibilite = () => {
-      const retMsg = validateDateRes();
-      if (retMsg === '') {
-         getDisponibilite();
+      const frmErrors = validateForm(false);   // Don't validate heureDebut
+      if (Object.keys(frmErrors).length > 0) {
+         setFormErrors(frmErrors);
       } else {
-         setFormErrors({ ...formErrors, ["dateRes"]: retMsg });
+         getDisponibilite();
       }
    }
 
@@ -136,13 +136,13 @@ export default function PageModifierReservation(props) {
       return retMsg;
    }
 
-   const validateForm = () => {
+   const validateForm = (valHeureDebut) => {
       const errors = {};
       //console.log("form.idDuree="+form.idDuree);
-      if (form.idDuree === 0) {   // No selection. Value is 0
+      if (form.idDuree == 0) {   // No selection. Value is 0
          errors.idDuree = "Veuillez choisir une durée";
       }
-      if (form.idPersonnel === 0) {   // No selection. Value is 0
+      if (form.idPersonnel == 0) {   // No selection. Value is 0
          errors.idPersonnel = "Veuillez choisir un massothérapeute";
       }
 
@@ -151,8 +151,10 @@ export default function PageModifierReservation(props) {
          errors.dateRes = dateResErrMsg;
       }
 
-      if (form.heureDebut === 0) {   // No selection. Value is 9
-         errors.heureDebut = "Veuillez choisir un disponibilité";
+      if (valHeureDebut) {
+         if (form.heureDebut == 0) {   // No selection. Value is 0
+            errors.heureDebut = "Veuillez choisir un disponibilité";
+         }
       }
 
       return errors;
@@ -161,7 +163,7 @@ export default function PageModifierReservation(props) {
    const handleSubmitForm = (e) => {
       e.preventDefault();
 
-      const frmErrors = validateForm();
+      const frmErrors = validateForm(true);   // Validate heureDebut
       if (Object.keys(frmErrors).length > 0) {
          setFormErrors(frmErrors);
       } else {
