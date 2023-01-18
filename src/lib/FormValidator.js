@@ -54,7 +54,6 @@ export function isDate(dateStr) {
       return false;
     }    
 
-
     if (month === 2) {   // Check if it's Leap year
       if (!isLeapYear(year)) {
          return false;      
@@ -64,9 +63,53 @@ export function isDate(dateStr) {
   return true;    
 }  
 
+// Valid for 24hr format HH:MM
+// 03:15 = true
+// 13:22 = true
+// 24:00 = false
+// 11:20 PM = false
+export function isTime( time ) {
+  // Return false if time is empty
+  if (!isNull( time )) { return false; }
+
+  // 24-hour format
+  // ( = start of group
+  // [01]?[0-9] = time start 0-9,1-9,00-09,10-19
+  // | = or
+  // 2[0-3] = time starting 20-23
+  // ) = end of group
+  const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+
+  return regex.test(time);   
+}
+
+// Compare 24hr format HH:MM
+// Return 0 = same
+//        1 = time1 > time2
+//        2 = time1 < time2
+export function compareTime (time1_str, time2_str) {
+    if (time1_str == time2_str) { return 0 }
+
+    const [hour1, minutes1] = time1_str.split(':');
+    const [hour2, minutes2] = time2_str.split(':');
+
+    let t1=new Date(parseInt("2022",10),(parseInt("01",10))-1,parseInt("01",10),
+                    parseInt(hour1,10),parseInt(minutes1,10),0);
+    let t2=new Date(parseInt("2022",10),(parseInt("01",10))-1,parseInt("01",10),
+                    parseInt(hour2,10),parseInt(minutes2,10),0);                 
+                    
+    let time1 = t1.valueOf(); 
+    let time2 = t2.valueOf();   
+    
+    if (time1 < time2) {
+       return 2;   // time1 < time2
+    }
+
+    return 1;   // time1 > time2
+}
+
 // SIN = 9 digits
 export function isSin(sinStr) {
   const regex = /^[0-9]{9}$/;
-  
   return regex.test(sinStr);   
 }  

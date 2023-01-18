@@ -133,9 +133,13 @@ export default function PageVosReservations() {
 
   function handleModifierReservation (data, newData) {
   //  console.log("Modifier reservation");
-    console.log("old idDuree="+data.idDuree, " new idDuree="+newData.idDuree+" new heureDebut="+newData.heureDebut+
+    console.log("old idDuree="+data.idDuree+" new idDuree="+newData.idDuree+" data.heureDebut="+data.heureDebut+" data.heureFin="+data.heureFin+" new heureDebut="+newData.heureDebut+
              " new heureFin="+newData.heureFin);
-   
+     if (JSON.stringify(data) === JSON.stringify(newData)) {
+        console.log("Same data");
+     } else {
+        console.log("Different data");
+     }
   }
 
 
