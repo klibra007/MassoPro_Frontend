@@ -15,6 +15,8 @@ import { set } from 'date-fns';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 
 export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso }) {
 
@@ -38,8 +40,11 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
     const connexionData = useSelector(selectConnexionData);
 
-
-
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+    const [notifyMsg, setNotifyMsg] = useState('');
+    const handleCloseSnack = () => {
+        setOpenSnackBar(false);
+    };
 
     /*const initialEvents = () => rendezVous.map((reservation) => {
 
@@ -87,6 +92,17 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         //setInitialData(initialEvents());
     }, [initialData]);
 
+    const notify = (msg, isReload) => {
+        setNotifyMsg(msg);
+        setOpenSnackBar(true);
+    
+        if (isReload) {
+           setInterval(() => {
+             window.location.reload(false);
+           }, 2000);
+        }
+    }    
+
 
     console.log("initial events: " + JSON.stringify(initialData));
 
@@ -105,14 +121,16 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             .then((response) => {
                 //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
-                    alert("Votre modification a bien été prise en compte!!");
+                    //alert("Votre modification a bien été prise en compte!!");
+                    notify("Votre modification a bien été prise en compte!!", false);
                     getReservationMasso(objReservationFinal.idPersonnel);
                     //window.location.reload(false);
                     //setOpenActivationClient(false);
                     setShow(false);
                 }
                 else{
-                    alert("Votre modification a échoué!!");
+                    //alert("Votre modification a échoué!!");
+                    notify("Votre modification a échoué!!", false);
                 }
             })
             .catch((error) => {
@@ -171,7 +189,8 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
         }
         else {
-            alert("Masso indisponible à cette date");
+            //alert("Masso indisponible à cette date");
+            notify("Masso indisponible à cette date", false);
         }
 
     }
@@ -317,6 +336,17 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} />
 
             {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} />}
+ 
+            <Snackbar sx={{ marginTop: 14, marginLeft: 19 }}
+                open={openSnackBar}
+                onClose={handleCloseSnack}
+                autoHideDuration={3000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+               <Alert severity="success" sx={{ width: '100%' }}>
+                  {notifyMsg}
+               </Alert>
+            </Snackbar>
         </>
 
     )

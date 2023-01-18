@@ -268,7 +268,7 @@ export default function PageModifierReservation(props) {
                   <InputGroup>
                      <Form.Control type='text' id="idDateRes" name="dateRes" value={form.dateRes}
                         onChange={handleChange} isInvalid={!!formErrors.dateRes} required />
-                     <Button id="idDateResBtn" variant="secondary" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
+                     <Button id="idDateResBtn" variant="secondary" size="sm" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
                      <Form.Control.Feedback type="invalid" className='text-start'>
                         {formErrors.dateRes}
                      </Form.Control.Feedback>
@@ -293,13 +293,13 @@ export default function PageModifierReservation(props) {
             </Form>
          </Modal.Body>
          <Modal.Footer>
-            <Button variant="outline-secondary" onClick={handleCancelForm}>
+            <Button variant="outline-secondary" size="sm" onClick={handleCancelForm}>
                Annuler
             </Button>
-            <Button variant="primary" onClick={handleSubmitForm}>
+            <Button variant="primary" size="sm" onClick={handleSubmitForm}>
                Modifier ma réservation
             </Button>
-            {(props.idPersonnel) && <Button variant="primary" onClick={handleDeleteReservation}>
+            {(props.idPersonnel) && <Button variant="primary" size="sm" onClick={handleDeleteReservation}>
                Supprimer ma réservation
             </Button>}
          </Modal.Footer>
