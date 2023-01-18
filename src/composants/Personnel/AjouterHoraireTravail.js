@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { isNull, isTime, compareTime } from '../lib/FormValidator';   
+import { isNull, isTime, compareTime } from '../../lib/FormValidator';   
 
 export default function AjouterHoraireTravail(props) {
     const {show, setShow, callbackFunc} = props;
@@ -64,10 +64,12 @@ export default function AjouterHoraireTravail(props) {
         } else {           
            handleCleanupForm();
            let data = {
-              weekday: weekday,
+              jour: `${weekday}`,
               heureDebut: form.heureDebut,
-              heureFin: form.heureFin
+              heureFin: form.heureFin,
+              idPersonnel: props.idPersonnel
            }
+           
            callbackFunc(data);  // Call next function
         }
     }   
@@ -134,10 +136,10 @@ export default function AjouterHoraireTravail(props) {
             </Form>  
           </Modal.Body>     
           <Modal.Footer>
-             <Button className="btn btn-secondary" onClick={handleCleanupForm}>
+             <Button variant="outline-secondary" onClick={handleCleanupForm}>
                 Annuler
              </Button>
-             <Button className="btn btn-primary" onClick={handleSubmitForm}>
+             <Button variant="primary" onClick={handleSubmitForm}>
                 Submit
              </Button>                
           </Modal.Footer>
