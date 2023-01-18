@@ -151,7 +151,7 @@ export default function PageModifierReservation(props) {
          errors.dateRes = dateResErrMsg;
       }
 
-      if (form.heureDebut == 0) {   // No selection. Value is 9
+      if (form.heureDebut === 0) {   // No selection. Value is 9
          errors.heureDebut = "Veuillez choisir un disponibilité";
       }
 
@@ -297,7 +297,7 @@ export default function PageModifierReservation(props) {
             <Button variant="primary" onClick={handleSubmitForm}>
                Modifier ma réservation
             </Button>
-            {(props.idPersonnel) && <Button variant="primary" onClick={handleDeleteReservation}>
+            {(props.idPersonnel) && <Button variant="primary" onClick={() => props.openConfirmDialog(props.data)}>
                Supprimer ma réservation
             </Button>}
          </Modal.Footer>

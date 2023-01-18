@@ -5,7 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { INITIAL_EVENTS, createEventId, dataConstraint, disponibilites } from './event_utils'
+import { INITIAL_EVENTS, createEventId, dataConstraint } from './event_utils'
 import { formatDate } from '@fullcalendar/core';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -15,14 +15,18 @@ import { set } from 'date-fns';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+import ConfirmDialog from '../Admin/ConfirmDialog';
 
-export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso }) {
+export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso, disponibilites }) {
 
+    //alert("objReservation personnel " + JSON.stringify(objReservationPersonnel) )
     //console.log("DATA DISPO: "+ dataDisponibilites);
+
+    let strDossierServeur = "https://dev.pascalrocher.com";
 
     const [weekendsVisible, setWeekendsVisible] = useState(true);
 
-    const [currentEvents, setCurrentEvents] = useState([]);
+    const [currentEvents, setCurrentEvents] = useState(initialData);
 
     const [selectedEvent, setSelectedEvent] = useState({});
 
@@ -37,6 +41,16 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     const [openWithSelect, setOpenWithSelect] = useState(false);
 
     const connexionData = useSelector(selectConnexionData);
+
+    const [annulerMsg, setAnnulerMsg] = useState();
+
+    const [open, setOpen] = useState(false);
+
+    const [reservationIdConfirmDialog, setReservationIdConfirmDialog] = useState();
+
+    const [notifyMsg, setNotifyMsg] = useState('');
+
+    const [openSnackBar, setOpenSnackBar] = useState(false);
 
 
 
@@ -94,7 +108,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     alert(today)*/
 
     const handleModifierReservation = (oldData, newData) => {
-        let strDossierServeur = "https://dev.pascalrocher.com";
+       
         let strNomApplication = strDossierServeur + `/api/rendezvous/${newData.idRendezVous}`;
 
         axios.put(strNomApplication, JSON.stringify(newData), {
@@ -106,7 +120,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     alert("Votre modification a bien été prise en compte!!");
-                    getReservationMasso(objReservationFinal.idPersonnel);
+                    getReservationMasso(objReservationPersonnel.idPersonnel);
                     //window.location.reload(false);
                     //setOpenActivationClient(false);
                     setShow(false);
@@ -245,6 +259,71 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         }
     }
 
+    const openConfirmDialog = (rdv) => {
+        //alert(JSON.stringify(rdv));
+        console.log("In OpenDialog")
+        setReservationIdConfirmDialog(rdv.id);
+        //setReservationId(rdv.reservation);
+        console.log("Type Personnel: ", connexionData.typePersonnel)
+    
+        if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
+    
+          setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? || \n 
+          Réservation : ${rdv.reservation} || \n 
+          Client : ${rdv.prenom}  ${rdv.nom} || \n 
+          Service: ${rdv.nomService}  || \n 
+          N° massothérapeute : ${rdv.idPersonnel} || \n 
+          Date :  ${rdv.dateRes}`);
+          //setOpen(true);
+        }
+        else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
+    
+          setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? || \n 
+          Réservation : ${rdv.reservation} || \n
+          n° Client : ${rdv.idClient} || \n 
+          Service: ${rdv.nomService}  || \n 
+          Date :  ${rdv.dateRes}`);
+          //setOpen(true);
+        }
+        setOpen(true);
+    
+        console.log("Open = ", open);
+      }
+
+      const notify = (msg, isReload) => {
+        setNotifyMsg(msg);
+        setOpenSnackBar(true);
+    
+        if (isReload) {
+          // setInterval(() => {
+          //   window.location.reload(false);
+          // }, 2000);
+        }
+      }
+
+      const handleAnnuler = () => {
+        console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
+        
+        let strNomApplication = strDossierServeur + `/api/rendezvous/${reservationIdConfirmDialog}`;
+
+        //alert(strNomApplication)
+
+        axios.delete(strNomApplication)
+          .then((response) => {
+    
+            if (response.data.status === true) {
+              //Check response.data because response.data.status and response.data.message may be undefined
+              console.log("idPersonnel=" + connexionData.idPersonnel + " La réponse /api/rendezvous: " + JSON.stringify(response.data.status, response.data.message));
+
+              getReservationMasso(objReservationPersonnel.idPersonnel);
+              notify("Votre réservations a été annulée.", true);
+              setShow(false);
+              //  dispatch(setTabReservation(response.data.reservations));
+            }
+          })
+          .catch(error => alert(error))
+      }
+
     return (
         <>
             {/*<RenderSidebar />*/}
@@ -284,7 +363,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 selectMirror={true}
                 dayMaxEvents={true}
                 weekends={weekendsVisible}
-                initialEvents={initialData}  // alternatively, use the `events` setting to fetch from a feed
+                //initialEvents={currentEvents}  // alternatively, use the `events` setting to fetch from a feed
                 events={initialData} // react pète un cable si pas controlé par un état
                 select={handleDateSelect}
                 eventContent={renderEventContent} // custom render function
@@ -314,9 +393,19 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 snapDuration={'00:30:00'}
             />}
 
-            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} />
+            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso}  setOpen={setOpen}  />
 
-            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} />}
+            <ConfirmDialog
+               title={annulerMsg}
+               txtCancel="Non"
+               txtConfirm="Oui"
+               open={open}
+               setOpen={setOpen}
+               callbackData={handleAnnuler}
+               reservationId={reservationIdConfirmDialog}
+            />
+
+            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} />}
         </>
 
     )
