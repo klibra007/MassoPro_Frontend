@@ -12,6 +12,7 @@ import { setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObje
 import { Paper } from '@mui/material';
 import FullScreenDialog from '../Admin/FullScreenDialog';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+import AjouterHoraireTravail from './AjouterHoraireTravail';
 
 export default function PageAgenda() {
 
@@ -19,7 +20,7 @@ export default function PageAgenda() {
     const [dureeTab, setDureeTab] = useState([]);
     const [dureeChoisiePersonnel, setDureeChoisiePersonnel] = useState([]);
     const [massoTab, setMassoTab] = useState([]);
-    const [massoChoisi, setMassoChoisi] = useState((connexionData.typePersonnel === "Massothérapeute") ? {nom: "Vous-même"} : {});
+    const [massoChoisi, setMassoChoisi] = useState((connexionData.typePersonnel === "Massothérapeute") ? { nom: "Vous-même" } : {});
     const [servicesTab, setServicesTab] = useState([]);
     const [serviceChoisi, setServiceChoisi] = useState({});
     const [rendezVous, setRendezVous] = useState([]);
@@ -28,6 +29,7 @@ export default function PageAgenda() {
     const [initialData, setInitialData] = useState([]);
     const [objReservationPersonnel, setObjReservationPersonnel] = useState({});
     const [disponibilites, setDisponibilites] = useState({});
+    const [show, setShow] = useState(false);
     const dispatch = useDispatch();
 
 
@@ -37,7 +39,7 @@ export default function PageAgenda() {
     let strNomApplication2 = strDossierServeur + "/api/servicespersonnels";
     let strNomApplication3 = strDossierServeur + "/api/services";
     let strNomApplication4 = strDossierServeur + "/api/client";
-    let strNomApplication5 = strDossierServeur + "/api/horairedetravail"
+    let strNomApplication5 = strDossierServeur + "/api/horairedetravail";
 
     const getMasso = (idService) => {
         axios.get(strNomApplication2 + `/${idService}`)
@@ -56,7 +58,7 @@ export default function PageAgenda() {
     const getDisponibilites = (idPersonnel) => {
         axios.get(strNomApplication5 + `/${idPersonnel}`)
             .then((response) => {
-                //alert("La réponse horaireTravail : " + JSON.stringify(response.data));
+                alert("La réponse horaireTravail recu du back: " + JSON.stringify(response.data));
                 if (response.data.status === true) {
                     /*const disponibiliteFinale = response.data.horairesDeTravail.map((dispo) => {
                         return {
@@ -242,6 +244,40 @@ export default function PageAgenda() {
     }
 
 
+    //  Ajout horaireDispo masso
+    const handleClickAjouterHoraire = () => {
+        setShow(true);
+    }
+
+    const ajouterHoraire = (data) => {
+
+        //alert("Data dans ajouter horaire travail: " + JSON.stringify(data));
+
+        axios.post(strNomApplication5, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                console.log("La réponse ajout horaire: " + JSON.stringify(response.data));
+                if (response.data.status === true) {
+                    //SnackBar
+                    alert("Votre horaire de travail a bien été ajouté!!");
+                    setShow(false);
+                    getDisponibilites(connexionData.idPersonnel);
+                } else {
+                    //SnackBar
+                    alert("Votre horaire de travail n'a pas été ajouté!!");
+                }
+
+            })
+            .catch((error) => {
+                alert(error.response);
+            });
+
+
+    }
+
 
 
     //alert(initialData);
@@ -259,7 +295,7 @@ export default function PageAgenda() {
 
                 <div style={{ alignContent: "center" }}>
                     <Paper >
-                        {(connexionData.typePersonnel === 'Massothérapeute') ? <div className='float-end mt-2'>{<Button variant="primary" >
+                        {(connexionData.typePersonnel === 'Massothérapeute') ? <div className='float-end mt-2'>{<Button variant="primary" onClick={handleClickAjouterHoraire}>
                             Ajouter horaire de travail
                         </Button>}</div> : ""}
 
@@ -326,6 +362,7 @@ export default function PageAgenda() {
                         </Form>
                     </Paper>
                     <Agenda rendezVous={rendezVous} initialData={initialData} objReservationPersonnel={objReservationPersonnel} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} getReservationMasso={getReservationMasso} disponibilites={disponibilites} />
+                    <AjouterHoraireTravail show={show} setShow={setShow} callbackFunc={ajouterHoraire} idPersonnel={connexionData.idPersonnel} />
                 </div>
 
 

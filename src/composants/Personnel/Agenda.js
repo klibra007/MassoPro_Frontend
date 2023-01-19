@@ -118,6 +118,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             .then((response) => {
                 //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
+                    //SnackBar
                     alert("Votre modification a bien été prise en compte!!");
                     getReservationMasso(objReservationPersonnel.idPersonnel);
                     //window.location.reload(false);
@@ -125,8 +126,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     setShow(false);
                 }
                 else{
-                    //alert("Votre modification a échoué!!");
-                    notify("Votre modification a échoué!!", false);
+                    alert("Votre modification a échoué!!");
                 }
             })
             .catch((error) => {
@@ -278,7 +278,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
     
           setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? || \n 
-          Réservation : ${rdv.reservation} || \n
+          Réservation : ${rdv.reservation} || {"\n"}
           n° Client : ${rdv.idClient} || \n 
           Service: ${rdv.nomService}  || \n 
           Date :  ${rdv.dateRes}`);
@@ -395,14 +395,14 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso}  setOpen={setOpen}  />
 
             <ConfirmDialog
-               title={annulerMsg}
+               title={"Confirmation de suppression"}
                txtCancel="Non"
                txtConfirm="Oui"
                open={open}
                setOpen={setOpen}
                callbackData={handleAnnuler}
                reservationId={reservationIdConfirmDialog}
-            />
+            >{annulerMsg}</ConfirmDialog>
 
             {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} />}
 
