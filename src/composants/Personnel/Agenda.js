@@ -126,7 +126,8 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     setShow(false);
                 }
                 else{
-                    alert("Votre modification a échoué!!");
+                    //alert("Votre modification a échoué!!");
+                    notify("Votre modification a échoué!!", false);
                 }
             })
             .catch((error) => {
