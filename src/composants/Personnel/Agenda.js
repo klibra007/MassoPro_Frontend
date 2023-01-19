@@ -15,6 +15,8 @@ import { set } from 'date-fns';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 import ConfirmDialog from '../Admin/ConfirmDialog';
 
 export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso, disponibilites }) {
