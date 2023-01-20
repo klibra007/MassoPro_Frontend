@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
   Button,
   Dialog,
@@ -7,8 +8,10 @@ import {
   DialogContent,
   DialogContentText,
   Typography
-} from '@mui/material'
+} from '@mui/material';
+
 import Link from '@mui/material/Link';
+
 
 export default function ConfirmDialog(props) {
   const { title, children, txtCancel, txtConfirm, icon, callbackFunc, callbackData } = props;
