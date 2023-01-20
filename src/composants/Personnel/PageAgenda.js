@@ -56,7 +56,8 @@ export default function PageAgenda() {
     let strNomApplication2 = strDossierServeur + "/api/servicespersonnels";
     let strNomApplication3 = strDossierServeur + "/api/services";
     let strNomApplication4 = strDossierServeur + "/api/client";
-    let strNomApplication5 = strDossierServeur + "/api/horairedetravail"
+    let strNomApplication5 = strDossierServeur + "/api/horairedetravail";
+    let strNomApplication6 = strDossierServeur + "/api/personnelservices";
 
     const getMasso = (idService) => {
         axios.get(strNomApplication2 + `/${idService}`)
@@ -188,15 +189,30 @@ export default function PageAgenda() {
 
     }
 
+    const getServices = () => {
+        if (connexionData.typePersonnel !== "Massothérapeute") {
+
+            axios.get(strNomApplication3)
+                .then((response) => {
+                    //alert(JSON.stringify(response.data))
+                    if ((connexionData.typePersonnel === "Massothérapeute") ? response.data.status === true : response.data.length > 0) {
+                        //alert("La réponse : " + JSON.stringify(response.data));
+                        setServicesTab(response.data);
+                    } else {
+                        setServicesTab([]);
+                    }
+                })
+                .catch(error => alert(error))
+        }
+    }
+
     useEffect(() => {
 
+        //alert(connexionData.typePersonnel);
+
         //recup des services
-        axios.get(strNomApplication3)
-            .then((response) => {
-                console.log("La réponse : " + JSON.stringify(response.data));
-                setServicesTab(response.data);
-            })
-            .catch(error => alert(error))
+        getServices();
+
 
         //recup des durées
         axios.get(strNomApplication)
@@ -212,6 +228,20 @@ export default function PageAgenda() {
         if (connexionData.typePersonnel === "Massothérapeute") {
             getReservationMasso(connexionData.idPersonnel);
             getDisponibilites(connexionData.idPersonnel);
+
+            //alert(`${strNomApplication6}/${connexionData.idPersonnel}`);
+
+            axios.get(`${strNomApplication6}/${connexionData.idPersonnel}`)
+                .then((response) => {
+                    if (response.data.status === true) {
+                        console.log("La réponse : " + JSON.stringify(response.data));
+                        setServicesTab(response.data.services);
+                    } else {
+                        setServicesTab([]);
+                    }
+
+                })
+                .catch(error => alert(error))
         }
 
         if (connexionData.typePersonnel === "Massothérapeute") {
@@ -373,9 +403,11 @@ export default function PageAgenda() {
 
                             </div>
                         </Form>
-                    </Paper>                    
-                    <Agenda rendezVous={rendezVous} initialData={initialData} objReservationPersonnel={objReservationPersonnel} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} getReservationMasso={getReservationMasso} disponibilites={disponibilites} />
-                    <AjouterHoraireTravail show={show} setShow={setShow} callbackFunc={ajouterHoraire} idPersonnel={connexionData.idPersonnel} />
+                    </Paper>
+
+                    <Agenda rendezVous={rendezVous} initialData={initialData} objReservationPersonnel={objReservationPersonnel} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} getReservationMasso={getReservationMasso} disponibilites={disponibilites} getServices={getServices}/>
+
+                    <AjouterHoraireTravail show={show} setShow={setShow} callbackFunc={ajouterHoraire} idPersonnel={connexionData.idPersonnel}  />
                 </div>
 
             </div>
