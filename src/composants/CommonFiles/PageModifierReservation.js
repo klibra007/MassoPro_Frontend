@@ -3,6 +3,10 @@ import { Modal, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { isNull, isDate } from '../../lib/FormValidator';
 
 
@@ -28,7 +32,6 @@ export default function PageModifierReservation(props) {
       idClient: data.idClient,
       idService: data.idService,
       idReservation: data.id
-
    }
 
    const [form, setForm] = useState({
@@ -197,12 +200,12 @@ export default function PageModifierReservation(props) {
       if (form.idPersonnel == 0) {   // No selection. Value is 0
          errors.idPersonnel = "Veuillez choisir un massothérapeute";
       }
-
+/*
       const dateErrMsg = validateDate();
       if (dateErrMsg !== '') {
          errors.date = dateErrMsg;
       }
-
+*/
       if (valHeureDebut) {
          if (form.heureDebut == 0) {   // No selection. Value is 0
             errors.heureDebut = "Veuillez choisir un disponibilité";
@@ -266,6 +269,16 @@ export default function PageModifierReservation(props) {
 
       removeFormError(e);
    }
+
+   const handleChangeDateRes = (epochDate) => {      
+      let dateSelected = new Date(epochDate);
+      const formattedDate = dateSelected.toISOString().split('T')[0];
+      console.log("formattedDate " + formattedDate);        
+      setForm({ ...form, date: formattedDate })
+      console.log(pageName + " La date choisi: " + formattedDate);
+      console.log(pageName + " La date dateRes: " + form.date);
+   }
+
 
    return (
       <Modal
@@ -334,16 +347,17 @@ export default function PageModifierReservation(props) {
                </Form.Group>}
 
                <Form.Group>
-                  <div className='text-start mt-2'>Choisir une date réservation</div>
-                  <InputGroup>
-                     <Form.Control type='text' id="idDate" name="date" value={form.date}
-                        onChange={handleChange} isInvalid={!!formErrors.date} required />
-                     <Button size='sm' id="idDateBtn" variant="secondary" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
-                     <Form.Control.Feedback type="invalid" className='text-start'>
-                        {formErrors.date}
-                     </Form.Control.Feedback>
-                  </InputGroup>
-               </Form.Group>
+                  <div className='text-start mt-2 mb-3'>Date de réservation</div>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                     <MobileDatePicker
+                        label="Choisir une date"
+                        inputFormat="YYYY-MM-DD"
+                        value={form.date}
+                        onChange={handleChangeDateRes}
+                        renderInput={(params) => <TextField {...params} />}
+                     />
+                  </LocalizationProvider>
+               </Form.Group>               
 
                {disponibiliteTab.length > 0 ?
                   <Form.Group>

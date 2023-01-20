@@ -15,6 +15,8 @@ import { set } from 'date-fns';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectConnexionData } from '../../app/features/connexionSlice';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 import ConfirmDialog from '../Admin/ConfirmDialog';
 
 export default function Agenda({ rendezVous, initialData, objReservationPersonnel, massoChoisi, serviceChoisi, clientChoisi, dureeChoisiePersonnel, getReservationMasso, disponibilites }) {
@@ -51,9 +53,9 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     const [notifyMsg, setNotifyMsg] = useState('');
 
     const [openSnackBar, setOpenSnackBar] = useState(false);
-
-
-
+    const handleCloseSnack = () => {
+        setOpenSnackBar(false);
+    };
 
     /*const initialEvents = () => rendezVous.map((reservation) => {
 
@@ -101,7 +103,6 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         //setInitialData(initialEvents());
     }, [initialData]);
 
-
     console.log("initial events: " + JSON.stringify(initialData));
 
     /*let today = new Date().toISOString();
@@ -130,9 +131,9 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     //setOpenActivationClient(false);
                     setShow(false);
                 }
-                else {
-                    //SnackBar
-                    alert("Votre modification a échoué!!");
+                else{
+                    //alert("Votre modification a échoué!!");
+                    notify("Votre modification a échoué!!", false);
                 }
             })
             .catch((error) => {
@@ -157,9 +158,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             setShow2(true);
         }
         else {
-
-            //SnackBar
-            alert("Veuillez choisir tous les éléments de réservations (client, service, masso, durée)");
+            notify("Veuillez choisir tous les éléments de réservations (client, service, masso, durée)", false);
         }
 
 
@@ -189,12 +188,10 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
             }*/
             setSelectedEvent(clickInfo.event.extendedProps);
             setShow(true);
-
-
         }
         else {
-
-            alert("Masso indisponible à cette date");
+            //alert("Masso indisponible à cette date");
+            notify("Masso indisponible à cette date", false);
         }
 
     }
@@ -306,9 +303,9 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         setOpenSnackBar(true);
 
         if (isReload) {
-            // setInterval(() => {
-            //   window.location.reload(false);
-            // }, 2000);
+             setInterval(() => {
+             window.location.reload(false);
+          }, 2000);
         }
     }
 
@@ -326,14 +323,14 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     //Check response.data because response.data.status and response.data.message may be undefined
                     console.log("idPersonnel=" + connexionData.idPersonnel + " La réponse /api/rendezvous: " + JSON.stringify(response.data.status, response.data.message));
 
-                    getReservationMasso(objReservationPersonnel.idPersonnel);
-                    notify("Votre réservation a été annulée.", true);
-                    setShow(false);
-                    //  dispatch(setTabReservation(response.data.reservations));
-                }
-            })
-            .catch(error => alert(error))
-    }
+              getReservationMasso(objReservationPersonnel.idPersonnel);
+              notify("Votre réservations a été annulée.", false);
+              setShow(false);
+              //  dispatch(setTabReservation(response.data.reservations));
+            }
+          })
+          .catch(error => alert(error))
+      }
 
     return (
         <>
@@ -417,7 +414,18 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 reservationId={reservationIdConfirmDialog}
             ></ConfirmDialog>
 
-            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog={openConfirmDialog} typePersonnel={connexionData.typePersonnel} />}
+            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} />}
+
+            <Snackbar sx={{ marginTop: 14, marginLeft: 19 }}
+                open={openSnackBar}
+                onClose={handleCloseSnack}
+                autoHideDuration={3000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+               <Alert severity="success" sx={{ width: '100%' }}>
+                  {notifyMsg}
+               </Alert>
+            </Snackbar>
         </>
 
     )

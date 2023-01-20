@@ -73,7 +73,7 @@ function NavBar() {
       
             {(connexionData.idPersonnel) ?
               <>
-              {/* <Nav.Link href="/admin/reservation">Reservations</Nav.Link> */}
+              <Nav.Link href="/admin/reservation">Reservations</Nav.Link>
               <Nav.Link href="/perso/agenda">{(connexionData.typePersonnel === "Secrétaire") ? "Réservations" : "Mon Agenda"}</Nav.Link>
               <Nav.Link href="/admin/clients">Clients</Nav.Link>
                 {/* <NavDropdown title="Clients" id="navbarScrollingDropdown">
