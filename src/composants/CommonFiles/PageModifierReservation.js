@@ -16,6 +16,7 @@ export default function PageModifierReservation(props) {
 
    const { data, show, setShow, callbackFunc } = props;
 
+   const [datePicker, setDatePicker] = useState(data.dateRes);
    const [hrFin, setHrFin] = useState("");
 
    const [dureeTab, setDureeTab] = useState([]);
@@ -273,7 +274,8 @@ export default function PageModifierReservation(props) {
    const handleChangeDateRes = (epochDate) => {      
       let dateSelected = new Date(epochDate);
       const formattedDate = dateSelected.toISOString().split('T')[0];
-      console.log("formattedDate " + formattedDate);        
+      console.log("formattedDate " + formattedDate);  
+      setDatePicker(formattedDate);   
       setForm({ ...form, date: formattedDate })
       console.log(pageName + " La date choisi: " + formattedDate);
       console.log(pageName + " La date dateRes: " + form.date);
@@ -352,7 +354,7 @@ export default function PageModifierReservation(props) {
                      <MobileDatePicker
                         label="Choisir une date"
                         inputFormat="YYYY-MM-DD"
-                        value={form.date}
+                        value={datePicker}
                         onChange={handleChangeDateRes}
                         renderInput={(params) => <TextField {...params} />}
                      />
