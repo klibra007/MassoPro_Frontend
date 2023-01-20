@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Form } from 'react-bootstrap';
-import {  setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
+import { setAffichageChoixDureeEtMasso, selectObjReservation, selectNomServiceChoisi, setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObjetReservationIdPersonnel, setAffichageReservation, setPrix } from '../app/features/reservationSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -15,7 +15,7 @@ export default function PageChoixDureeMasso() {
     const [selectDuree, setSelectDuree] = useState(0);
     const [selectMasso, setSelectMasso] = useState(0);
     const [dureeInvalid, setDureeInvalid] = useState(false);
-    const [massoInvalid, setMassoInvalid] = useState(false);      
+    const [massoInvalid, setMassoInvalid] = useState(false);
 
     console.log("dans choixMasso : " + JSON.stringify(objReservation))
 
@@ -62,27 +62,27 @@ export default function PageChoixDureeMasso() {
 
     const validateForm = () => {
         // console.log("selectDuree="+selectDuree+" selectMasso="+selectMasso);
-        let isValid=true;
-        setDureeInvalid(false); 
-        setMassoInvalid(false); 
-  
+        let isValid = true;
+        setDureeInvalid(false);
+        setMassoInvalid(false);
+
         if (selectDuree === 0) {  // Pas selection. Value=0
-           setDureeInvalid(true);
-           isValid=false;
+            setDureeInvalid(true);
+            isValid = false;
         }
-  
+
         if (selectMasso === 0) {  // Pas selection. Value=0
-           setMassoInvalid(true);
-           isValid=false;
+            setMassoInvalid(true);
+            isValid = false;
         }
-  
-        return isValid; 
-    }    
+
+        return isValid;
+    }
 
     const handleClickSuivant = () => {
         if (validateForm()) {
-           dispatch(setAffichageChoixDureeEtMasso(false));
-           dispatch(setAffichageReservation(true));
+            dispatch(setAffichageChoixDureeEtMasso(false));
+            dispatch(setAffichageReservation(true));
         }
     }
 
@@ -96,32 +96,32 @@ export default function PageChoixDureeMasso() {
                         </Form.Group>
 
                         <Form.Group>
-                           <div className='text-start mt-4 text-primary'>Durée</div>
-                           <Form.Select id='idDuree' isInvalid={dureeInvalid} onChange={(e) => { handleChangeDuree(e) }}>
-                              <option value={0}>Veuillez choisir une durée svp</option>
-                              {dureeTab.map((data) => {
-                                  const { id, duree, prix, estActif } = data;
-                                  if (estActif === 1) {
-                                  return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
-                                  }
-                              })}
-                           </Form.Select>
-                           <Form.Control.Feedback type="invalid" className='text-start'>
+                            <div className='text-start mt-4 text-primary'>Durée</div>
+                            <Form.Select id='idDuree' isInvalid={dureeInvalid} onChange={(e) => { handleChangeDuree(e) }}>
+                                <option value={0}>Veuillez choisir une durée svp</option>
+                                {dureeTab.map((data) => {
+                                    const { id, duree, prix, estActif } = data;
+                                    if (estActif === 1) {
+                                        return <option value={`${id}-${duree}-${prix}`} key={`S${id}`}>{`${duree}min (+ $${prix})`}</option>
+                                    }
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid" className='text-start'>
                                 Veuillez choisir une durée
-                           </Form.Control.Feedback>                            
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group>
-                           <div className='text-start mt-3 text-primary'>Massothérapeute</div>
-                           <Form.Select id='idMasso' isInvalid={massoInvalid} onChange={(e) => { handleChangeMasso(e) }}>
-                              <option value={0}>Veuillez choisir un massothérapeute svp</option>
-                              {massoTab.map((masso) => {
-                                 return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
-                              })}
-                           </Form.Select>
-                           <Form.Control.Feedback type="invalid" className='text-start'>
+                            <div className='text-start mt-3 text-primary'>Massothérapeute</div>
+                            <Form.Select id='idMasso' isInvalid={massoInvalid} onChange={(e) => { handleChangeMasso(e) }}>
+                                <option value={0}>Veuillez choisir un massothérapeute svp</option>
+                                {massoTab.map((masso) => {
+                                    return <option key={`M${masso.id}`} value={`${masso.id}-${masso.prenom}-${masso.nom}`}>{`${masso.prenom} ${masso.nom}`}</option>
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid" className='text-start'>
                                 Veuillez choisir un massothérapeute
-                           </Form.Control.Feedback>                            
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mt-4">
@@ -131,5 +131,5 @@ export default function PageChoixDureeMasso() {
                 </Col>
             </Row>
         </Container>
-    ) 
+    )
 }  

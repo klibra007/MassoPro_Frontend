@@ -125,7 +125,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 //alert("La réponse: " + JSON.stringify(response));
                 if (response.data.status === true) {
                     //SnackBar
-                    alert("Votre modification a bien été prise en compte!!");
+                    //alert("Votre modification a bien été prise en compte!!");
                     getReservationMasso(objReservationPersonnel.idPersonnel);
                     //window.location.reload(false);
                     //setOpenActivationClient(false);
@@ -414,7 +414,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 reservationId={reservationIdConfirmDialog}
             ></ConfirmDialog>
 
-            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} />}
+            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} typePersonnel={connexionData.typePersonnel} />}
 
             <Snackbar sx={{ marginTop: 14, marginLeft: 19 }}
                 open={openSnackBar}
