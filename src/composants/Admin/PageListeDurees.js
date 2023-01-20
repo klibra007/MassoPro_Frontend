@@ -19,7 +19,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EditIcon from '@mui/icons-material/Edit';
 
 import PageAddUpdateDuree from './PageAddUpdateDuree'
-import ConfirmDialog from '../ConfirmDialog'
+import ConfirmDialog from '../ConfirmDialog2'
 
 export default function PageListeDurees() {
 
