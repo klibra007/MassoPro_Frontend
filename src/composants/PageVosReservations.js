@@ -104,7 +104,7 @@ export default function PageVosReservations() {
 
     if (connexionData.idClient !== null && connexionData.idClient !== undefined) {
 
-      setAnnulerMsg(`Êtes-vous certain de vouloir annuler votre réservation numéro ${rdv.reservation} pour le ${rdv.nomService} avec ${rdv.prenom}  ${rdv.nom} le ${rdv.date}?`);
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler le ${rdv.nomService} avec ${rdv.prenom}  ${rdv.nom} le ${rdv.date}?`);
     }
     else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
 
@@ -123,6 +123,7 @@ export default function PageVosReservations() {
     console.log("In OpenDialog")
     setReservationId(rdv.idRes);
     setShowData({
+      id: rdv.id,
       reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
       idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin, idClient: rdv.idClient
     });
@@ -131,11 +132,42 @@ export default function PageVosReservations() {
   }
 
 
-  function handleModifierReservation (data, newData) {
-  //  console.log("Modifier reservation");
-    alert(`"old idDuree=${data.idDuree} new idDuree=${newData.idDuree} new heureDebut=${newData.heureDebut} new heureFin ${newData.heureFin}`);
-   
+  const handleModifierReservation = (oldData, newData) => {
+
+    //alert("newData : " + JSON.stringify(newData));
+
+    let strNomApplication = strDossierServeur + `/api/rendezvous/${oldData.idReservation}`;
+
+    //alert(strNomApplication);
+
+    axios.put(strNomApplication, JSON.stringify(newData), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => {
+        //alert("La réponse: " + JSON.stringify(response));
+        if (response.data.status === true) {
+          //SnackBar
+          alert("Votre modification a bien été prise en compte!!");
+          getReservations();
+          notify("Votre réservation a été modifiée.", true);
+          //getReservationMasso(objReservationPersonnel.idPersonnel);
+          //window.location.reload(false);
+          //setOpenActivationClient(false);
+          //setShow(false);
+        }
+        else {
+          //SnackBar
+          alert("Votre modification a échoué!!");
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.data.status);
+        //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
+      });
   }
+
 
 
   const handleValidateAnnuler = (date, heureDebut) => {
@@ -155,10 +187,10 @@ export default function PageVosReservations() {
       return true;
     }
   }
- 
+
   const handleAnnuler = () => {
     console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
-    
+
     axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
       .then((response) => {
 
@@ -214,9 +246,10 @@ export default function PageVosReservations() {
       </Grid> */}
 
       <ConfirmDialog
-        title={annulerMsg}
+        title={`Confirmer annulation réservation n° ${reservationId}`}
         txtCancel="Non"
         txtConfirm="Oui"
+        children={annulerMsg}
         open={open}
         setOpen={setOpen}
         callbackData={handleAnnuler}

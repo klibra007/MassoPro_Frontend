@@ -42,7 +42,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
     const connexionData = useSelector(selectConnexionData);
 
-    const [annulerMsg, setAnnulerMsg] = useState();
+    const [annulerMsg, setAnnulerMsg] = useState([]);
 
     const [open, setOpen] = useState(false);
 
@@ -108,8 +108,12 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
     alert(today)*/
 
     const handleModifierReservation = (oldData, newData) => {
-       
-        let strNomApplication = strDossierServeur + `/api/rendezvous/${newData.idRendezVous}`;
+
+        console.log("newData : " + JSON.stringify(newData));
+
+        let strNomApplication = strDossierServeur + `/api/rendezvous/${oldData.idReservation}`;
+
+        //alert(strNomApplication);
 
         axios.put(strNomApplication, JSON.stringify(newData), {
             headers: {
@@ -126,7 +130,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                     //setOpenActivationClient(false);
                     setShow(false);
                 }
-                else{
+                else {
                     //SnackBar
                     alert("Votre modification a échoué!!");
                 }
@@ -189,7 +193,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
 
         }
         else {
-            //SnackBar
+
             alert("Masso indisponible à cette date");
         }
 
@@ -270,64 +274,66 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         setReservationIdConfirmDialog(rdv.id);
         //setReservationId(rdv.reservation);
         console.log("Type Personnel: ", connexionData.typePersonnel)
-    
+
         if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
-    
-          setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? || \n 
-          Réservation : ${rdv.reservation} || \n 
-          Client : ${rdv.prenom}  ${rdv.nom} || \n 
-          Service: ${rdv.nomService}  || \n 
-          N° massothérapeute : ${rdv.idPersonnel} || \n 
-          Date :  ${rdv.dateRes}`);
-          //setOpen(true);
+
+            setAnnulerMsg([
+                `Client : ${rdv.prenom}  ${rdv.nom}`
+                /*`Réservation : ${rdv.reservation}`,
+                `Service: ${rdv.nomService}`,
+                `N° massothérapeute : ${rdv.idPersonnel}`,
+                `Date :  ${rdv.dateRes}`*/
+            ]);
+            //setOpen(true);
         }
         else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
-    
-          setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? || \n 
-          Réservation : ${rdv.reservation} || {"\n"}
-          n° Client : ${rdv.idClient} || \n 
-          Service: ${rdv.nomService}  || \n 
-          Date :  ${rdv.dateRes}`);
-          //setOpen(true);
+
+            setAnnulerMsg([
+
+                `Client : ${rdv.prenom}  ${rdv.nom}`
+                /*`Réservation : ${rdv.reservation}`,
+                `Service: ${rdv.nomService}`,
+            `Date :  ${rdv.dateRes}`*/])
+            //setOpen(true);
         }
         setOpen(true);
-    
-        console.log("Open = ", open);
-      }
 
-      const notify = (msg, isReload) => {
+        console.log("Open = ", open);
+    }
+
+    const notify = (msg, isReload) => {
         setNotifyMsg(msg);
         setOpenSnackBar(true);
-    
-        if (isReload) {
-          // setInterval(() => {
-          //   window.location.reload(false);
-          // }, 2000);
-        }
-      }
 
-      const handleAnnuler = () => {
+        if (isReload) {
+            // setInterval(() => {
+            //   window.location.reload(false);
+            // }, 2000);
+        }
+    }
+
+    const handleAnnuler = () => {
         console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
-        
+
         let strNomApplication = strDossierServeur + `/api/rendezvous/${reservationIdConfirmDialog}`;
 
         //alert(strNomApplication)
 
         axios.delete(strNomApplication)
-          .then((response) => {
-    
-            if (response.data.status === true) {
-              //Check response.data because response.data.status and response.data.message may be undefined
-              console.log("idPersonnel=" + connexionData.idPersonnel + " La réponse /api/rendezvous: " + JSON.stringify(response.data.status, response.data.message));
+            .then((response) => {
 
-              getReservationMasso(objReservationPersonnel.idPersonnel);
-              notify("Votre réservations a été annulée.", true);
-              setShow(false);
-              //  dispatch(setTabReservation(response.data.reservations));
-            }
-          })
-          .catch(error => alert(error))
-      }
+                if (response.data.status === true) {
+                    //Check response.data because response.data.status and response.data.message may be undefined
+                    console.log("idPersonnel=" + connexionData.idPersonnel + " La réponse /api/rendezvous: " + JSON.stringify(response.data.status, response.data.message));
+
+                    getReservationMasso(objReservationPersonnel.idPersonnel);
+                    notify("Votre réservation a été annulée.", true);
+                    setShow(false);
+                    //  dispatch(setTabReservation(response.data.reservations));
+                }
+            })
+            .catch(error => alert(error))
+    }
 
     return (
         <>
@@ -398,19 +404,20 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
                 snapDuration={'00:30:00'}
             />}
 
-            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso}  setOpen={setOpen}  />
+            <FullScreenDialog objReservationFinal={objReservationFinal} massoChoisi={massoChoisi} serviceChoisi={serviceChoisi} clientChoisi={clientChoisi} dureeChoisiePersonnel={dureeChoisiePersonnel} show={show2} setShow={setShow2} openReservationPersonnel={openReservationPersonnel} setOpenReservationPersonnel={setOpenReservationPersonnel} openWithSelect={openWithSelect} setOpenWithSelect={setOpenWithSelect} getReservationMasso={getReservationMasso} setOpen={setOpen} />
 
             <ConfirmDialog
-               title={"Confirmation de suppression"}
-               txtCancel="Non"
-               txtConfirm="Oui"
-               open={open}
-               setOpen={setOpen}
-               callbackData={handleAnnuler}
-               reservationId={reservationIdConfirmDialog}
-            >{annulerMsg}</ConfirmDialog>
+                title={`Confirmer annulation "${selectedEvent.nomService}" du ${selectedEvent.dateRes}?`}
+                txtCancel="Non"
+                txtConfirm="Oui"
+                children={annulerMsg}
+                open={open}
+                setOpen={setOpen}
+                callbackData={handleAnnuler}
+                reservationId={reservationIdConfirmDialog}
+            ></ConfirmDialog>
 
-            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog ={openConfirmDialog} />}
+            {<PageModifierReservation data={selectedEvent} show={show} setShow={setShow} callbackFunc={handleModifierReservation} idPersonnel={connexionData.idPersonnel} openConfirmDialog={openConfirmDialog} typePersonnel={connexionData.typePersonnel} />}
         </>
 
     )

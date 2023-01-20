@@ -12,26 +12,33 @@ export default function PageModifierReservation(props) {
 
    const { data, show, setShow, callbackFunc } = props;
 
-   const [hrFin, setHrFin] = useState(data.heureFin);
+   const [hrFin, setHrFin] = useState("");
 
    const [dureeTab, setDureeTab] = useState([]);
    const [massoTab, setMassoTab] = useState([]);
+   const [servicesTab, setServicesTab] = useState([]);
    const [disponibiliteTab, setDisponibiliteTab] = useState([]);
 
    const formInitState = {
       idDuree: data.idDuree,
       idPersonnel: data.idPersonnel,
-      dateRes: data.dateRes,
+      date: data.dateRes,
       heureDebut: data.heureDebut,
-      heureFin: data.heureFin
+      heureFin: data.heureFin,
+      idClient: data.idClient,
+      idService: data.idService,
+      idReservation: data.id
+
    }
 
    const [form, setForm] = useState({
       idDuree: '',
       idPersonnel: '',
-      dateRes: '',
+      date: '',
       heureDebut: '',
-      heureFin: ''
+      heureFin: '',
+      idClient: '',
+      idService: ''
    })
 
    const [formErrors, setFormErrors] = useState({})
@@ -40,6 +47,8 @@ export default function PageModifierReservation(props) {
    let strAppDuree = strDossierServeur + "/api/durees";
    let strAppPersonnels = strDossierServeur + "/api/servicespersonnels";
    let strAppRdv = strDossierServeur + "/api/rendezvous";
+   let strAppServices = strDossierServeur + "/api/services";
+   let strAppServicesByMasso = strDossierServeur + "/api/personnelservices";
 
    let objRes = {
       "date": data.dateRes,
@@ -53,12 +62,49 @@ export default function PageModifierReservation(props) {
    }, [hrFin])
 
    useEffect(() => {
-      objRes.date = form.dateRes;
+      objRes.date = form.date;
       objRes.idPersonnel = form.idPersonnel;
       objRes.idDuree = form.idDuree;
-   }, [form.idDuree, form.idPersonnel, form.dateRes])
+      getDisponibilite();
+   }, [form.idDuree, form.idPersonnel, form.date])
 
    useEffect(() => {
+      objRes.idDuree = form.idDuree;
+      getDisponibilite();
+   }, [form.idDuree])
+
+
+   useEffect(() => {
+
+      //recup des services
+      if (props.typePersonnel !== "Massothérapeute") {
+
+         axios.get(strAppServices)
+            .then((response) => {
+               //alert(JSON.stringify(response.data))
+               if ((props.typePersonnel === "Massothérapeute") ? response.data.status === true : response.data.length > 0) {
+                  //alert("La réponse : " + JSON.stringify(response.data));
+                  setServicesTab(response.data);
+               } else {
+                  setServicesTab([]);
+               }
+            })
+            .catch(error => alert(error))
+      } else {
+         axios.get(`${strAppServicesByMasso}/${props.idPersonnel}`)
+            .then((response) => {
+               if (response.data.status === true) {
+                  console.log("La réponse : " + JSON.stringify(response.data));
+                  setServicesTab(response.data.services);
+               } else {
+                  setServicesTab([]);
+               }
+
+            })
+            .catch(error => alert(error))
+
+      }
+
       //recup des durées
       axios.get(strAppDuree)
          .then((response) => {
@@ -97,6 +143,7 @@ export default function PageModifierReservation(props) {
 
    const getDisponibilite = () => {
       console.log(pageName + " " + JSON.stringify(objRes));
+
       axios.post(strAppRdv, JSON.stringify(objRes), {
          headers: {
             'Content-Type': 'application/json'
@@ -124,12 +171,12 @@ export default function PageModifierReservation(props) {
       }
    }
 
-   const validateDateRes = () => {
+   const validateDate = () => {
       let retMsg = "";
-      if (!isNull(form.dateRes)) {
+      if (!isNull(form.date)) {
          retMsg = "Veuillez entrer une date réservation";
       }
-      else if (!isDate(form.dateRes)) {
+      else if (!isDate(form.date)) {
          retMsg = "Date invalide";
       }
 
@@ -139,16 +186,21 @@ export default function PageModifierReservation(props) {
    const validateForm = (valHeureDebut) => {
       const errors = {};
       //console.log("form.idDuree="+form.idDuree);
+      if (form.idService == 0) {
+         errors.idService = "Veuillez choisir un service";
+      }
+
       if (form.idDuree == 0) {   // No selection. Value is 0
          errors.idDuree = "Veuillez choisir une durée";
       }
+
       if (form.idPersonnel == 0) {   // No selection. Value is 0
          errors.idPersonnel = "Veuillez choisir un massothérapeute";
       }
 
-      const dateResErrMsg = validateDateRes();
-      if (dateResErrMsg !== '') {
-         errors.dateRes = dateResErrMsg;
+      const dateErrMsg = validateDate();
+      if (dateErrMsg !== '') {
+         errors.date = dateErrMsg;
       }
 
       if (valHeureDebut) {
@@ -173,10 +225,6 @@ export default function PageModifierReservation(props) {
       }
    }
 
-   const handleDeleteReservation = () => {
-
-   }
-
    const handleCancelForm = (e) => {
       setFormErrors({});  // Reset error fields
       setShow(false);
@@ -191,7 +239,12 @@ export default function PageModifierReservation(props) {
    }
 
    const handleChange = (e) => {
-      setForm({ ...form, [e.target.name]: e.target.value })
+      setForm({ ...form, [e.target.name]: e.target.value });
+
+      if ([e.target.name] === "idDuree") {
+         //*objRes.idDuree = e.target.value;
+         getDisponibilite();
+      }
 
       removeFormError(e);
    }
@@ -228,8 +281,25 @@ export default function PageModifierReservation(props) {
          <Modal.Body>
             <Form>
                <div>Numéro de réservation: {data.reservation}</div>
+               <div>Massage: {data.nomService}</div>
                <div>Heure debut: {form.heureDebut}</div>
-               <div>Heure fin: {hrFin}</div>
+               <div>Heure fin: {(hrFin === "") ? data.heureFin : hrFin}</div>
+
+               <Form.Group>
+                  <div className='text-start mt-2'>Services</div>
+                  <Form.Select id='idService' name="idService" value={form.idService}
+                     onChange={handleChange} isInvalid={!!formErrors.idService}>
+                     <option value={0}>Veuillez choisir un service svp</option>
+                     {servicesTab.map((service) => {
+                        return <option key={service.id} value={service.id}>
+                           {`${service.nomService}`}</option>
+                     })}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid" className='text-start'>
+                     {formErrors.idService}
+                  </Form.Control.Feedback>
+               </Form.Group>
+
                <Form.Group>
                   <div className='text-start mt-2'>Durée</div>
                   <Form.Select id='idDuree' name="idDuree" value={form.idDuree}
@@ -248,7 +318,7 @@ export default function PageModifierReservation(props) {
                   </Form.Control.Feedback>
                </Form.Group>
 
-               <Form.Group>
+               {(props.typePersonnel !== "Massothérapeute") && <Form.Group>
                   <div className='text-start mt-2'>Massothérapeute</div>
                   <Form.Select id='idPersonnel' name="idPersonnel" value={form.idPersonnel}
                      onChange={handleChange} isInvalid={!!formErrors.idPersonnel}>
@@ -261,16 +331,16 @@ export default function PageModifierReservation(props) {
                   <Form.Control.Feedback type="invalid" className='text-start'>
                      {formErrors.idPersonnel}
                   </Form.Control.Feedback>
-               </Form.Group>
+               </Form.Group>}
 
                <Form.Group>
                   <div className='text-start mt-2'>Choisir une date réservation</div>
                   <InputGroup>
-                     <Form.Control type='text' id="idDateRes" name="dateRes" value={form.dateRes}
-                        onChange={handleChange} isInvalid={!!formErrors.dateRes} required />
-                     <Button size='sm' id="idDateResBtn" variant="secondary" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
+                     <Form.Control type='text' id="idDate" name="date" value={form.date}
+                        onChange={handleChange} isInvalid={!!formErrors.date} required />
+                     <Button size='sm' id="idDateBtn" variant="secondary" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
                      <Form.Control.Feedback type="invalid" className='text-start'>
-                        {formErrors.dateRes}
+                        {formErrors.date}
                      </Form.Control.Feedback>
                   </InputGroup>
                </Form.Group>
