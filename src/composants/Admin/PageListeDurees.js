@@ -169,7 +169,7 @@ export default function PageListeDurees() {
                       <Grid item xs={2}>
                         <ConfirmDialog
                           title="Supprimer"
-                          children="Etes-vous sûr de vouloir le désactiver?"
+                          children={["Etes-vous sûr de vouloir le désactiver?", "Le ca marche pas", "Le ca marche"]}
                           txtCancel="Non"
                           txtConfirm="Oui"
                           icon={<DeleteForeverOutlinedIcon className='app-icon' />}

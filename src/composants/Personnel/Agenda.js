@@ -275,7 +275,7 @@ export default function Agenda({ rendezVous, initialData, objReservationPersonne
         if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
 
             setAnnulerMsg([
-                `Client : ${rdv.prenom}  ${rdv.nom}`
+                `Client : ${rdv.prenom}  ${rdv.nom}`,
                 /*`Réservation : ${rdv.reservation}`,
                 `Service: ${rdv.nomService}`,
                 `N° massothérapeute : ${rdv.idPersonnel}`,
