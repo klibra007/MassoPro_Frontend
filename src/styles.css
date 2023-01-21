@@ -542,6 +542,9 @@ body {
     color: white;
 }
 
+
+
+
 .MuiButtonBase-root:hover,
 .btn.btn-primary:hover,
 .MuiDialogActions-root .MuiButtonBase-root:hover {
@@ -558,12 +561,12 @@ body {
 }
 
 
-.MuiButtonBase-root.btn-secondary {
+.MuiButtonBase-root.btn-secondary, .MuiDialogActions-root button:first-child {
     color: #6c757d;
     background-color: transparent;
 }
 
-.MuiButtonBase-root.btn-secondary:hover {
+.MuiButtonBase-root.btn-secondary:hover, .MuiDialogActions-root button:first-child:hover {
     /* background-color:#5c636a; */
     /* background-color: rgba(108, 117, 125, 0.298); */
     color: white;
@@ -607,10 +610,10 @@ body {
     background-color: #82654e;
 }
 
-.App .MuiPickersDay-root.Mui-selected {
+.MuiPickersDay-root.Mui-selected {
     /* background-color: #ccd5ae; */
     /* background-color: #82654e; */
-    background-color: #a98467;
+    background-color: #a98467 !important;
 
 }
 
@@ -619,15 +622,11 @@ body {
     background-color: #82654e;
 }
 
-.MuiPickerStaticWrapper-root .MuiDialogActions-root button:first-child {
-    /* background-color: #6c757d; */
-    color: #6c757d;
-    background-color: transparent;
-}
 
 .MuiPickerStaticWrapper-root .MuiDialogActions-root button:nth-child(2) {
     /* font-weight: bold; */
 }
+
 
 /* End Calendar */
 

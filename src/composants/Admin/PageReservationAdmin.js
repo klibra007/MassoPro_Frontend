@@ -229,15 +229,21 @@ export default function PageReservationAdmin() {
                     </Form.Select>
 
                     <div className='text-start mt-2'>Cliquer pour choisir une date de réservation</div>
+                    <div className="mobile-date-picker">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <MobileDatePicker
+                        
+                        
+                            <MobileDatePicker 
+                            
                             label="Choisir une date"
                             inputFormat="YYYY-MM-DD"
                             value={dateRes}
                             onChange={handleChangeDateRes}
-                            renderInput={(params) => <TextField {...params} />}
+                            renderInput={(params) => <TextField {...params} 
+                            size="small" sx={{mt:1}}/>}
                         />
                     </LocalizationProvider>
+                    </div>
                     <InputGroup>
                         {/* <Form.Control type='text' id="idDateRes" value={dateRes} onChange={(e) => handleChangeDateRes(e)} required /> */}
                         {/* <Button id="idDateResBtn" variant="secondary" onClick={() => getDisponibilite()}>Changer Date</Button> */}
