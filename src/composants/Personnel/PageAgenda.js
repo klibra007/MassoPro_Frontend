@@ -12,8 +12,6 @@ import { setDureeChoisie, setNomMassoChoisi, setObjetReservationIdDuree, setObje
 import { Paper } from '@mui/material';
 import FullScreenDialog from '../Admin/FullScreenDialog';
 import { selectConnexionData } from '../../app/features/connexionSlice';
-import Snackbar from '@mui/material/Snackbar';
-import { Alert } from '@mui/material';
 import AjouterHoraireTravail from './AjouterHoraireTravail';
 
 export default function PageAgenda() {
@@ -22,7 +20,7 @@ export default function PageAgenda() {
     const [dureeTab, setDureeTab] = useState([]);
     const [dureeChoisiePersonnel, setDureeChoisiePersonnel] = useState([]);
     const [massoTab, setMassoTab] = useState([]);
-    const [massoChoisi, setMassoChoisi] = useState((connexionData.typePersonnel === "Massothérapeute") ? {nom: "Vous-même"} : {});
+    const [massoChoisi, setMassoChoisi] = useState((connexionData.typePersonnel === "Massothérapeute") ? { nom: "Vous-même" } : {});
     const [servicesTab, setServicesTab] = useState([]);
     const [serviceChoisi, setServiceChoisi] = useState({});
     const [rendezVous, setRendezVous] = useState([]);
@@ -34,22 +32,7 @@ export default function PageAgenda() {
     const [show, setShow] = useState(false);
     const dispatch = useDispatch();
 
-    const [notifyMsg, setNotifyMsg] = useState('');
-    const [openSnackBar, setOpenSnackBar] = useState(false);
-    const handleCloseSnack = () => {
-        setOpenSnackBar(false);
-    };
 
-    const notify = (msg, isReload) => {
-        setNotifyMsg(msg);
-        setOpenSnackBar(true);
-    
-        if (isReload) {
-             setInterval(() => {
-             window.location.reload(false);
-          }, 2000);
-        }
-    }
 
     let strDossierServeur = "https://dev.pascalrocher.com";
     let strNomApplication = strDossierServeur + "/api/durees";
@@ -76,7 +59,7 @@ export default function PageAgenda() {
     const getDisponibilites = (idPersonnel) => {
         axios.get(strNomApplication5 + `/${idPersonnel}`)
             .then((response) => {
-                //alert("La réponse horaireTravail : " + JSON.stringify(response.data));
+                //alert("La réponse horaireTravail recu du back: " + JSON.stringify(response.data));
                 if (response.data.status === true) {
                     /*const disponibiliteFinale = response.data.horairesDeTravail.map((dispo) => {
                         return {
@@ -290,12 +273,14 @@ export default function PageAgenda() {
         getReservationMasso(tab[0]);
     }
 
+
     //  Ajout horaireDispo masso
     const handleClickAjouterHoraire = () => {
         setShow(true);
     }
 
     const ajouterHoraire = (data) => {
+
         //alert("Data dans ajouter horaire travail: " + JSON.stringify(data));
 
         axios.post(strNomApplication5, JSON.stringify(data), {
@@ -307,21 +292,23 @@ export default function PageAgenda() {
                 console.log("La réponse ajout horaire: " + JSON.stringify(response.data));
                 if (response.data.status === true) {
                     //SnackBar
-                    //alert("Votre horaire de travail a bien été ajouté!!");
-                    notify("Votre horaire de travail a bien été ajouté!!", false);
+                    alert("Votre horaire de travail a bien été ajouté!!");
                     setShow(false);
                     getDisponibilites(connexionData.idPersonnel);
                 } else {
                     //SnackBar
-                    //alert("Votre horaire de travail n'a pas été ajouté!!");
-                    notify("Votre horaire de travail n'a pas été ajouté!!", false);
+                    alert("Votre horaire de travail n'a pas été ajouté!!");
                 }
 
             })
             .catch((error) => {
                 alert(error.response);
             });
-    }    
+
+
+    }
+
+
 
     //alert(initialData);
 
@@ -338,7 +325,7 @@ export default function PageAgenda() {
 
                 <div style={{ alignContent: "center" }}>
                     <Paper >
-                        {(connexionData.typePersonnel === 'Massothérapeute') ? <div className='float-end mt-2'>{<Button variant="primary" >
+                        {(connexionData.typePersonnel === 'Massothérapeute') ? <div className='float-end mt-2'>{<Button variant="primary" onClick={handleClickAjouterHoraire}>
                             Ajouter horaire de travail
                         </Button>}</div> : ""}
 
@@ -410,17 +397,9 @@ export default function PageAgenda() {
                     <AjouterHoraireTravail show={show} setShow={setShow} callbackFunc={ajouterHoraire} idPersonnel={connexionData.idPersonnel}  />
                 </div>
 
+
+
             </div>
-            <Snackbar sx={{ marginTop: 14, marginLeft: 19 }}
-                open={openSnackBar}
-                onClose={handleCloseSnack}
-                autoHideDuration={3000}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-               <Alert severity="success" sx={{ width: '100%' }}>
-                  {notifyMsg}
-               </Alert>
-            </Snackbar>            
         </Container>
     )
 }

@@ -4,10 +4,9 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+
 import { isNull, isDate } from '../../lib/FormValidator';
+
 
 
 export default function PageModifierReservation(props) {
@@ -15,6 +14,8 @@ export default function PageModifierReservation(props) {
    const noDispoMsg = "Aucun disponibilité pour cette date";
 
    const { data, show, setShow, callbackFunc } = props;
+
+   const [flag, setFlag] = useState(false);
 
    const [hrFin, setHrFin] = useState("");
 
@@ -74,10 +75,18 @@ export default function PageModifierReservation(props) {
    useEffect(() => {
       objRes.idDuree = form.idDuree;
       getDisponibilite();
-   }, [form.idDuree])
+   }, [form.idDuree]);
+
+   useEffect(() =>{
+      getDisponibilite();
+   }, [flag] )
 
 
    useEffect(() => {
+
+      //recup des disponibilités
+
+      getDisponibilite();
 
       //recup des services
       if (props.typePersonnel !== "Massothérapeute") {
@@ -145,7 +154,7 @@ export default function PageModifierReservation(props) {
    }
 
    const getDisponibilite = () => {
-      console.log(pageName + " " + JSON.stringify(objRes));
+      //alert(pageName + " " + JSON.stringify(objRes));
 
       axios.post(strAppRdv, JSON.stringify(objRes), {
          headers: {
@@ -200,12 +209,12 @@ export default function PageModifierReservation(props) {
       if (form.idPersonnel == 0) {   // No selection. Value is 0
          errors.idPersonnel = "Veuillez choisir un massothérapeute";
       }
-/*
+
       const dateErrMsg = validateDate();
       if (dateErrMsg !== '') {
          errors.date = dateErrMsg;
       }
-*/
+
       if (valHeureDebut) {
          if (form.heureDebut == 0) {   // No selection. Value is 0
             errors.heureDebut = "Veuillez choisir un disponibilité";
@@ -247,6 +256,25 @@ export default function PageModifierReservation(props) {
       if ([e.target.name] === "idDuree") {
          //*objRes.idDuree = e.target.value;
          getDisponibilite();
+         setFlag(true);
+      }
+
+      if (e.target.name === "idService") {
+         let strAppUrl = strAppPersonnels + `/${e.target.value}`;
+         //console.log("idService="+data.idService+" strAppUrl="+strAppUrl);
+         axios.get(strAppUrl)
+            .then((response) => {
+               //console.log("PageModifierReservation. La réponse masso : " + JSON.stringify(response.data));
+               if (response.data.length > 0) {
+                  // If there are data 
+                  setMassoTab(response.data);
+               } else {
+                  // no data, set array empty  
+                  setMassoTab([]);
+               }
+            })
+            .catch(error => alert(error));
+
       }
 
       removeFormError(e);
@@ -270,14 +298,14 @@ export default function PageModifierReservation(props) {
       removeFormError(e);
    }
 
-   const handleChangeDateRes = (epochDate) => {      
+   /*const handleChangeDateRes = (epochDate) => {      
       let dateSelected = new Date(epochDate);
       const formattedDate = dateSelected.toISOString().split('T')[0];
       console.log("formattedDate " + formattedDate);        
       setForm({ ...form, date: formattedDate })
       console.log(pageName + " La date choisi: " + formattedDate);
       console.log(pageName + " La date dateRes: " + form.date);
-   }
+   }*/
 
 
    return (
@@ -347,6 +375,18 @@ export default function PageModifierReservation(props) {
                </Form.Group>}
 
                <Form.Group>
+                  <div className='text-start mt-2'>Choisir une date réservation</div>
+                  <InputGroup>
+                     <Form.Control type='text' id="idDate" name="date" value={form.date}
+                        onChange={handleChange} isInvalid={!!formErrors.date} required />
+                     <Button size='sm' id="idDateBtn" variant="secondary" onClick={() => handleGetDisponibilite()}>Changer Date</Button>
+                     <Form.Control.Feedback type="invalid" className='text-start'>
+                        {formErrors.date}
+                     </Form.Control.Feedback>
+                  </InputGroup>
+               </Form.Group>
+
+               {/*<Form.Group>
                   <div className='text-start mt-2 mb-3'>Date de réservation</div>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                      <MobileDatePicker
@@ -357,7 +397,7 @@ export default function PageModifierReservation(props) {
                         renderInput={(params) => <TextField {...params} />}
                      />
                   </LocalizationProvider>
-               </Form.Group>               
+                  </Form.Group>*/}
 
                {disponibiliteTab.length > 0 ?
                   <Form.Group>

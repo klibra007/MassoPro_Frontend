@@ -224,7 +224,7 @@ export default function FullScreenDialog(props) {
             //   dispatch(setAffichageAvantConfirmation());
 
             //mettre ici le popup de confirmation 
-            alert("Votre réservation a été bien effectuée!!");
+            alert("Votre réservation a bien été effectuée!!");
             props.setShow(false);
             props.getReservationMasso(props.objReservationFinal.idPersonnel);
             }

@@ -73,12 +73,12 @@ export default function PageListeDurees() {
         console.log("La réponse: " + JSON.stringify(response));
         if (response.data.status === true) {
           getDurees();
-          notify('Durée modifié', false);
+          notify('Durée modifiée!!', false);
         }
       })
       .catch((error) => {
         console.log(error.response.data.status);
-        notify("Erreur modifié de durée", false)
+        notify("Erreur de modification de durée!!", false)
       });
   }
 
@@ -112,13 +112,13 @@ export default function PageListeDurees() {
         console.log("La réponse: " + JSON.stringify(response));
         if (response.data.status === true) {
           getDurees();
-          notify('Durée est désactivés', false);
+          notify('La durée est désactivée!!', false);
 
         }
       })
       .catch((error) => {
         console.log(error.response.data.status);
-        notify("Erreur désactivés durée", false)
+        notify("Erreur de désactivation de durée!!", false)
       });
   }
 
@@ -169,7 +169,7 @@ export default function PageListeDurees() {
                       <Grid item xs={2}>
                         <ConfirmDialog
                           title="Supprimer"
-                          children={["Etes-vous sûr de vouloir le désactiver?", "Le ca marche pas", "Le ca marche"]}
+                          children={["Etes-vous sûr de vouloir désactiver cette durée?"]}
                           txtCancel="Non"
                           txtConfirm="Oui"
                           icon={<DeleteForeverOutlinedIcon className='app-icon' />}
