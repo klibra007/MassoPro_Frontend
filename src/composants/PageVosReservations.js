@@ -33,6 +33,12 @@ export default function PageVosReservations() {
     setOpenSnackBar(false);
   };
 
+
+
+
+
+
+
   useEffect(() => {
     if (JSON.stringify(connexionData) === "{}") {
       navigate('/connexion');
@@ -59,6 +65,8 @@ export default function PageVosReservations() {
   useEffect(() => {
     getReservations();
   }, []);
+
+
 
   const Reservation = () => {
     console.log("DANS LE FRAGMENT REACT RESERVATION " + tabReservations.length);
@@ -96,6 +104,8 @@ export default function PageVosReservations() {
     }
   }
 
+
+
   const openConfirmDialog = (rdv) => {
     console.log("In OpenDialog")
     setReservationIdConfirmDialog(rdv.id);
@@ -104,11 +114,11 @@ export default function PageVosReservations() {
 
     if (connexionData.idClient !== null && connexionData.idClient !== undefined) {
 
-      setAnnulerMsg(`Êtes-vous certain de vouloir annuler le ${rdv.nomService} avec ${rdv.prenom}  ${rdv.nom} le ${rdv.date}?`);
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler votre réservation numéro ${rdv.reservation} pour le ${rdv.nomService} avec ${rdv.prenom}  ${rdv.nom} le ${rdv.date}?`);
     }
     else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Secrétaire") {
 
-      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n n° Client : ${rdv.idClient} \n Service: ${rdv.nomService} \n Massothérapeute : ${rdv.prenom}  ${rdv.nom} \n Date :  ${rdv.date}`);
+      setAnnulerMsg(`Êtes-vous certain de vouloir annuler cette réservation? \n Réservation : ${rdv.reservation} \n Client : ${rdv.prenom} ${rdv.nom} \n Service: ${rdv.nomService} \n Massothérapeute : ${rdv.prenom}  ${rdv.nom} \n Date :  ${rdv.date}`);
     }
     else if (connexionData.idPersonnel !== null && connexionData.idPersonnel !== undefined && connexionData.typePersonnel === "Massothérapeute") {
 
@@ -123,51 +133,17 @@ export default function PageVosReservations() {
     console.log("In OpenDialog")
     setReservationId(rdv.idRes);
     setShowData({
-      id: rdv.id,
       reservation: rdv.reservation, idService: rdv.idService, idPersonnel: rdv.idPersonnel,
-      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut, heureFin: rdv.heureFin, idClient: rdv.idClient
+      idDuree: rdv.idDuree, dateRes: rdv.date, heureDebut: rdv.heureDebut
     });
     setShowModRes(true);
     console.log("OpenPageModifierReservation = ", open);
   }
 
 
-  const handleModifierReservation = (oldData, newData) => {
-
-    //alert("newData : " + JSON.stringify(newData));
-
-    let strNomApplication = strDossierServeur + `/api/rendezvous/${oldData.idReservation}`;
-
-    //alert(strNomApplication);
-
-    axios.put(strNomApplication, JSON.stringify(newData), {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => {
-        //alert("La réponse: " + JSON.stringify(response));
-        if (response.data.status === true) {
-          //SnackBar
-          alert("Votre modification a bien été prise en compte!!");
-          getReservations();
-          notify("Votre réservation a été modifiée.", true);
-          //getReservationMasso(objReservationPersonnel.idPersonnel);
-          //window.location.reload(false);
-          //setOpenActivationClient(false);
-          //setShow(false);
-        }
-        else {
-          //SnackBar
-          alert("Votre modification a échoué!!");
-        }
-      })
-      .catch((error) => {
-        console.log(error.response.data.status);
-        //document.getElementById('idErreur').innerHTML = "Veuillez vérifier votre email/mot de passe svp!"
-      });
+  const handleModifierReservation = (data) => {
+    console.log("Modifier reservation");
   }
-
 
 
   const handleValidateAnnuler = (date, heureDebut) => {
@@ -187,10 +163,11 @@ export default function PageVosReservations() {
       return true;
     }
   }
+ 
+
 
   const handleAnnuler = () => {
     console.log("In PageVosReservations - handleAnnuler: ", reservationIdConfirmDialog, " idPersonnel: " + connexionData.idPersonnel);
-
     axios.delete(strNomApplication + "/" + reservationIdConfirmDialog)
       .then((response) => {
 
@@ -210,9 +187,9 @@ export default function PageVosReservations() {
     setOpenSnackBar(true);
 
     if (isReload) {
-      // setInterval(() => {
-      //   window.location.reload(false);
-      // }, 2000);
+      setInterval(() => {
+      window.location.reload(false);
+      }, 2000);
     }
   }
 
@@ -256,7 +233,7 @@ export default function PageVosReservations() {
         reservationId={reservationIdConfirmDialog}
       />
 
-      <PageModifierReservation
+<PageModifierReservation
         data={showData}
         show={showModRes}
         setShow={setShowModRes}
